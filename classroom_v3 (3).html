@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIデータ・デジタル入門 授業ツール｜杉山真央</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;600&family=DM+Serif+Display:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f5f1ec;--surface:#ffffff;--border:#e0d9d0;
+  --ink:#2d2925;--muted:#6b635a;--light:#a09890;
+  --sage:#6f9c74;--sage-l:#e8f0e8;
+  --terra:#c4836a;--terra-l:#f5ebe5;
+  --slate:#6e8fad;--slate-l:#e4ecf3;
+  --gold:#b09265;--gold-l:#f3eedd;
+  --plum:#9478a8;--plum-l:#ede8f3;
+  --r:10px;
+  --acc:var(--sage);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+
+/* ── HOME ── */
+.home{max-width:980px;margin:0 auto;padding:64px 24px 100px;animation:fadeUp .4s ease;}
+.home-head{text-align:center;margin-bottom:52px;}
+.eyebrow{font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--light);margin-bottom:14px;}
+.home-title{font-family:'Noto Serif JP',serif;font-size:clamp(1.5rem,3.5vw,2.1rem);font-weight:600;line-height:1.5;margin-bottom:6px;}
+.home-meta{font-size:.85rem;color:var(--muted);}
+.home-line{width:40px;height:1px;background:var(--border);margin:28px auto 0;}
+.sessions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px 22px 22px;cursor:pointer;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
+.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c,var(--sage));}
+.scard:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,.11);}
+.scard-num{font-family:'DM Serif Display',serif;font-style:italic;font-size:2.6rem;color:var(--border);line-height:1;margin-bottom:10px;}
+.scard-lbl{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--c,var(--sage));font-weight:500;margin-bottom:5px;}
+.scard-title{font-family:'Noto Serif JP',serif;font-size:1.08rem;font-weight:600;margin-bottom:3px;}
+.scard-sub{font-size:.78rem;color:var(--muted);}
+.scard-footer{margin-top:18px;font-family:'Jost',sans-serif;font-size:.7rem;color:var(--light);}
+
+/* ── SESSION VIEW ── */
+.session-view{display:none;min-height:100vh;}
+.session-view.on{display:block;}
+.snav{position:sticky;top:0;background:rgba(245,241,236,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:12px;z-index:200;flex-wrap:wrap;}
+.back-btn{background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:4px 0;transition:color .2s;white-space:nowrap;}
+.back-btn:hover{color:var(--ink);}
+.snav-title{font-size:.88rem;font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sdots{display:flex;gap:5px;align-items:center;}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;border:none;position:relative;}
+.sdot.active{background:var(--acc);transform:scale(1.35);}
+.sdot.done{background:var(--acc);opacity:.4;}
+.sdot::after{content:attr(data-label);position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-family:'Noto Sans JP',sans-serif;font-size:.75rem;font-weight:500;white-space:nowrap;padding:5px 11px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:500;box-shadow:0 3px 10px rgba(0,0,0,.2);}
+.sdot::before{content:'';position:absolute;top:calc(100% + 5px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-bottom-color:var(--ink);pointer-events:none;opacity:0;transition:opacity .15s;z-index:500;}
+.sdot:hover::after,.sdot:hover::before{opacity:1;}
+
+
+/* ── STEP CONTENT ── */
+.step-wrap{max-width:880px;margin:0 auto;padding:44px 24px 100px;animation:fadeUp .3s ease;}
+.step-badge{display:inline-flex;align-items:center;gap:6px;font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);font-weight:500;margin-bottom:8px;}
+.step-title{font-family:'Noto Serif JP',serif;font-size:clamp(1.35rem,3vw,1.9rem);font-weight:600;line-height:1.4;margin-bottom:6px;}
+.step-time{font-size:.82rem;color:var(--muted);margin-bottom:36px;}
+
+/* ── KP CARDS (clickable) ── */
+.kp-list{display:flex;flex-direction:column;gap:14px;margin-bottom:20px;}
+.kp{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--acc);border-radius:0 var(--r) var(--r) 0;padding:18px 22px;cursor:pointer;transition:box-shadow .2s,transform .2s;position:relative;}
+.kp:hover{box-shadow:0 4px 18px rgba(0,0,0,.09);transform:translateX(3px);}
+.kp-inner{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.kp-body{flex:1;}
+.kp h4{font-weight:700;font-size:.93rem;margin-bottom:6px;}
+.kp p,.kp ul{font-size:.87rem;color:var(--muted);line-height:1.75;}
+.kp ul{list-style:none;display:flex;flex-direction:column;gap:3px;}
+.kp li{padding-left:14px;position:relative;}
+.kp li::before{content:'·';position:absolute;left:0;color:var(--acc);font-size:1.1rem;top:-2px;}
+.kp-arrow{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--light);margin-top:2px;transition:background .2s,color .2s;}
+.kp:hover .kp-arrow{background:var(--acc);color:#fff;border-color:var(--acc);}
+.kp-hint{font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--light);margin-top:8px;}
+
+/* ── DETAIL PANEL ── */
+.detail-panel{position:fixed;inset:0;background:var(--bg);z-index:300;overflow-y:auto;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);}
+.detail-panel.open{transform:translateX(0);}
+.dp-nav{position:sticky;top:0;background:rgba(245,241,236,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:13px 24px;display:flex;align-items:center;gap:12px;z-index:10;}
+.dp-nav-title{font-size:.88rem;font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted);}
+.dp-wrap{max-width:820px;margin:0 auto;padding:44px 24px 100px;}
+.dp-category{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);margin-bottom:8px;}
+.dp-title{font-family:'Noto Serif JP',serif;font-size:clamp(1.2rem,2.8vw,1.75rem);font-weight:600;line-height:1.4;margin-bottom:28px;}
+
+/* detail content components */
+.dp-section{margin-bottom:36px;}
+.dp-section-label{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--light);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.dp-section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.dp-para{font-size:.92rem;line-height:1.9;color:var(--muted);margin-bottom:14px;}
+.dp-para strong{color:var(--ink);}
+
+.dp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-bottom:20px;}
+.dp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 20px 16px;}
+.dp-card-icon{font-size:1.6rem;margin-bottom:10px;display:block;}
+.dp-card-title{font-weight:700;font-size:.9rem;margin-bottom:6px;}
+.dp-card-body{font-size:.84rem;color:var(--muted);line-height:1.75;}
+
+.dp-example{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;}
+.dp-ex-hd{background:var(--bg);padding:9px 18px;font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--light);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.dp-ex-body{padding:16px 20px;font-size:.9rem;line-height:1.85;color:var(--ink);}
+.dp-ex-note{padding:0 20px 14px;font-size:.82rem;color:var(--muted);}
+
+.dp-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.dp-cmp-col{border-radius:var(--r);padding:16px 18px;}
+.dp-cmp-col.good{background:var(--sage-l);border:1px solid #b8d8bb;}
+.dp-cmp-col.bad{background:var(--terra-l);border:1px solid #e0bdb0;}
+.dp-cmp-lbl{font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-bottom:8px;}
+.dp-cmp-col.good .dp-cmp-lbl{color:var(--sage);}
+.dp-cmp-col.bad .dp-cmp-lbl{color:var(--terra);}
+.dp-cmp-col p{font-size:.88rem;line-height:1.75;color:var(--ink);}
+
+.dp-quote{background:var(--surface);border-left:4px solid var(--acc);padding:18px 22px;border-radius:0 var(--r) var(--r) 0;margin-bottom:14px;}
+.dp-quote p{font-size:.95rem;line-height:1.85;font-style:italic;color:var(--ink);}
+.dp-quote cite{display:block;font-size:.78rem;color:var(--light);margin-top:8px;font-style:normal;}
+
+.dp-steps{display:flex;flex-direction:column;gap:0;margin-bottom:20px;}
+.dp-step{display:grid;grid-template-columns:32px 1fr;gap:0 16px;padding:14px 0;border-bottom:1px solid var(--border);}
+.dp-step:last-child{border-bottom:none;}
+.dp-step-num{width:32px;height:32px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:600;flex-shrink:0;margin-top:2px;}
+.dp-step-content h5{font-size:.9rem;font-weight:700;margin-bottom:4px;}
+.dp-step-content p{font-size:.85rem;color:var(--muted);line-height:1.7;}
+
+.dp-tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.dp-tag{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:100px;font-size:.82rem;font-weight:500;border:1.5px solid;}
+
+.dp-tbl{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:.86rem;}
+.dp-tbl th{background:var(--bg);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);color:var(--muted);font-weight:500;}
+.dp-tbl td{padding:10px 14px;border-bottom:1px solid var(--border);line-height:1.65;}
+.dp-tbl tr:last-child td{border-bottom:none;}
+.dp-tbl td:first-child{font-weight:600;white-space:nowrap;}
+
+.dp-point-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:14px;}
+.dp-point-box h5{font-size:.93rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.dp-point-box p,.dp-point-box ul{font-size:.88rem;color:var(--muted);line-height:1.75;}
+.dp-point-box ul{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:8px;}
+.dp-point-box li{padding-left:16px;position:relative;}
+.dp-point-box li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:.78rem;top:3px;}
+
+.dp-highlight{background:var(--gold-l);border:1px solid #d4bc96;border-radius:var(--r);padding:18px 22px;margin-bottom:14px;}
+.dp-highlight p{font-size:.9rem;line-height:1.8;color:var(--ink);}
+.dp-highlight strong{color:var(--gold);}
+
+/* ── TERMS PANEL (slides from left) ── */
+.terms-panel{position:fixed;inset:0;background:var(--bg);z-index:310;overflow-y:auto;transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);}
+.terms-panel.open{transform:translateX(0);}
+.tp-nav{position:sticky;top:0;background:rgba(245,241,236,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:13px 20px;display:flex;align-items:center;gap:12px;z-index:10;}
+.tp-session-badge{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:3px 10px;border-radius:100px;flex-shrink:0;}
+.tp-title{font-size:.88rem;font-weight:500;flex:1;color:var(--muted);}
+.tp-body{max-width:820px;margin:0 auto;padding:36px 24px 100px;}
+.tp-heading{font-family:'Noto Serif JP',serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:600;margin-bottom:6px;}
+.tp-sub{font-size:.84rem;color:var(--muted);margin-bottom:28px;}
+.term-search-wrap{position:relative;margin-bottom:28px;}
+.term-search{width:100%;padding:11px 16px 11px 40px;border:1px solid var(--border);border-radius:100px;background:var(--surface);font-family:'Noto Sans JP',sans-serif;font-size:.9rem;color:var(--ink);outline:none;transition:border-color .2s;}
+.term-search:focus{border-color:var(--tp-acc,var(--sage));}
+.term-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--light);pointer-events:none;}
+.term-count{font-family:'Jost',sans-serif;font-size:.72rem;color:var(--light);margin-bottom:16px;}
+.terms-list{display:flex;flex-direction:column;gap:0;}
+.term-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin-bottom:10px;transition:box-shadow .2s;}
+.term-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.08);}
+.term-card.hidden{display:none;}
+.term-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;}
+.term-ja{font-family:'Noto Serif JP',serif;font-size:1.05rem;font-weight:600;color:var(--ink);line-height:1.5;flex-wrap:wrap;}
+.term-slash{color:var(--border);margin:0 5px;font-weight:300;font-family:'Jost',sans-serif;}
+.term-en-inline{font-family:'Jost',sans-serif;font-size:.88rem;font-weight:400;color:var(--light);letter-spacing:.03em;}
+.term-reading{display:block;font-size:.75rem;color:var(--light);font-family:'Noto Sans JP',sans-serif;margin-top:2px;}
+.term-loan{font-family:'Jost',sans-serif;font-size:.88rem;font-weight:400;color:var(--light);margin-left:6px;letter-spacing:.02em;}
+.term-en{font-family:'Jost',sans-serif;font-size:.78rem;color:var(--tp-acc,var(--sage));font-weight:500;letter-spacing:.04em;flex-shrink:0;padding-top:3px;}
+.term-ety{display:block;font-size:.78rem;color:var(--muted);margin-top:4px;line-height:1.6;}
+.term-wasei-badge{display:inline-block;font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:.1em;padding:1px 7px;border-radius:100px;background:#f0e8d8;color:#8a6840;border:1px solid #d4bc96;margin-top:4px;font-weight:600;}
+.term-cats{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+.term-cat{font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 9px;border-radius:100px;font-weight:600;background:var(--tp-acc-l,var(--sage-l));color:var(--tp-acc,var(--sage));}
+.term-def{font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:8px;}
+.term-ex{background:var(--bg);border-radius:6px;padding:10px 14px;font-size:.83rem;color:var(--muted);line-height:1.7;border-left:2px solid var(--tp-acc,var(--sage));}
+.term-ex-lbl{font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--light);margin-bottom:3px;}
+.terms-empty{text-align:center;padding:52px 24px;color:var(--light);font-size:.9rem;}
+.terms-btn{display:flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.08em;color:var(--muted);transition:all .2s;white-space:nowrap;flex-shrink:0;}
+.terms-btn:hover{border-color:var(--acc);color:var(--ink);}
+.terms-btn svg{flex-shrink:0;}
+/* home card terms link */
+.scard-terms{display:inline-flex;align-items:center;gap:4px;margin-top:10px;font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--light);cursor:pointer;transition:color .2s;}
+.scard-terms:hover{color:var(--c,var(--sage));}
+
+/* ── MOVIE EXERCISE ── */
+.movie-intro{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;margin-bottom:20px;font-size:.88rem;color:var(--muted);line-height:1.7;}
+.movie-intro strong{color:var(--ink);}
+.movie-era-group{margin-bottom:32px;}
+.movie-era-label{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--light);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.movie-era-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.movie-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
+.movie-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;transition:box-shadow .2s,transform .2s;}
+.movie-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.12);transform:translateY(-2px);}
+.movie-poster{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;background:var(--bg);}
+.movie-poster-placeholder{width:100%;aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--bg) 0%,var(--border) 100%);color:var(--light);font-size:2rem;}
+.movie-info{padding:12px 13px 14px;}
+.movie-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:4px;}
+.movie-title{font-family:'Noto Serif JP',serif;font-size:.92rem;font-weight:600;line-height:1.4;color:var(--ink);}
+.movie-country{font-family:'Jost',sans-serif;font-size:.65rem;padding:1px 7px;border-radius:100px;font-weight:600;flex-shrink:0;margin-top:2px;}
+.movie-country.jp{background:#fde8e8;color:#b05050;}
+.movie-country.us{background:#e8edf5;color:#4a6090;}
+.movie-year{font-family:'Jost',sans-serif;font-size:.72rem;color:var(--light);margin-bottom:7px;}
+.movie-synopsis{font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;transition:all .2s;}
+.movie-synopsis.open{display:block;-webkit-line-clamp:unset;overflow:visible;}
+.synopsis-toggle{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.06em;color:var(--tp-acc,var(--terra));background:none;border:none;cursor:pointer;padding:0 0 8px;display:block;}
+.movie-genre-btns{display:flex;flex-wrap:wrap;gap:5px;}
+.mgbtn{font-size:.72rem;padding:3px 9px;border-radius:100px;border:1.5px solid var(--border);background:none;cursor:pointer;color:var(--muted);font-family:'Noto Sans JP',sans-serif;transition:all .15s;}
+.mgbtn:hover{opacity:.85;}
+.mgbtn.sel{color:#fff;border-color:transparent;background:var(--terra);}
+.movie-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.movie-loading{text-align:center;padding:40px;color:var(--light);font-size:.9rem;}
+
+/* ── STEP FOOTER NAV ── */
+.sfooter{position:fixed;bottom:0;left:0;right:0;background:rgba(245,241,236,.95);backdrop-filter:blur(8px);border-top:1px solid var(--border);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;z-index:99;}
+.snav-btn{display:flex;align-items:center;gap:7px;padding:9px 20px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-family:'Jost',sans-serif;font-size:.76rem;letter-spacing:.07em;color:var(--muted);transition:all .2s;}
+.snav-btn:hover{border-color:var(--acc);color:var(--ink);}
+.snav-btn.primary{background:var(--acc);border-color:var(--acc);color:#fff;}
+.snav-btn.primary:hover{opacity:.88;}
+.snav-btn:disabled{opacity:.3;cursor:default;pointer-events:none;}
+.sfooter-info{font-family:'Jost',sans-serif;font-size:.73rem;color:var(--light);}
+.print-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.07em;color:var(--muted);transition:all .2s;white-space:nowrap;}
+.print-btn:hover{border-color:var(--acc);color:var(--ink);}
+
+@media print{
+  .snav,.sfooter,.terms-btn,.print-btn,.detail-panel,.terms-panel{display:none!important;}
+  .step-wrap{padding:20px!important;max-width:100%!important;}
+  body{background:#fff!important;}
+  .movie-card{break-inside:avoid;}
+  .movie-synopsis{display:block!important;-webkit-line-clamp:unset!important;overflow:visible!important;}
+  .synopsis-toggle{display:none!important;}
+  table.obs input,table.obs textarea,.note-box textarea,.ref-q textarea,.sum-inp textarea{
+    border:1px solid #ccc!important;min-height:40px!important;background:#fff!important;
+  }
+  .kp-hint{display:none!important;}
+  .kp-arrow{display:none!important;}
+  .sfooter-info{display:none!important;}
+}
+
+/* ── OTHER COMPONENTS ── */
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:36px 40px;text-align:center;margin-bottom:20px;}
+.q-icon{font-size:2.2rem;margin-bottom:16px;display:block;}
+.q-text{font-family:'Noto Serif JP',serif;font-size:1.2rem;font-weight:600;line-height:1.7;color:var(--ink);}
+.q-note{margin-top:14px;font-size:.84rem;color:var(--muted);}
+.cmp-intro{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;margin-bottom:20px;font-size:.88rem;color:var(--muted);line-height:1.7;}
+.cmp-intro strong{color:var(--ink);}
+.cmp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.cmp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;}
+.cmp-card.va{border-top:3px solid var(--sage);}
+.cmp-card.vb{border-top:3px solid var(--gold);}
+.cmp-card.vc{border-top:3px solid var(--terra);}
+.cmp-lbl{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;margin-bottom:10px;}
+.cmp-card.va .cmp-lbl{color:var(--sage);}
+.cmp-card.vb .cmp-lbl{color:var(--gold);}
+.cmp-card.vc .cmp-lbl{color:var(--terra);}
+.cmp-text{font-size:.9rem;line-height:1.85;color:var(--ink);}
+.obs-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:16px;}
+.obs-hd{background:var(--bg);padding:11px 18px;font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--light);border-bottom:1px solid var(--border);}
+table.obs{width:100%;border-collapse:collapse;}
+table.obs th{background:var(--bg);padding:10px 14px;font-size:.78rem;color:var(--muted);font-weight:500;text-align:left;border-bottom:1px solid var(--border);}
+table.obs td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;font-size:.87rem;}
+table.obs tr:last-child td{border-bottom:none;}
+table.obs td:first-child{color:var(--muted);font-size:.82rem;white-space:nowrap;width:120px;}
+table.obs input,table.obs textarea{width:100%;border:1px solid var(--border);border-radius:5px;padding:7px 10px;font-family:'Noto Sans JP',sans-serif;font-size:.85rem;color:var(--ink);background:var(--bg);resize:vertical;line-height:1.6;}
+table.obs input:focus,table.obs textarea:focus{outline:none;border-color:var(--acc);}
+.src-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:26px 30px;margin-bottom:20px;}
+.src-lbl{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--light);margin-bottom:12px;}
+.src-text{font-size:.92rem;line-height:2.0;color:var(--ink);}
+.src-chars{margin-top:10px;font-family:'Jost',sans-serif;font-size:.72rem;color:var(--light);}
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.sum-inp{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;}
+.sum-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.sum-head span:first-child{font-size:.9rem;font-weight:700;}
+.sum-ctr{font-family:'Jost',sans-serif;font-size:.78rem;color:var(--muted);}
+.sum-ctr.over{color:var(--terra);}
+.sum-inp textarea{width:100%;border:1px solid var(--border);border-radius:5px;padding:9px 12px;font-family:'Noto Sans JP',sans-serif;font-size:.88rem;line-height:1.7;color:var(--ink);background:var(--bg);resize:vertical;min-height:80px;}
+.sum-inp textarea:focus{outline:none;border-color:var(--acc);}
+.sum-cmp-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;}
+.sum-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.sum-row-hd{background:var(--bg);padding:9px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+.sum-row-lbl{font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.sum-badge{font-family:'Jost',sans-serif;font-size:.68rem;padding:2px 9px;border-radius:100px;font-weight:500;}
+.sum-badge.student{background:var(--sage-l);color:var(--sage);}
+.sum-badge.ai{background:var(--slate-l);color:var(--slate);}
+.sum-row-text{padding:14px 18px;font-size:.9rem;line-height:1.8;}
+.eval-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:16px;}
+table.eval{width:100%;border-collapse:collapse;}
+table.eval th{background:var(--bg);padding:10px 14px;font-size:.78rem;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);text-align:center;}
+table.eval th:first-child{text-align:left;}
+table.eval td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:.84rem;text-align:center;}
+table.eval td:first-child{text-align:left;}
+table.eval tr:last-child td{border-bottom:none;}
+table.eval input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.lchip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:100px;font-size:.8rem;font-weight:500;border:1.5px solid transparent;}
+.lchip .dot{width:7px;height:7px;border-radius:50%;}
+.cls-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-bottom:20px;}
+.cls-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:16px 17px;transition:border-color .2s;}
+.cls-card.uncert{border-style:dashed;}
+.cls-post{font-size:.9rem;line-height:1.72;margin-bottom:12px;color:var(--ink);}
+.cls-btns{display:flex;flex-wrap:wrap;gap:6px;}
+.lbtn{font-size:.75rem;padding:3px 11px;border-radius:100px;border:1.5px solid var(--border);background:none;cursor:pointer;color:var(--muted);font-family:'Noto Sans JP',sans-serif;transition:all .15s;}
+.lbtn:hover{opacity:.85;}
+.lbtn.sel{color:#fff;border-color:transparent;}
+.lbtn[data-l="情報提供"].sel{background:var(--slate);}
+.lbtn[data-l="意見"].sel{background:var(--gold);}
+.lbtn[data-l="宣伝"].sel{background:var(--terra);}
+.lbtn[data-l="感想"].sel{background:var(--sage);}
+.lbtn[data-l="質問"].sel{background:var(--plum);}
+.unc-btn{font-size:.72rem;padding:3px 10px;border-radius:100px;border:1.5px dashed var(--border);background:none;cursor:pointer;color:var(--light);font-family:'Noto Sans JP',sans-serif;transition:all .15s;}
+.unc-btn.on{border-color:var(--gold);color:var(--gold);}
+.sent-list{display:flex;flex-direction:column;gap:13px;margin-bottom:20px;}
+.sent-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:17px 19px;}
+.sent-n{font-family:'Jost',sans-serif;font-size:.7rem;color:var(--light);margin-bottom:5px;}
+.sent-txt{font-size:.95rem;line-height:1.72;margin-bottom:12px;color:var(--ink);}
+.sent-btns{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.sbtn{font-size:.78rem;padding:4px 12px;border-radius:100px;border:1.5px solid var(--border);background:none;cursor:pointer;font-family:'Noto Sans JP',sans-serif;color:var(--muted);transition:all .15s;}
+.sbtn:hover{opacity:.8;}
+.sbtn.sel{color:#fff;border-color:transparent;}
+.sbtn[data-e="喜び"].sel{background:var(--sage);}
+.sbtn[data-e="安堵"].sel{background:#85b09a;}
+.sbtn[data-e="驚き"].sel{background:var(--slate);}
+.sbtn[data-e="不安"].sel{background:#9a8ab0;}
+.sbtn[data-e="落胆"].sel{background:var(--gold);}
+.sbtn[data-e="不満"].sel{background:#c4976a;}
+.sbtn[data-e="怒り"].sel{background:var(--terra);}
+.sbtn[data-e="皮肉"].sel{background:#7a8a9e;}
+.sbtn[data-e="複合"].sel{background:var(--plum);}
+.sbtn[data-e="判断困難"].sel{background:var(--light);}
+.sent-note-inp{width:100%;border:1px solid var(--border);border-radius:5px;padding:6px 10px;font-family:'Noto Sans JP',sans-serif;font-size:.82rem;background:var(--bg);color:var(--ink);}
+.sent-note-inp:focus{outline:none;border-color:var(--acc);}
+.sent-note-inp::placeholder{color:var(--light);}
+.disc-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--acc);border-radius:0 var(--r) var(--r) 0;padding:24px 26px;margin-bottom:16px;}
+.disc-card h4{font-family:'Noto Serif JP',serif;font-size:1.03rem;font-weight:600;margin-bottom:10px;}
+.disc-card p,.disc-card ul{font-size:.87rem;color:var(--muted);line-height:1.7;}
+.disc-card ul{list-style:none;display:flex;flex-direction:column;gap:4px;margin-top:8px;}
+.disc-card li{padding-left:16px;position:relative;}
+.disc-card li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:.78rem;top:2px;}
+.note-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;}
+.note-hd{background:var(--bg);padding:9px 18px;font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--light);border-bottom:1px solid var(--border);}
+.note-box textarea{width:100%;border:none;padding:14px 18px;font-family:'Noto Sans JP',sans-serif;font-size:.9rem;line-height:1.8;color:var(--ink);background:var(--surface);resize:vertical;min-height:110px;}
+.note-box textarea:focus{outline:none;}
+.ref-form{display:flex;flex-direction:column;gap:16px;}
+.ref-q{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.ref-q label{display:block;padding:13px 18px 0;font-size:.88rem;font-weight:500;}
+.ref-q textarea{display:block;width:100%;border:none;border-top:1px solid var(--border);margin-top:10px;padding:12px 18px;font-family:'Noto Sans JP',sans-serif;font-size:.88rem;line-height:1.7;background:var(--surface);resize:vertical;min-height:68px;color:var(--ink);}
+.ref-q textarea:focus{outline:none;}
+.ai-cmp-note{background:var(--slate-l);border:1px solid #c5d5e5;border-radius:var(--r);padding:18px 22px;margin-bottom:20px;font-size:.88rem;color:#4a6070;line-height:1.7;}
+.ai-sent-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.ai-sent-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;}
+.ai-sent-row .asr-txt{font-size:.9rem;line-height:1.7;margin-bottom:10px;}
+.ai-sent-row .asr-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.asr-col{border-radius:6px;padding:10px 12px;font-size:.82rem;line-height:1.65;}
+.asr-col.human{background:var(--sage-l);}
+.asr-col.ai{background:var(--slate-l);}
+.asr-col-lbl{font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-bottom:4px;}
+.asr-col.human .asr-col-lbl{color:var(--sage);}
+.asr-col.ai .asr-col-lbl{color:var(--slate);}
+.lb-form{display:flex;flex-direction:column;gap:0;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:680px){
+  .cmp-grid,.sum-grid,.dp-compare{grid-template-columns:1fr;}
+  .cls-grid{grid-template-columns:1fr;}
+  .step-wrap,.dp-wrap{padding:28px 16px 90px;}
+  .home{padding:44px 16px 80px;}
+  .asr-compare{grid-template-columns:1fr!important;}
+  .dp-cards{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<!-- TERMS PANEL (slides from left) -->
+<div class="terms-panel" id="terms-panel">
+  <div class="tp-nav">
+    <button class="back-btn" onclick="closeTerms()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      閉じる
+    </button>
+    <span class="tp-session-badge" id="tp-badge"></span>
+    <span class="tp-title">用語リスト</span>
+  </div>
+  <div class="tp-body">
+    <h2 class="tp-heading" id="tp-heading"></h2>
+    <p class="tp-sub" id="tp-sub"></p>
+    <div class="term-search-wrap">
+      <svg class="term-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="term-search" id="term-search" type="text" placeholder="用語を検索…" oninput="filterTerms(this.value)">
+    </div>
+    <div class="term-count" id="term-count"></div>
+    <div class="terms-list" id="terms-list"></div>
+  </div>
+</div>
+
+<!-- DETAIL PANEL (shared, populated dynamically) -->
+<div class="detail-panel" id="detail-panel">
+  <div class="dp-nav">
+    <button class="back-btn" onclick="closeDetail()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      戻る
+    </button>
+    <span class="dp-nav-title" id="dp-nav-title"></span>
+  </div>
+  <div class="dp-wrap" id="dp-content"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// TERMS DATA
+// ══════════════════════════════════════════
+const TERMS = [
+  // ── Session 6 ──────────────────────────
+  { si:0,
+    terms:[
+      { ja:'生成AI', reading:'せいせいAI', en:'Generative AI',
+        cats:['技術'],
+        def:'テキスト・画像・音声などを新たに「生成」するAIの総称。大量のデータを学習し、指示（プロンプト）に応じて確率的に出力を作り出す。ChatGPT・Gemini・Midjourney などが代表例。',
+        ex:'「生成AIとは何か」を中学生向け・大学生向けに書き分けると、語彙や例の出し方が変わる。' },
+
+      { ja:'アルゴリズム', kana:true, loan:'algorithm', en:'Algorithm',
+        ety:'9世紀のアラビアの数学者 al-Khwārizmī（フワーリズミー）の名がラテン語化されて "algorismus"、のちに "algorithm" に定着。「算法・計算手順」の意。英語からの直接借用語。',
+        cats:['技術'],
+        def:'問題を解くための手順・処理の流れを形式化したもの。AIのレコメンドや検索順位の決定など、どのように判断・選択するかを定義したルール群。',
+        ex:'SNSのタイムラインに何を表示するかは、各プラットフォームのアルゴリズムが決定している。' },
+
+      { ja:'学習データ', reading:'がくしゅうデータ', en:'Training Data',
+        cats:['技術','データ'],
+        def:'AIのモデルを訓練するために使うデータの集合。このデータの内容・偏り・量がAIの出力の質と傾向を大きく左右する。',
+        ex:'翻訳AIが英語→日本語に強い理由は、英日の学習データが豊富だからである。' },
+
+      { ja:'バイアス', kana:true, loan:'bias', en:'Bias',
+        ety:'ラテン語 "biaxius"（斜め・傾いた）が古フランス語 "biais" を経て英語 "bias" に。布地を斜めに裁断することを指す言葉が語源で、そこから「偏り・傾向」の意に転じた。英語からの直接借用語。',
+        cats:['概念','社会'],
+        def:'情報・判断・データに含まれる偏り。AIのバイアスは、学習データの偏り・ラベル設計の誤り・開発者の判断などから生まれる。意図せず生まれる場合も多い。',
+        ex:'採用AIが女性を低く評価してしまった事例（Amazon, 2018年）は、学習データのバイアスが原因とされる。' },
+
+      { ja:'フレーミング', kana:true, loan:'framing', en:'Framing',
+        ety:'英語 "frame"（枠・骨格）の動名詞形。社会学者ゴフマン（1974年）が「フレーム分析」として概念化し、メディア研究・政治コミュニケーション研究に広まった。英語からの直接借用語。',
+        cats:['概念','言語'],
+        def:'情報をどの「枠組み」で提示するかによって、受け手の解釈や印象を方向づける手法・現象。同じ事実でも、フレームが違えば意味が変わる。',
+        ex:'「AI導入で効率化」vs「AI導入で雇用が減少」は、同じ出来事を異なるフレームで伝えている。' },
+
+      { ja:'表現', reading:'ひょうげん', en:'Representation / Expression',
+        cats:['概念','言語'],
+        def:'何かを語・文・画像などを使って表すこと。どの語を選ぶか・どう並べるかによって、同じ内容でも受け手への影響が変わる。',
+        ex:'「移民」と「外国人労働者」と「難民」は、指す人が重なる場合でも、語が呼び起こすイメージが異なる。' },
+
+      { ja:'文脈', reading:'ぶんみゃく', en:'Context',
+        cats:['概念','言語'],
+        def:'ある表現・出来事の前後関係・状況・背景。同じ語でも文脈によって意味や感情が変わる。AIは文脈の把握が苦手な場合がある。',
+        ex:'「さすがですね」は褒め言葉にも皮肉にもなる。判断には文脈が必要。' },
+
+      { ja:'受け手', reading:'うけて', en:'Audience / Recipient',
+        cats:['概念'],
+        def:'テキストや情報が向けられている相手。想定読者・視聴者・利用者。どんな受け手を想定するかで、語彙・例・強調点が変わる。',
+        ex:'「生成AIとは何か」の説明は、中学生向けと企業向けでは全く異なる言い方になる。' },
+
+      { ja:'中立性', reading:'ちゅうりつせい', en:'Neutrality',
+        cats:['概念','社会'],
+        def:'特定の立場・価値観に偏らないこと。AIは「中立」に見えても、学習データや設計に価値判断が含まれるため、完全な中立は難しい。',
+        ex:'検索エンジンが上位に表示するページの選定も、アルゴリズムに基づく判断であり、完全に中立ではない。' },
+
+      { ja:'フィルターバブル', kana:true, loan:'filter bubble', en:'Filter Bubble',
+        ety:'2010年、米国のネット活動家イーライ・パリサーが著書で命名・普及させた英語の概念語。"filter"（フィルター・選別）＋"bubble"（泡・閉じた空間）の複合語。英語起源で和製英語ではない。',
+        cats:['社会','技術'],
+        def:'レコメンドアルゴリズムにより、ユーザーが自分の好みや意見に合う情報だけに囲まれるようになる現象。多様な視点に触れる機会が減る。',
+        ex:'政治的な関心を持つユーザーのSNSタイムラインは、同じ立場の意見ばかりになりやすい。' },
+    ]
+  },
+
+  // ── Session 7 ──────────────────────────
+  { si:1,
+    terms:[
+      { ja:'要約', reading:'ようやく', en:'Summarization',
+        cats:['技術','言語'],
+        def:'元のテキストの主要な情報を保ちながら、長さを短くすること。単なる短縮ではなく、重要情報の選択・再構成・筋道の維持が必要。',
+        ex:'400字の記事を50字にまとめると、どの情報が「重要」かの判断が問われる。' },
+
+      { ja:'主旨', reading:'しゅし', en:'Main Point / Gist',
+        cats:['言語'],
+        def:'テキスト全体が最も伝えようとしていること・中心的な主張。要約では主旨を落とさないことが最優先。',
+        ex:'「具体例だけ残って主旨が消えた要約」は、内容があっても要約として失敗している。' },
+
+      { ja:'核心', reading:'かくしん', en:'Core / Essence',
+        cats:['言語'],
+        def:'文章の中で最も本質的・不可欠な部分。主旨に近い概念で、これを失うと文章の意味が変質してしまう。',
+        ex:'「AIは便利だが批判的評価が必要」という主張の核心は「批判的評価」の部分にある。' },
+
+      { ja:'ニュアンス', kana:true, loan:'nuance', en:'Nuance',
+        ety:'フランス語 "nuance" から直接借用。もとはラテン語 "nubes"（雲・色合い）に由来し、色の微妙なグラデーションを指す言葉だった。英語・日本語ともにフランス語からの借用語。',
+        cats:['言語'],
+        def:'言葉の意味の微妙な差異・言外の含み。要約では断定しすぎたり弱めすぎたりすることでニュアンスが消えやすい。',
+        ex:'「可能性がある」を「〜だ」と断定して要約すると、元の慎重な表現のニュアンスが失われる。' },
+
+      { ja:'プロンプト', kana:true, loan:'prompt', en:'Prompt',
+        ety:'ラテン語 "promptus"（準備された・すぐ使える・即座の）から英語 "prompt" に。本来は「俳優への台詞の提示」を指す演劇用語でもある。AI分野での「指示文」という用法は2020年代に定着。英語からの直接借用語。',
+        cats:['技術'],
+        def:'生成AIへの指示文。「どのように出力するか」を大きく左右する。同じ文章でもプロンプトが変わると、全く異なる要約・文章が出力される。',
+        ex:'「中学生向けに50字で」vs「専門家向けに200字で」では、同じ文章への要約が大きく変わる。' },
+
+      { ja:'情報の取捨選択', reading:'じょうほうのとりしゃせんたく', en:'Selection of Information',
+        cats:['概念'],
+        def:'何の情報を残し、何を省くかを判断すること。要約の本質的な作業。「重要」の基準は書き手・AIによって異なる。',
+        ex:'条件・留保・反論は取捨選択で削られやすいが、削ると意味が歪む場合がある。' },
+
+      { ja:'再構成', reading:'さいこうせい', en:'Reconstruction',
+        cats:['概念','言語'],
+        def:'元の情報を分解し、新たな形に組み立て直すこと。要約は「圧縮」ではなく「再構成」であり、書き手の判断が介在する。',
+        ex:'「要約は情報の再構成である」という観点から、AIの要約も人間の要約も「中立ではない」と言える。' },
+
+      { ja:'ハルシネーション', kana:true, loan:'hallucination', en:'Hallucination',
+        ety:'ラテン語 "hallucinari"（うろうろ彷徨う・幻を見る）から英語 "hallucination"（幻覚）に。医学・心理学用語として使われていたが、AI分野での「誤った生成」という意味での用法は2020年代以降に急速に広まった。英語からの直接借用語。',
+        cats:['技術'],
+        def:'AIが事実に基づかない・元の文章に存在しない内容を「もっともらしく」生成してしまう現象。要約でも発生する可能性がある。',
+        ex:'AIが要約に「原文に書いていない情報」を追加してしまうと、ハルシネーションが起きている。' },
+
+      { ja:'圧縮率', reading:'あっしゅくりつ', en:'Compression Ratio',
+        cats:['技術','言語'],
+        def:'元のテキストに対して要約がどれくらい短くなっているかの割合。圧縮率が高いほど情報の取捨選択の密度が上がる。',
+        ex:'400字の文を50字に要約すると圧縮率は約87.5%。何が残るかの判断がより厳しくなる。' },
+
+      { ja:'出典', reading:'しゅってん', en:'Source / Citation',
+        cats:['概念'],
+        def:'情報がどこから来たかの出所・参照元。AIの要約では出典が示されない場合が多く、元の文章との照合が必要。',
+        ex:'「AI要約を使う際は出典を確認する」ことで、誤りやニュアンスの変化を発見できる。' },
+    ]
+  },
+
+  // ── Session 8 ──────────────────────────
+  { si:2,
+    terms:[
+      { ja:'分類', reading:'ぶんるい', en:'Classification',
+        cats:['技術','概念'],
+        def:'共通の性質に基づいてデータをグループに分ける操作。分類の目的・基準・ラベル設計によって結果が変わる。AIの中核的タスクの一つ。',
+        ex:'スパム判定・感情判定・画像認識はいずれも「分類」タスクである。' },
+
+      { ja:'ラベル / ラベリング', kana:true, loan:'label / labeling', en:'Label / Labeling',
+        ety:'古フランス語 "lambel"（布の飾り帯）、さらにゲルマン語系の語が起源とされ、英語 "label"（貼り付けるもの）に。動詞 "labeling" はそこからの派生。英語からの直接借用語。',
+        cats:['技術','データ'],
+        def:'各データが属するカテゴリにつける名前（ラベル）と、それを付与する作業（ラベリング）。AIの学習精度はラベルの質に大きく依存する。',
+        ex:'「ポジティブ」「ネガティブ」「中立」というラベルを文に付けていく作業がラベリング。' },
+
+      { ja:'アノテーション', kana:true, loan:'annotation', en:'Annotation',
+        ety:'ラテン語 "annotatio"（注釈を付ける）から。"ad-"（〜に向けて）＋"notare"（印をつける）の複合。学術文書への注釈という古くからの意味が、データへの付加情報という現代的な意味に拡張された。英語からの直接借用語。',
+        cats:['技術','データ'],
+        def:'データにラベル・タグ・メモなどの付加情報を与える作業の総称。機械学習の学習データ作成において不可欠なプロセス。',
+        ex:'クラウドソーシングで多数の人がアノテーション作業を行い、大規模な学習データが作られる。' },
+
+      { ja:'カテゴリ', kana:true, loan:'category', en:'Category',
+        ety:'古代ギリシャ語 "κατηγορία"（述語・告発・陳述）から。哲学者アリストテレスが「存在の分類」のために用い、「カテゴリー論」として体系化した。英語 "category" を経て日本語に。',
+        cats:['概念','データ'],
+        def:'分類における各グループの名称・種類。カテゴリの設計（粒度・網羅性・排他性）がラベリングの品質を左右する。',
+        ex:'「感情カテゴリ」を「喜び・怒り・悲しみ」にするか「ポジティブ・ネガティブ」にするかで分析結果が変わる。' },
+
+      { ja:'機械学習', reading:'きかいがくしゅう', en:'Machine Learning',
+        cats:['技術'],
+        def:'大量のデータからパターンを自動的に学習し、予測・分類などを行うAIの手法。ラベル付きデータを使う「教師あり学習」が代表的。',
+        ex:'スパムフィルターは大量のスパム・非スパムのラベル付きメールを学習して作られる。' },
+
+      { ja:'訓練データ', reading:'くんれんデータ', en:'Training Data',
+        cats:['技術','データ'],
+        def:'機械学習モデルを学習させるために使うラベル付きデータの集合。「学習データ」とも呼ぶ。量と質の両方が精度に影響する。',
+        ex:'訓練データが少ない・偏っている場合、モデルは特定のパターンしか学習できない。' },
+
+      { ja:'境界例 / エッジケース', reading:'きょうかいれい',
+        ety:'「境界例」は日本語由来。"エッジケース" は英語 "edge case" の直接借用で、"edge"（端・周縁）にある例外的ケースの意。',
+        cats:['概念','データ'],
+        def:'複数のカテゴリに当てはまる・どのカテゴリにも当てはまらない、分類が難しい事例。境界例の扱いを事前にルール化しておくことが重要。',
+        ex:'「このカフェ最高！でも席が少ないのが難点」は、感想にも意見にも当てはまる境界例。' },
+
+      { ja:'アノテーター', kana:true, loan:'annotator', en:'Annotator',
+        ety:'"annotate"（注釈をつける）に動作主を表す接尾辞 "-or" を付けた英語の派生語。「注釈者・ラベル付け作業者」の意。英語からの直接借用語。',
+        cats:['技術','データ'],
+        def:'データにラベルを付ける作業を行う人。アノテーターの判断基準・スキル・文化的背景によって、同じデータへのラベルが変わることがある。',
+        ex:'日本語の文をアノテートする場合、日本語ネイティブと非ネイティブでは判断が異なる場合がある。' },
+
+      { ja:'アノテーター間一致率', reading:'かんいっちりつ',
+        ety:'「アノテーター」は英語 "annotator" からの借用語（→アノテーター参照）。「間一致率」は日本語で、英語では "inter-annotator agreement" と呼ぶ。',
+        cats:['技術','データ'],
+        def:'複数のアノテーターが同じデータに対してどれくらい一致したラベルを付けたかの指標。一致率が低い場合、ラベル定義の見直しが必要。',
+        ex:'「皮肉」ラベルはアノテーター間一致率が低くなりやすい。文化的背景で判断が変わるため。' },
+
+      { ja:'マルチラベル', kana:true, loan:'multi-label', en:'Multi-Label',
+        ety:'英語 "multi-"（複数・多数）＋"label"（ラベル）の複合語。機械学習の技術用語として使われる英語表現の直接借用語。',
+        cats:['技術','データ'],
+        def:'1つのデータに複数のラベルが当てはまること、またはそれを許容する分類設計。1つに絞る「シングルラベル」と対比される。',
+        ex:'「新機能搭載！今週末まで50%オフ」は「情報提供」でも「宣伝」でもある → マルチラベルの例。' },
+
+      { ja:'正解ラベル', reading:'せいかいラベル', en:'Ground Truth Label',
+        cats:['技術','データ'],
+        def:'機械学習における「正解」として用いるラベル。人間が付与したアノテーションが正解として扱われるが、人間の判断も完全ではない。',
+        ex:'「正解ラベル」も人間が設計・付与したものであり、バイアスや誤りを含む可能性がある。' },
+
+      { ja:'特徴量', reading:'とくちょうりょう', en:'Feature',
+        cats:['技術'],
+        def:'機械学習で分類・予測に使うデータの属性値。テキスト分類では語の出現頻度・位置・品詞などが特徴量になる。',
+        ex:'スパム判定では「無料」「今すぐ」などの語の出現が特徴量として使われる。' },
+    ]
+  },
+
+  // ── Session 9 ──────────────────────────
+  { si:3,
+    terms:[
+      { ja:'感情分析', reading:'かんじょうぶんせき', en:'Sentiment Analysis',
+        cats:['技術'],
+        def:'テキストに含まれる書き手の感情・意見・態度を自動的に判定する技術。NLPの代表的な応用分野の一つ。オピニオンマイニングとも呼ばれる。',
+        ex:'商品レビューを「ポジティブ / ネガティブ / 中立」に自動分類するシステムが感情分析の典型例。' },
+
+      { ja:'自然言語処理（NLP）', reading:'しぜんげんごしょり', en:'Natural Language Processing (NLP)',
+        cats:['技術'],
+        def:'人間が日常的に使う言語（自然言語）をコンピュータで処理する技術の総称。翻訳・要約・感情分析・質問応答などが含まれる。',
+        ex:'感情分析・要約・分類はいずれもNLPのタスクとして研究・実装されている。' },
+
+      { ja:'ポジティブ / ネガティブ', kana:true, loan:'positive / negative', en:'Positive / Negative',
+        ety:'"positive" はラテン語 "positivus"（置かれた・確定した・明示的な）から、"negative" はラテン語 "negativus"（否定する）から。それぞれ英語を経て日本語に借用。心理学・ビジネス用語として広まった後、感情分析の技術用語にも定着。',
+        cats:['概念'],
+        def:'感情分析における最も基本的な2値分類。好意的な感情をポジティブ、否定的な感情をネガティブとする。実際には「中立」を加えた3値分類が多い。',
+        ex:'「最高だった！」はポジティブ、「最悪だった」はネガティブとして明確に判定しやすい。' },
+
+      { ja:'皮肉 / 反語', reading:'ひにく / はんご', en:'Irony / Sarcasm',
+        cats:['言語'],
+        def:'表面上はポジティブな語・表現を使いながら、実際の意味はネガティブ（またはその逆）な表現。AIが最も苦手とするパターンの一つ。',
+        ex:'「さすが日本の電車、また遅れましたね」は「さすが」というポジ語を使った皮肉表現。' },
+
+      { ja:'文脈依存', reading:'ぶんみゃくいぞん', en:'Context-Dependent',
+        cats:['概念','言語'],
+        def:'語や文の意味・感情が、それ単体では決まらず前後の文脈・状況に依存すること。感情分析が難しい最大の要因の一つ。',
+        ex:'「やっと終わった」は、辛い作業後なら安堵、楽しいイベント後なら名残惜しさを表す場合がある。' },
+
+      { ja:'複数感情', reading:'ふくすうかんじょう', en:'Multi-Emotion',
+        cats:['概念'],
+        def:'一つのテキストに複数の異なる感情が共存している状態。単純な2値・3値分類では表現しきれない。',
+        ex:'「合格した。でもあのミスをしなければもっとよかった」には喜びと後悔が共存している。' },
+
+      { ja:'文化差', reading:'ぶんかさ', en:'Cultural Difference',
+        cats:['概念','社会'],
+        def:'感情の表現スタイルや解釈が文化・言語によって異なること。英語ベースで学習したモデルは日本語の婉曲表現を正確に判定できない場合がある。',
+        ex:'日本語の謙遜表現「まだまだです」は、英語圏では否定的に判定されやすい。' },
+
+      { ja:'辞書ベース方式', reading:'じしょベース', en:'Dictionary-Based Method',
+        ety:'「辞書」は和語。「ベース」は英語 "base"（基盤）からの借用語。「ベース」単体は和製英語的な使われ方もあるが、ここでの「辞書ベース方式」は英語 "dictionary-based method" の意訳・直訳表現に近い。',
+        cats:['技術'],
+        def:'ポジティブ語・ネガティブ語のリストを用意し、語の出現頻度から感情を判定する手法。シンプルで高速だが、文脈・皮肉・複合感情に弱い。',
+        ex:'「最高」が辞書にポジティブ語として登録されていれば、どんな文脈でもポジティブと判定する。' },
+
+      { ja:'婉曲表現', reading:'えんきょくひょうげん', en:'Euphemism / Indirect Expression',
+        cats:['言語'],
+        def:'直接的な表現を避け、遠回しに表現すること。日本語に特に多く見られ、感情分析の精度を下げる要因になる。',
+        ex:'「結構です」は文脈によってOK（肯定）にも断り（否定）にもなる典型的な婉曲表現。' },
+
+      { ja:'アスペクト別感情分析', reading:'べつかんじょうぶんせき', en:'Aspect-Based Sentiment Analysis',
+        ety:'「アスペクト」は英語 "aspect"（側面・観点）からの借用語。ラテン語 "aspectus"（見ること・外観）に由来。言語学では動詞の「相」の意でも使う。',
+        cats:['技術'],
+        def:'文章の中の特定の側面（アスペクト）ごとに感情を判定する手法。「料理はポジティブ、サービスはネガティブ」のように細かく分析できる。',
+        ex:'レストランレビューで「料理は最高だが、接客は最悪」という場合、全体をポジ・ネガで判定すると情報が失われる。' },
+
+      { ja:'オピニオンマイニング', kana:true, en:'Opinion Mining',
+        ety:'英語 "opinion"（意見・見解、ラテン語 "opinio" 由来）＋"mining"（採掘・探索）の複合語。「データマイニング（data mining）」と同じ "mining" の比喩を使う。大量のテキストから意見を「掘り出す」イメージ。英語起源の技術用語で和製英語ではない。',
+        cats:['技術'],
+        def:'テキストから意見・評価・感情・姿勢などを自動抽出・分析する技術。感情分析とほぼ同義で使われることが多い。',
+        ex:'企業が大量の消費者レビューからブランドへの意見を自動収集する際にオピニオンマイニングが使われる。' },
+
+      { ja:'ハルシネーション（感情分析での文脈）', reading:'ハルシネーション', en:'Hallucination',
+        cats:['技術'],
+        def:'AIが文章に存在しない感情・意図を「読み取った」かのように誤判定する現象。特に文脈が不十分な短文で発生しやすい。',
+        ex:'「まあ、よかったですね」を単純にポジティブと判定するのは、文脈を無視した誤判定（ハルシネーション的現象）といえる。' },
+    ]
+  },
+];
+
+// terms panel state
+let termsSessionIdx = -1;
+
+function openTerms(si){
+  termsSessionIdx = si;
+  const s = SESSIONS[si];
+  const tdata = TERMS[si];
+  const acc = [s.color,'var(--sage-l)'];
+  const accL = ['var(--sage-l)','var(--slate-l)','var(--terra-l)','var(--plum-l)'][si];
+  const accC = ['var(--sage)','var(--gold)','var(--terra)','var(--plum)'][si];
+
+  const panel = document.getElementById('terms-panel');
+  panel.style.setProperty('--tp-acc', accC);
+  panel.style.setProperty('--tp-acc-l', accL);
+
+  const badge = document.getElementById('tp-badge');
+  badge.textContent = `第${s.num}回`;
+  badge.style.background = accL;
+  badge.style.color = accC;
+
+  document.getElementById('tp-heading').textContent = s.title + ' — 用語リスト';
+  document.getElementById('tp-sub').textContent = `この授業で登場する重要語 ${tdata.terms.length}語`;
+  document.getElementById('term-search').value = '';
+
+  const list = document.getElementById('terms-list');
+  list.innerHTML = tdata.terms.map((t,i)=>`
+    <div class="term-card" id="term-${i}" data-ja="${t.ja}" data-en="${t.en.toLowerCase()}" data-def="${t.def}">
+      <div class="term-header">
+        <div style="flex:1">
+          <div class="term-ja">${t.ja}<span class="term-slash"> / </span><span class="term-en-inline">${t.en}</span></div>
+          ${t.kana
+            ? `${t.ety ? `<span class="term-ety">${t.ety}</span>` : ''}
+               ${t.wasei ? `<span class="term-wasei-badge">和製英語</span>` : ''}`
+            : `<span class="term-reading">${t.reading}</span>`
+          }
+        </div>
+      </div>
+      <div class="term-cats">${t.cats.map(c=>`<span class="term-cat">${c}</span>`).join('')}</div>
+      <div class="term-def">${t.def}</div>
+      <div class="term-ex"><div class="term-ex-lbl">使用例</div>${t.ex}</div>
+    </div>`).join('');
+
+  updateTermCount(tdata.terms.length, tdata.terms.length);
+  panel.classList.add('open');
+  panel.scrollTop = 0;
+}
+
+function closeTerms(){
+  document.getElementById('terms-panel').classList.remove('open');
+}
+
+function filterTerms(q){
+  if(termsSessionIdx < 0) return;
+  const tdata = TERMS[termsSessionIdx];
+  const query = q.toLowerCase().trim();
+  let shown = 0;
+  tdata.terms.forEach((t,i)=>{
+    const card = document.getElementById('term-'+i);
+    if(!card) return;
+    const match = !query ||
+      t.ja.includes(q) ||
+      t.en.toLowerCase().includes(query) ||
+      t.reading.includes(q) ||
+      t.def.includes(q) ||
+      t.cats.some(c=>c.includes(q));
+    card.classList.toggle('hidden', !match);
+    if(match) shown++;
+  });
+  const empty = document.querySelector('.terms-empty');
+  if(shown===0 && !empty){
+    document.getElementById('terms-list').insertAdjacentHTML('beforeend','<div class="terms-empty">該当する用語が見つかりませんでした</div>');
+  } else if(shown>0 && empty){
+    empty.remove();
+  }
+  updateTermCount(shown, tdata.terms.length);
+}
+
+function updateTermCount(shown, total){
+  const el = document.getElementById('term-count');
+  if(el) el.textContent = shown===total ? `全 ${total} 語` : `${shown} / ${total} 語 表示中`;
+}
+
+// ══════════════════════════════════════════
+// TMDB CONFIG & MOVIE DATA
+// ══════════════════════════════════════════
+const TMDB_IMG = 'https://image.tmdb.org/t/p/w342';
+
+const MOVIE_GENRES = ['ドラマ','アクション','SF・ファンタジー','ホラー・スリラー','アニメーション','コメディ','その他'];
+
+const MOVIES = [
+  { era:'1990年代', films:[
+    { id:128,   title:'もののけ姫',           year:1997, country:'jp', poster:'/mVdz3vlmioKWZaHTGfu99zIuayZ.jpg',
+      synopsis:'室町時代、祟り神に呪われた少年アシタカが旅の途中で出会う、森の神々と人間の文明の激しい対立を描く壮大な物語。' },
+    { id:11239, title:'Shall we ダンス？',     year:1996, country:'jp', poster:'/nbJmWcLjFkczj6TCGkogOROus6o.jpg',
+      synopsis:'平凡なサラリーマンが、ある日目にした窓辺の女性に惹かれ、衝動的に社交ダンス教室の扉を開く。やがて夢中になっていくダンスが、彼の人生を静かに変えていく。' },
+    { id:274,   title:'羊たちの沈黙',          year:1991, country:'us', poster:'/aXDd5Nwwr9M8erJo3C7u0ehoeG5.jpg',
+      synopsis:'FBI訓練生クラリスは、連続猟奇殺人犯を追うため、収監中の天才的殺人鬼レクター博士の知恵を借りることになる。' },
+    { id:329,   title:'ジュラシック・パーク',   year:1993, country:'us', poster:'/1pKyHaQjzhBJk5qMCO0ATrRlXJr.jpg',
+      synopsis:'遺伝子工学で恐竜を復元したテーマパークが開園前の視察中に制御不能となり、研究者たちが巨大な肉食恐竜から逃れようとするサバイバル。' },
+  ]},
+  { era:'2000年代', films:[
+    { id:129,   title:'千と千尋の神隠し',       year:2001, country:'jp', poster:'/8TEs6twIANAc2qiU8m17JO8Ujcx.jpg',
+      synopsis:'引越し途中に迷い込んだ異世界で、両親が豚に変えられてしまった少女・千尋が、神々の世界で働きながら元の世界に戻る方法を探す。' },
+    { id:2517,  title:'誰も知らない',           year:2004, country:'jp', poster:'/gyKXQi9zWRQqa1qbXngUk4W0Skh.jpg',
+      synopsis:'母親に置き去りにされた4人の子どもたちが、東京の片隅のアパートで誰にも知られずにひっそりと生き続ける姿を静かに映し出す。' },
+    { id:98,    title:'グラディエーター',        year:2000, country:'us', poster:'/gcXdbLu9aatgLNYCxu3QMATrDoo.jpg',
+      synopsis:'ローマ帝国の将軍が謀反により奴隷に落とされ、剣闘士として闘技場を生き抜きながら皇帝への復讐を誓う壮大な復讐劇。' },
+    { id:550,   title:'ファイト・クラブ',        year:1999, country:'us', poster:'/7rNgfppzQsU7Gl6yV3eFxsXOga0.jpg',
+      synopsis:'平凡な生活に虚無感を抱く男が、肉体の痛みに生きる実感を求める謎の男と出会い、秘密の地下格闘クラブを立ち上げる。やがてその活動は予想外の方向へと暴走していく。' },
+  ]},
+  { era:'2010年代', films:[
+    { id:315011, title:'シン・ゴジラ',          year:2016, country:'jp', poster:'/8ulwqKiHxz5uH0g0I1BVeNDTWlo.jpg',
+      synopsis:'東京湾に突如現れた巨大不明生物が次々と進化しながら上陸。未知の脅威に対し、日本政府と自衛隊が官僚的な手続きの壁と闘いながら対処しようとする。' },
+    { id:157336, title:'インターステラー',       year:2014, country:'us', poster:'/rgoNKrN5oEWIpfM6ZSPORbB2NYf.jpg',
+      synopsis:'食糧危機で滅びつつある地球を救うため、元宇宙飛行士の父親が愛する娘と家族を残して宇宙へ旅立ち、時空を超えた使命に挑む。' },
+    { id:419430, title:'ゲット・アウト',         year:2017, country:'us', poster:'/lIiu916nD00DMbpOBxM9LE624YY.jpg',
+      synopsis:'黒人青年が白人の彼女の実家を訪問するが、表面上は友好的な家族の奇妙な言動に次第に恐怖を感じ始める。' },
+    { id:82695,  title:'レ・ミゼラブル',          year:2012, country:'us', poster:'/qVMAL5YudMO3SKIJN8q0onA7T58.jpg',
+      synopsis:'19世紀フランスを舞台に、パンを盗んだために19年間服役した男ジャン・バルジャンが、贖罪と愛を求めて生き抜く波乱の半生を描く壮大なミュージカル。' },
+  ]},
+  { era:'2020年代', films:[
+    { id:758866, title:'ドライブ・マイ・カー',   year:2021, country:'jp', poster:'/6BkE8l4NK4fWw0PLrE9oGY6feuH.jpg',
+      synopsis:'妻を突然失った舞台俳優兼演出家が、ある国際演劇祭で専属ドライバーの若い女性と出会い、長距離ドライブを重ねる中で互いの喪失と向き合っていく。' },
+    { id:976893, title:'PERFECT DAYS',          year:2023, country:'jp', poster:'/dENgZn7CD6GkPvmxaBAsk8eZDnI.jpg',
+      synopsis:'東京でトイレ清掃員として働く平山は、毎日同じルーティンの中に静かな喜びを見出している。木漏れ日、古い文庫本、カセットテープ——彼の小さくも豊かな日常を映し出す。' },
+    { id:545611, title:'エブリシング・エブリウェア・オール・アット・ワンス', year:2022, country:'us', poster:'/lSBIQml4j0VxpsrR9ruOn3rvJtT.jpg',
+      synopsis:'中年中国系移民女性が、確定申告の修正という日常の中で突如マルチバースの混乱に巻き込まれ、無数の自分の人生と向き合いながら娘との絆を取り戻そうとする。' },
+    { id:872585, title:'オッペンハイマー',        year:2023, country:'us', poster:'/stEuHtfsjd7MYJcVzuAjVyvsXcj.jpg',
+      synopsis:'原子爆弾の父と呼ばれるJ・ロバート・オッペンハイマーが、世界を変えた兵器を作り上げた栄光と、その後の聴聞会での苦悩を交差させて描く伝記ドラマ。' },
+  ]},
+];
+
+const movieState = {};
+
+function toggleSyn(id){
+  const el=document.getElementById('syn-'+id);
+  const btn=el.nextElementSibling;
+  if(!el)return;
+  const open=el.classList.toggle('open');
+  btn.textContent=open?'閉じる ▴':'続きを読む ▾';
+}
+
+function setMovieGenre(movieId, genre){
+  if(movieState[movieId] === genre){ delete movieState[movieId]; }
+  else { movieState[movieId] = genre; }
+  document.querySelectorAll(`.mgbtn[data-mid="${movieId}"]`).forEach(b=>{
+    b.classList.toggle('sel', b.dataset.genre === movieState[movieId]);
+  });
+}
+
+function renderMovieStep(){
+  return `
+    <div class="movie-intro">
+      <strong>映画のポスターとあらすじ</strong>を見て、最も当てはまるジャンルを1つ選んでください。
+      迷う作品はそのままにしておき、後でグループで理由を共有しましょう。
+    </div>
+    <div class="movie-legend">
+      ${MOVIE_GENRES.map(g=>`<span class="lchip" style="background:var(--terra-l);color:var(--terra);border-color:#e0bdb0">${g}</span>`).join('')}
+    </div>
+    <div id="movie-cards-wrap">
+      ${MOVIES.map(era=>`
+        <div class="movie-era-group">
+          <div class="movie-era-label">${era.era}</div>
+          <div class="movie-grid">
+            ${era.films.map(film=>`
+              <div class="movie-card">
+                <img class="movie-poster"
+                     src="${TMDB_IMG}${film.poster}"
+                     alt="${film.title}"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="movie-poster-placeholder" style="display:none">🎬</div>
+                <div class="movie-info">
+                  <div class="movie-title-row">
+                    <div class="movie-title">${film.title}</div>
+                    <span class="movie-country ${film.country}">${film.country==='jp'?'邦画':'洋画'}</span>
+                  </div>
+                  <div class="movie-year">${film.year}年</div>
+                  <div class="movie-synopsis" id="syn-${film.id}">${film.synopsis}</div>
+                  <button class="synopsis-toggle" onclick="toggleSyn(${film.id})">続きを読む ▾</button>
+                  <div class="movie-genre-btns">
+                    ${MOVIE_GENRES.map(g=>`<button class="mgbtn${movieState[film.id]===g?' sel':''}" data-mid="${film.id}" data-genre="${g}" onclick="setMovieGenre(${film.id},'${g}')">${g}</button>`).join('')}
+                  </div>
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="disc-card" style="margin-top:20px">
+      <h4>観察のポイント</h4>
+      <ul>
+        <li>ポスターだけ見たときと、あらすじを読んだ後でジャンル判断が変わった作品はあるか</li>
+        <li>邦画と洋画でポスターの「見せ方」にどんな違いがあるか</li>
+        <li>複数ジャンルに当てはまって迷った作品はどれか、その理由は</li>
+        <li>年代によってジャンルの雰囲気はどう変わっているか</li>
+      </ul>
+    </div>`;
+}
+
+
+
+const DETAILS = {
+
+  // ─── SESSION 6 ───────────────────────────
+
+  's6_ai_usage': {
+    category: 'Session 6 — AIと社会・文化',
+    title: 'AIはどこで使われているか',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">身近な利用場面</div>
+        <div class="dp-cards">
+          <div class="dp-card"><span class="dp-card-icon">🌐</span><div class="dp-card-title">翻訳・テキスト生成</div><div class="dp-card-body">DeepL・Google翻訳・ChatGPT・Gemini。文章の下書き・要約・メール文面の作成などにも使われる。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">🎵</span><div class="dp-card-title">レコメンドエンジン</div><div class="dp-card-body">YouTube・Spotify・Amazonの「あなたへのおすすめ」。視聴履歴・購入履歴からパターンを学習する。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">🖼️</span><div class="dp-card-title">画像生成・編集</div><div class="dp-card-body">Midjourney・DALL-E・Adobe Fireflyなど。テキストで指示するだけで画像が生成される。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">💬</span><div class="dp-card-title">チャットボット</div><div class="dp-card-body">カスタマーサポート・FAQ応答・学習支援。24時間対応できることが強み。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">🔍</span><div class="dp-card-title">検索の変化</div><div class="dp-card-body">GoogleのAI Overviewなど、検索結果にAIの要約が表示されるようになっている。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">🏥</span><div class="dp-card-title">医療・法務・教育</div><div class="dp-card-body">診断支援・契約書レビュー・採点補助など、専門職の作業を補助する形で導入が進む。</div></div>
+        </div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">考えてみよう</div>
+        <div class="dp-point-box"><h5>🤔 「気づかずに使っている」AIとは？</h5><p>SNSのタイムライン表示順・地図アプリのルート提案・ネットショッピングの価格変動など、ユーザーが意識しない場面でもAIは使われています。</p></div>
+        <div class="dp-highlight"><p><strong>問いかけ：</strong>今日1日で、あなたはどこかでAIの出力を受け取りましたか？意識せずに「選ばされていた」ものはありますか？</p></div>
+      </div>`
+  },
+
+  's6_bias': {
+    category: 'Session 6 — AIと社会・文化',
+    title: 'AIは「中立」ではないことがある',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">なぜ中立でないのか</div>
+        <div class="dp-para">AIは大量のテキストデータを学習して作られます。そのデータには、人間社会の<strong>偏り・価値観・歴史的な不平等</strong>がそのまま含まれています。</div>
+        <div class="dp-steps">
+          <div class="dp-step"><div class="dp-step-num">1</div><div class="dp-step-content"><h5>学習データの偏り</h5><p>インターネット上のテキストは特定の言語・文化・性別・年代のものが多い。英語のデータが圧倒的に多く、他の言語では精度が落ちることがある。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">2</div><div class="dp-step-content"><h5>表現の偏り</h5><p>「医師」と入力すると男性の画像が多く生成される、「犯罪」関連で特定の人種の顔が多く表示されるなどの問題が報告されている。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">3</div><div class="dp-step-content"><h5>立場・観点の違い</h5><p>同じ歴史的出来事でも、どの国の視点で書かれたデータが多いかによってAIの回答が変わりうる。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">4</div><div class="dp-step-content"><h5>開発者の選択</h5><p>どのデータを使うか、どの回答を「良い」とするかは、開発チームの判断（人間）が関与している。</p></div></div>
+        </div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">具体的な事例</div>
+        <div class="dp-example"><div class="dp-ex-hd">事例① 採用AIの問題（Amazon, 2018年）</div><div class="dp-ex-body">Amazonが開発した採用審査AIが、過去の採用データから学習した結果、女性応募者を低く評価するようになっていた。</div><div class="dp-ex-note">→ 過去10年の採用が男性中心だったことが、そのままバイアスとして学習されてしまった。</div></div>
+        <div class="dp-example"><div class="dp-ex-hd">事例② 顔認識精度の格差</div><div class="dp-ex-body">顔認識AIは、白人男性に対しては99%近い精度を示す一方で、黒人女性に対しては35%程度まで精度が下がるという研究報告がある（MIT, 2018）。</div><div class="dp-ex-note">→ 学習データに含まれる顔の多様性の偏りが原因とされる。</div></div>
+        <div class="dp-example"><div class="dp-ex-hd">事例③ 翻訳の性別バイアス</div><div class="dp-ex-body">「彼は医師です。彼女は看護師です。」を英語→日本語に翻訳させると、性別が逆の文では不自然な訳が生じる場合がある。</div><div class="dp-ex-note">→ 職業に紐づく性別の固定観念が学習データに含まれているため。</div></div>
+      </div>
+      <div class="dp-highlight"><p><strong>重要：</strong>「バイアスがある＝AIが悪い」ではなく、<strong>「誰が・どのデータで・どのように作ったか」</strong>を問うことが大切です。</p></div>`
+  },
+
+  's6_humanistic': {
+    category: 'Session 6 — AIと社会・文化',
+    title: '人文学的な見方 — 4つの問い',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">テキストを読むときの4つの観点</div>
+        <div class="dp-para">人文学（文学・言語学・歴史・社会学など）では、テキストの「内容」だけでなく、<strong>どう書かれているか・誰が書いたか・誰に向けて書かれているか</strong>に注目します。</div>
+        <div class="dp-point-box" style="border-left:3px solid var(--sage)"><h5>🔍 バイアス（偏り）</h5><p>情報は常に何らかの立場や目的のもとで作られます。「この文章は誰の利益になるか」「どんな前提が隠れているか」を問います。</p><ul><li>ニュース記事：どの事実を強調し、何を省略しているか</li><li>教科書：誰の視点から歴史が書かれているか</li></ul></div>
+        <div class="dp-point-box" style="border-left:3px solid var(--gold)"><h5>🖊️ 表現（言葉の選び方）</h5><p>同じ出来事でも、「排除する」と「選別する」では印象が変わります。どの語が選ばれているかに注目します。</p><ul><li>「移民」vs「難民」vs「外国人労働者」</li><li>「AI導入で効率化」vs「AI導入で雇用が減少」</li></ul></div>
+        <div class="dp-point-box" style="border-left:3px solid var(--terra)"><h5>🖼️ フレーム（前提・枠組み）</h5><p>情報が提示される「枠組み」が、私たちの解釈を方向づけます。何を当然のこととして語っているかを見ます。</p><ul><li>「生産性を上げるためにAIを使う」→ 生産性向上が目的という前提</li><li>「AI時代に乗り遅れるな」→ 競争という枠組み</li></ul></div>
+        <div class="dp-point-box" style="border-left:3px solid var(--slate)"><h5>👥 受け手（誰に向けているか）</h5><p>文章はつねに特定の読者を想定して書かれます。その想定読者を意識すると、表現の意図が見えてきます。</p><ul><li>子ども向け：親しみやすい語彙・短い文</li><li>専門家向け：専門用語・データの重視</li><li>消費者向け：感情に訴える表現・行動を促す表現</li></ul></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">4つの問いを使う練習</div>
+        <div class="dp-example"><div class="dp-ex-hd">例文：「最新AIが教師の仕事を変える」</div><div class="dp-ex-body">バイアス → 「変える」は良い変化か悪い変化か？<br>表現 → 「変える」と「奪う」では何が違うか？<br>フレーム → 教育の目的は「効率化」という前提か？<br>受け手 → 誰がこの記事を読むと想定されているか？</div></div>
+      </div>`
+  },
+
+  // ─── SESSION 7 ───────────────────────────
+
+  's7_basics': {
+    category: 'Session 7 — 生成AIと要約',
+    title: '要約の基本3条件',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">要約とは何か</div>
+        <div class="dp-para">要約とは、<strong>元のテキストの内容を保ちながら、読み手にとって必要な情報を整理して短くする</strong>作業です。ただ短くするだけでは要約ではありません。</div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">条件① 重要情報を残す</div>
+        <div class="dp-para">「重要」かどうかの判断が要約の核心です。主題（何についての文章か）と核心（その文章が最も伝えたいこと）を落とさないことが基本です。</div>
+        <div class="dp-compare">
+          <div class="dp-cmp-col good"><div class="dp-cmp-lbl">✓ 適切な例</div><p>元文：「AIの普及により…批判的に読み解く力が重要になる」<br>→ 「AI普及時代に批判的読解力が求められる」</p></div>
+          <div class="dp-cmp-col bad"><div class="dp-cmp-lbl">✗ 問題のある例</div><p>元文：「AIの普及により…批判的に読み解く力が重要になる」<br>→ 「生成AIが便利になった」（核心が消えている）</p></div>
+        </div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">条件② 重複を省く</div>
+        <div class="dp-para">元の文章では同じ内容を言い方を変えて繰り返していることが多いです。要約では、そうした繰り返しを1つにまとめます。</div>
+        <div class="dp-example"><div class="dp-ex-hd">例</div><div class="dp-ex-body">元文：「AIは便利です。生活を豊かにしてくれます。我々の日常をサポートしてくれます。」<br>→ 「AIは生活を豊かにする便利なツールである。」</div></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">条件③ 筋道を保つ</div>
+        <div class="dp-para">元の文章の論理的な流れ（原因→結果、問題→解決策など）を壊さないようにします。重要な語句を拾い集めるだけでは文脈が崩れることがあります。</div>
+        <div class="dp-compare">
+          <div class="dp-cmp-col good"><div class="dp-cmp-lbl">✓ 筋道が保たれている</div><p>「AIの普及で学習スタイルが変化したが、誤りも多いため批判的評価が必要だ」</p></div>
+          <div class="dp-cmp-col bad"><div class="dp-cmp-lbl">✗ 筋道が崩れている</div><p>「AIは普及している。誤りがある。批判的読解が大切。最終判断は人間が行う」（箇条書きの羅列になっている）</p></div>
+        </div>
+      </div>`
+  },
+
+  's7_problems': {
+    category: 'Session 7 — 生成AIと要約',
+    title: '要約でよく起こる問題',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">問題① 大事な情報の欠落</div>
+        <div class="dp-para">何を「重要」とみなすかの判断を誤ると、核心が消えた要約になります。特に「条件・留保・反論」は削られやすい情報です。</div>
+        <div class="dp-example"><div class="dp-ex-hd">元文</div><div class="dp-ex-body">「AIは多くの作業を効率化できる。ただし、個人情報の取り扱いや誤情報のリスクについては十分な注意が必要である。」</div></div>
+        <div class="dp-compare">
+          <div class="dp-cmp-col good"><div class="dp-cmp-lbl">✓ 条件が残っている</div><p>「AIは作業効率化に有効だが、プライバシーと誤情報への注意が必要だ」</p></div>
+          <div class="dp-cmp-col bad"><div class="dp-cmp-lbl">✗ 条件が消えた</div><p>「AIは多くの作業を効率化できる」（注意事項が完全に消えた）</p></div>
+        </div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">問題② ニュアンスの変化</div>
+        <div class="dp-para">元の文章の慎重な言い回し・可能性の表現が、断定的な表現に変わってしまうことがあります。</div>
+        <div class="dp-tbl"><table class="dp-tbl" style="width:100%;border-collapse:collapse">
+          <tr><th style="padding:8px 12px;background:var(--bg);border-bottom:1px solid var(--border);font-size:.82rem">元の表現</th><th style="padding:8px 12px;background:var(--bg);border-bottom:1px solid var(--border);font-size:.82rem">要約での誤変換</th></tr>
+          <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">「〜する可能性がある」</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--terra)">「〜する」</td></tr>
+          <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">「〜と考えられている」</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--terra)">「〜だ」</td></tr>
+          <tr><td style="padding:8px 12px">「一部の研究者は〜と主張する」</td><td style="padding:8px 12px;color:var(--terra)">「〜が明らかになった」</td></tr>
+        </table></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">問題③ 具体例だけ残って主旨が消える</div>
+        <div class="dp-para">本文で使われていた具体的な事例（企業名・数字など）は印象に残りやすいため、要約で残りやすい一方、その事例が「何を示すために使われていたか」が消えることがあります。</div>
+        <div class="dp-example"><div class="dp-ex-hd">例</div><div class="dp-ex-body">元文：「AIのバイアス問題を示す例として、Amazonの採用AIが女性を低く評価した事例がある。このことは、学習データの設計が重要であることを示す。」<br>→ 誤った要約：「Amazonの採用AIで女性が低く評価された」（事例は残ったが、主旨「データ設計の重要性」が消えた）</div></div>
+      </div>`
+  },
+
+  's7_ai_summary': {
+    category: 'Session 7 — 生成AIと要約',
+    title: '生成AIによる要約の特徴',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">生成AIが要約できる仕組み</div>
+        <div class="dp-para">生成AIはテキストの統計的なパターンを学習しています。「このような文章が来たら、このような文章が続きやすい」という確率に基づいて文章を生成します。要約も同じく、<strong>「要約文としてらしい文章」</strong>を生成しています。</div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">生成AIの要約の強み</div>
+        <div class="dp-point-box" style="border-left:3px solid var(--sage)"><h5>◎ スピードと安定性</h5><p>数千字の文章を数秒で要約できる。一定の読みやすさが保たれた文章が出力される。</p></div>
+        <div class="dp-point-box" style="border-left:3px solid var(--sage)"><h5>◎ 指示に応じた変形</h5><p>「小学生向けに」「箇条書きで」「専門家向けに200字で」など、プロンプト（指示）によって出力スタイルを変えられる。</p></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">生成AIの要約の限界</div>
+        <div class="dp-point-box" style="border-left:3px solid var(--terra)"><h5>△ 「重要」の基準はモデルに依存する</h5><p>どの情報を残すかは、学習データのパターンに基づく判断であり、必ずしも読み手の目的と一致しない。</p></div>
+        <div class="dp-point-box" style="border-left:3px solid var(--terra)"><h5>△ プロンプトの違いで要約が変わる</h5><p>同じ文章でも、指示の仕方によって全く異なる要約が生成される。つまり、要約に「唯一の正解」はない。</p></div>
+        <div class="dp-point-box" style="border-left:3px solid var(--terra)"><h5>△ 「もっともらしい誤り」が生まれることがある</h5><p>文章として自然でも、元の文章に書かれていないことが含まれる「ハルシネーション（幻覚）」が起きることがある。</p></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">プロンプトの違いで変わる例</div>
+        <div class="dp-example"><div class="dp-ex-hd">指示A：「この文章を50字で要約してください」</div><div class="dp-ex-body">「生成AIの普及により学習スタイルが変化したが、誤情報リスクから批判的評価力が必要とされている。」</div></div>
+        <div class="dp-example"><div class="dp-ex-hd">指示B：「この文章のポイントを中学生向けにわかりやすく50字でまとめてください」</div><div class="dp-ex-body">「AIはとても便利だけど、間違いもあるから、自分でちゃんと確かめることが大切です。」</div></div>
+        <div class="dp-highlight"><p><strong>気づき：</strong>同じ文章でも、指示が違えば要約の内容・語彙・強調点が変わります。どちらが「正しい」要約かは、<strong>使う目的</strong>によって変わります。</p></div>
+      </div>`
+  },
+
+  // ─── SESSION 8 ───────────────────────────
+
+  's8_what_is_classify': {
+    category: 'Session 8 — 分類とラベリング',
+    title: '分類とは何か',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">分類の基本的な考え方</div>
+        <div class="dp-para">分類とは、<strong>共通の性質に基づいてデータをグループに分ける操作</strong>です。私たちは日常的に分類を行っています（食材を野菜・肉・魚に分ける、書類をテーマ別に分ける）。</div>
+        <div class="dp-point-box"><h5>重要な問い：何のために分けるのか？</h5><p>分類の目的が変わると、基準も変わります。同じ「映画」でも、次の目的では分け方が異なります：</p><ul><li>興行収入を分析したい → ジャンル・制作費・公開時期</li><li>子どもに見せる映画を選びたい → 年齢区分・暴力表現の有無</li><li>語学学習に使いたい → 使用言語・字幕の有無</li></ul></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">分類の手順</div>
+        <div class="dp-steps">
+          <div class="dp-step"><div class="dp-step-num">1</div><div class="dp-step-content"><h5>目的を決める</h5><p>何のために分類するのか。誰が・どんな場面で・どう使うデータなのかを明確にする。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">2</div><div class="dp-step-content"><h5>カテゴリ（ラベル）を設計する</h5><p>何種類に分けるか・カテゴリ名は何にするかを決める。カテゴリは「網羅的（全データが当てはまる）」かつ「排他的（重複しない）」であることが理想。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">3</div><div class="dp-step-content"><h5>境界例のルールを作る</h5><p>どちらにも当てはまるデータをどう扱うか、事前にルールを決めておく。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">4</div><div class="dp-step-content"><h5>分類を実行・評価する</h5><p>実際に分けてみて、うまくいかない例が多いようなら設計を見直す。</p></div></div>
+        </div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">分類の難しさ</div>
+        <div class="dp-example"><div class="dp-ex-hd">例：「トマト」はどのカテゴリか？</div><div class="dp-ex-body">植物学的には「果物（果実）」。料理上の分類では「野菜」。スーパーの売り場では野菜売り場に置かれる。<br>→ 同じモノでも、<strong>目的・文脈・基準</strong>によって分類が変わります。</div></div>
+      </div>`
+  },
+
+  's8_what_is_label': {
+    category: 'Session 8 — 分類とラベリング',
+    title: 'ラベルとは何か',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">ラベルの役割</div>
+        <div class="dp-para">ラベルとは、<strong>各データが属するカテゴリにつける名前（タグ）</strong>です。AIの学習では、データに正解ラベルを付ける作業を「アノテーション（annotation）」といいます。</div>
+        <div class="dp-compare">
+          <div class="dp-cmp-col good"><div class="dp-cmp-lbl">データ例</div><p>「このメールを読んで困惑した。なんとかしてほしい」</p></div>
+          <div class="dp-cmp-col bad"><div class="dp-cmp-lbl">ラベル例</div><p>感情 → ネガティブ<br>カテゴリ → 苦情<br>優先度 → 高</p></div>
+        </div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">AIの学習におけるアノテーション</div>
+        <div class="dp-para">機械学習では「正解ラベル付きデータ」を大量に用意することで、AIが「このデータはこのラベル」というパターンを学習します。</div>
+        <div class="dp-steps">
+          <div class="dp-step"><div class="dp-step-num">1</div><div class="dp-step-content"><h5>データを集める</h5><p>テキスト・画像・音声など、学習に使うデータを収集する。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">2</div><div class="dp-step-content"><h5>人間がラベルを付ける</h5><p>クラウドソーシングや専門スタッフが、1件ずつラベルを付ける作業（アノテーション）を行う。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">3</div><div class="dp-step-content"><h5>AIが学習する</h5><p>ラベル付きデータを使ってモデルを訓練する。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">4</div><div class="dp-step-content"><h5>新しいデータに適用する</h5><p>学習済みモデルが、ラベルのない新しいデータを自動分類する。</p></div></div>
+        </div>
+      </div>
+      <div class="dp-highlight"><p><strong>重要：</strong>AIの分類精度は、アノテーションの<strong>質と量</strong>に大きく依存します。ラベルの定義が曖昧だったり、アノテーターによって判断がブレると、AIの精度も下がります。</p></div>`
+  },
+
+  's8_annotation_importance': {
+    category: 'Session 8 — 分類とラベリング',
+    title: 'AIにおけるラベリングの重要性',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">代表的な応用例</div>
+        <div class="dp-cards">
+          <div class="dp-card"><span class="dp-card-icon">📧</span><div class="dp-card-title">スパム判定</div><div class="dp-card-body">メールを「スパム / 非スパム」に分類。「今すぐ」「無料」「当選」などの語句パターンを学習する。誤判定（重要メールがスパムに入る）も起きる。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">💬</span><div class="dp-card-title">感情判定</div><div class="dp-card-body">テキストを「ポジティブ / ネガティブ / 中立」などに分類。カスタマーレビューの傾向分析やSNSモニタリングに使われる。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">🖼️</span><div class="dp-card-title">画像認識</div><div class="dp-card-body">「犬 / 猫 / その他」「良品 / 不良品」などに分類。医療診断（X線・MRI画像の異常検出）にも応用されている。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">🔒</span><div class="dp-card-title">有害コンテンツ検出</div><div class="dp-card-body">SNSや動画プラットフォームでの有害投稿の自動検出。境界ケースが多く、人間による確認も並行して行われる。</div></div>
+        </div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">ラベル設計が悪いと何が起きるか</div>
+        <div class="dp-example"><div class="dp-ex-hd">事例：感情判定AIの誤分類</div><div class="dp-ex-body">「最悪でした。二度と行きません。でも料理はおいしかったです。」<br>→ ラベルが「全体的なポジティブ／ネガティブ」の2値しかない場合、この文は正確に分類できない。<br>→ 「料理」「サービス」「雰囲気」など<strong>軸を分けたラベル設計</strong>が必要。</div></div>
+        <div class="dp-highlight"><p><strong>まとめ：</strong>ラベル設計は、AIがどのような「問い」に答えられるかを決定します。設計の段階でどれだけ丁寧に考えるかが、AIの有用性を左右します。</p></div>
+      </div>`
+  },
+
+  's8_labeling_difficulty': {
+    category: 'Session 8 — 分類とラベリング',
+    title: 'ラベリングの難しさ',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">難しさ① 曖昧なケース</div>
+        <div class="dp-para">現実のデータには、どのカテゴリにも当てはまるようで、どれにもはっきり当てはまらない「グレーゾーン」のケースが必ず存在します。</div>
+        <div class="dp-example"><div class="dp-ex-hd">例：「このカフェのコーヒー、すごくよかった！また来ます！」</div><div class="dp-ex-body">感想？ → コーヒーへの評価を書いている → ◯<br>情報提供？ → そのカフェの情報が含まれる → △<br>宣伝？ → 良い評価を拡散している → △<br>→ どのラベルが「正解」かは、<strong>目的によって変わる</strong></div></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">難しさ② 複数ラベル</div>
+        <div class="dp-para">1つのデータに複数のラベルが当てはまる「マルチラベル」の問題です。1つに絞るか、複数を許容するかの設計判断が必要です。</div>
+        <div class="dp-example"><div class="dp-ex-hd">例：「新機能搭載！今週末まで50%オフ。詳細はこちら▶」</div><div class="dp-ex-body">情報提供（新機能の告知）+ 宣伝（割引訴求）+ 行動喚起（リンクへの誘導）<br>→ 3つすべてに当てはまる可能性がある</div></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">難しさ③ 人によって判断が異なる</div>
+        <div class="dp-para">同じデータに対して、異なるアノテーターが異なるラベルを付けることがあります。この「アノテーター間一致率」が低いと、AIの学習が不安定になります。</div>
+        <div class="dp-tbl"><table style="width:100%;border-collapse:collapse;font-size:.86rem">
+          <tr><th style="padding:8px 12px;background:var(--bg);border-bottom:1px solid var(--border)">アノテーター</th><th style="padding:8px 12px;background:var(--bg);border-bottom:1px solid var(--border)">「まあ、よかったですね」の判定</th></tr>
+          <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">Aさん</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">ポジティブ</td></tr>
+          <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">Bさん</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">中立</td></tr>
+          <tr><td style="padding:8px 12px">Cさん</td><td style="padding:8px 12px">ネガティブ（皮肉）</td></tr>
+        </table></div>
+        <div class="dp-highlight"><p><strong>対策：</strong>ラベルの定義文と例文を事前に整備し、判断基準を統一する「アノテーションガイドライン」の作成が重要です。</p></div>
+      </div>`
+  },
+
+  // ─── SESSION 9 ───────────────────────────
+
+  's9_what_is_sentiment': {
+    category: 'Session 9 — 感情分析',
+    title: '感情分析とは何か',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">感情分析の定義</div>
+        <div class="dp-para">感情分析（Sentiment Analysis / Opinion Mining）とは、<strong>テキストに含まれる書き手の感情・意見・態度を自動的に判定する技術</strong>です。NLP（自然言語処理）の重要な応用分野の一つです。</div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">分類の粒度</div>
+        <div class="dp-cards">
+          <div class="dp-card"><span class="dp-card-icon">⚖️</span><div class="dp-card-title">3値分類（最も基本）</div><div class="dp-card-body">ポジティブ / ネガティブ / 中立<br>シンプルで扱いやすいが、ニュアンスが失われる。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">🎨</span><div class="dp-card-title">多クラス分類</div><div class="dp-card-body">喜び・怒り・悲しみ・不安・驚き・嫌悪など。Ekmanの基本6感情などの理論に基づくことが多い。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">📊</span><div class="dp-card-title">スコアリング</div><div class="dp-card-body">「ポジティブ度：0〜100」のように数値で表す。段階的な強さを表現できる。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">🎯</span><div class="dp-card-title">アスペクト別分析</div><div class="dp-card-body">「料理はポジティブ、サービスはネガティブ」のように、文章の中の特定の側面ごとに感情を判定する。</div></div>
+        </div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">主な分析手法</div>
+        <div class="dp-steps">
+          <div class="dp-step"><div class="dp-step-num">A</div><div class="dp-step-content"><h5>辞書ベース方式</h5><p>ポジティブ語（嬉しい・最高）・ネガティブ語（最悪・失望）のリストを作り、語の出現頻度から判定する。シンプルだが文脈を無視してしまう。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">B</div><div class="dp-step-content"><h5>機械学習方式</h5><p>感情ラベル付きデータを学習させ、新しいテキストに適用する。文脈の一部を考慮できるが、学習データの質・量に依存する。</p></div></div>
+          <div class="dp-step"><div class="dp-step-num">C</div><div class="dp-step-content"><h5>深層学習方式（最新）</h5><p>BERT・GPTなどの大規模言語モデルを使う。文脈理解が向上しているが、皮肉・婉曲表現はまだ苦手な場合がある。</p></div></div>
+        </div>
+      </div>`
+  },
+
+  's9_use_cases': {
+    category: 'Session 9 — 感情分析',
+    title: '感情分析の活用例',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">ビジネスでの活用</div>
+        <div class="dp-cards">
+          <div class="dp-card"><span class="dp-card-icon">🛒</span><div class="dp-card-title">商品レビュー分析</div><div class="dp-card-body">Amazonなどのレビューを自動集計し、「何が評価され、何が不満か」を把握する。品質改善に活用される。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">📱</span><div class="dp-card-title">SNSモニタリング</div><div class="dp-card-body">企業・ブランド・製品名への反応をリアルタイムで監視する。炎上リスクの早期察知にも使われる。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">📞</span><div class="dp-card-title">カスタマーサポート</div><div class="dp-card-body">問い合わせメールの緊急度・感情を判定し、対応優先順位を自動で付ける。</div></div>
+          <div class="dp-card"><span class="dp-card-icon">📰</span><div class="dp-card-title">メディア・世論分析</div><div class="dp-card-body">ニュース記事や政治家の演説のトーン・感情傾向を分析する。選挙研究などに活用。</div></div>
+        </div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">研究・教育での活用</div>
+        <div class="dp-example"><div class="dp-ex-hd">アンケート自由記述の分析</div><div class="dp-ex-body">大量の自由記述回答を感情分析にかけることで、全体傾向を素早く把握できる。ただし、判定の誤りが全体統計に影響するため、サンプルの人手確認が重要。</div></div>
+        <div class="dp-example"><div class="dp-ex-hd">語学教育での感情表現学習</div><div class="dp-ex-body">学習者が書いた文章の感情傾向を分析し、表現の多様性や適切さのフィードバックに使う研究がある。</div></div>
+      </div>
+      <div class="dp-highlight"><p><strong>注意：</strong>感情分析ツールを使うときは「どの手法で・何を学習したモデルか」を確認することが大切です。同じテキストでも、ツールによって結果が大きく異なることがあります。</p></div>`
+  },
+
+  's9_difficulty': {
+    category: 'Session 9 — 感情分析',
+    title: '感情分析の難しさ',
+    html: `
+      <div class="dp-section">
+        <div class="dp-section-label">難しさ① 皮肉・反語</div>
+        <div class="dp-para">表面上はポジティブな語を使いながら、実際の意味はネガティブな表現です。AIは特にこのパターンを苦手とします。</div>
+        <div class="dp-example"><div class="dp-ex-hd">例</div><div class="dp-ex-body">「さすが日本の電車、またダイヤ通りに遅れてくれましたね」<br>→「さすが」はほめ言葉だが、文脈上は批判<br><br>「彼女のプレゼンはいつも完璧ですよね。私なんてまだまだです」<br>→ 褒め言葉か嫌味か、文脈・関係性がないと判断できない</div></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">難しさ② 文脈依存</div>
+        <div class="dp-para">同じ語でも、前後の文脈によって感情が全く変わります。</div>
+        <div class="dp-tbl"><table style="width:100%;border-collapse:collapse;font-size:.86rem">
+          <tr><th style="padding:8px 12px;background:var(--bg);border-bottom:1px solid var(--border)">表現</th><th style="padding:8px 12px;background:var(--bg);border-bottom:1px solid var(--border)">文脈A</th><th style="padding:8px 12px;background:var(--bg);border-bottom:1px solid var(--border)">文脈B</th></tr>
+          <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">「やっと終わった」</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">辛い作業が終わった → 安堵</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">楽しいイベントが終わった → 名残惜しさ</td></tr>
+          <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">「まあまあです」</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">期待以下 → 落胆</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">謙遜表現 → 実はとても良い</td></tr>
+          <tr><td style="padding:8px 12px">「最悪だった」</td><td style="padding:8px 12px">文字通りひどい経験 → 怒り</td><td style="padding:8px 12px">若者語で「最高に面白かった」の意味</td></tr>
+        </table></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">難しさ③ 複数感情</div>
+        <div class="dp-para">1つの文章に複数の感情が共存することがあります。</div>
+        <div class="dp-example"><div class="dp-ex-hd">例</div><div class="dp-ex-body">「試験に合格した。嬉しいけど、もっとよい点数が取れるはずだったと思うと悔しい。」<br>→ 喜び＋後悔が同時に存在する</div></div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-section-label">難しさ④ 文化差・言語差</div>
+        <div class="dp-para">感情表現のスタイルは文化・言語によって大きく異なります。日本語の特徴として、<strong>婉曲表現・謙遜表現・間接的否定</strong>が多く、英語ベースで学習したモデルでは精度が落ちることがあります。</div>
+        <div class="dp-point-box"><h5>日本語固有の難しさ</h5><ul><li>「なかなかいいですね」→ ほめているのか曖昧</li><li>「結構です」→ OKの意味か断りの意味か文脈次第</li><li>語尾の「〜かもしれません」→ 強い確信があっても使う場合がある</li></ul></div>
+      </div>`
+  }
+
+};
+
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+const LABELS = ['情報提供','意見','宣伝','感想','質問'];
+const LABEL_COLORS = {情報提供:'var(--slate)',意見:'var(--gold)',宣伝:'var(--terra)',感想:'var(--sage)',質問:'var(--plum)'};
+const EMOTIONS = ['喜び','安堵','驚き','不安','落胆','不満','怒り','皮肉','複合','判断困難'];
+const POSTS = [
+  '今日から駅前に新しいカフェがオープンした。モーニングセットが700円だそう。',
+  'このイヤホン、音質も着け心地も最高！買って本当によかったと思う。',
+  'SNSを何時間も見続けるのは精神的によくない。意識的に使用を制限すべきだ。',
+  '期間限定！今月末まで会員登録で初月無料。お急ぎください。',
+  '来週の授業、オンラインになるって本当ですか？',
+  '学生食堂の営業時間が来月から変更になるそうです。',
+  'AIに何でもやらせてしまうのは、人間の思考力を低下させると思う。',
+  '楽しみにしていた映画、思ったほどではなかった。途中から飽きてしまった。',
+  '今なら無料体験実施中。スタッフ一同お待ちしております！',
+  'レポートの参考文献って、何件くらい必要ですか？',
+  '昨日発表された新AIモデル、処理速度が従来の3倍になったとのこと。',
+  '大学のテキスト、毎年買い直すのはコストがかかりすぎる。もっと工夫してほしい。',
+  'このカフェのラテアート、かわいくて思わず写真を撮ってしまった。',
+  '今週末限定！全品20%オフセール開催中。ぜひご来店ください。',
+  'Googleマップのレビューって、どこまで信用できるものなんでしょうか？',
+];
+const SENTENCES = [
+  {t:'試験の結果が届いた。合格していた！',h:'（文脈なし）'},
+  {t:'まあ、よかったですね。',h:'（表情・状況不明）'},
+  {t:'また同じミスをしてしまった……',h:'（自分へのコメント）'},
+  {t:'やっと終わった。本当に長かった。',h:'（作業後のひとこと）'},
+  {t:'このレストラン、前回は最高だったのに、今日は何もかもダメだった。',h:'（レビュー）'},
+  {t:'明日のプレゼンがある。まだ準備が全然できていない。',h:'（夜のつぶやき）'},
+  {t:'こんな機能があったんですね。知らなかった！すごい。',h:'（SNSの反応）'},
+  {t:'彼はいつも遅れてくるんですよね。さすがですね。',h:'（同僚への評価）'},
+  {t:'なんとかなるとは思うけど……どうかな。',h:'（試験前日）'},
+  {t:'思っていたより早く終わって助かった。',h:'（作業完了後）'},
+  {t:'また雨か。毎日毎日うんざりする。',h:'（天気へのコメント）'},
+  {t:'彼女のプレゼン、本当に勉強になりました。私なんてまだまだですね。',h:'（発表後の感想）'},
+];
+const AI_JUDGMENTS = [
+  {human:'喜び',ai:'ポジティブ',note:'感嘆符から容易に判断'},
+  {human:'曖昧／皮肉',ai:'ポジティブ',note:'「よかった」を肯定語と誤判定しやすい'},
+  {human:'落胆・後悔',ai:'ネガティブ',note:'「また」「しまった」で判断'},
+  {human:'安堵＋疲労',ai:'ポジティブ',note:'「やっと」の文脈依存を見逃しがち'},
+  {human:'不満',ai:'ネガティブ',note:'「ダメだった」が強い否定語'},
+  {human:'不安',ai:'ネガティブ',note:'否定語「できていない」を検知'},
+  {human:'驚き＋感嘆',ai:'ポジティブ',note:'感嘆符・「すごい」が寄与'},
+  {human:'皮肉',ai:'ポジティブ',note:'「さすが」を肯定語と誤判定'},
+  {human:'不安・諦め',ai:'中立',note:'判断が難しい典型例'},
+  {human:'安堵',ai:'ポジティブ',note:'「助かった」がポジ判定に'},
+  {human:'苛立ち',ai:'ネガティブ',note:'「うんざり」が強い否定語'},
+  {human:'複合（感嘆＋卑下または皮肉）',ai:'ポジティブ',note:'「勉強になりました」が支配的に'},
+];
+const SOURCE_TEXT = `近年、生成AIを活用した文章作成ツールが急速に普及し、大学生の学習スタイルにも変化が生まれている。レポートの下書きや文献の要約など、さまざまな場面で利用されるようになった。しかし、AIが生成するテキストには、事実の誤りや情報の偏りが含まれることがある。そのため、AIの出力をそのまま使用するのではなく、内容を確認・評価する力が重要になる。AIはあくまで補助的なツールであり、最終的な判断は人間が行う必要がある。情報を批判的に読み解く姿勢こそが、これからの時代に求められる力といえるだろう。`;
+const AI_SUM_A = `生成AIが普及し大学生も使うようになったが、誤りもあるので確認が大切だ。`;
+const AI_SUM_B = `生成AIの普及により大学生の学習スタイルが変化しているが、AIの出力には誤りや偏りが含まれる場合があるため、批判的に内容を評価する力が求められる。`;
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+const state = {
+  view:'home', si:-1, step:0,
+  inputs:{},
+  classify:{},
+  sentiment:{},
+};
+
+// ══════════════════════════════════════════
+// DETAIL PANEL
+// ══════════════════════════════════════════
+function openDetail(key){
+  const d=DETAILS[key];if(!d)return;
+  document.getElementById('dp-nav-title').textContent=d.category;
+  document.getElementById('dp-content').innerHTML=`
+    <div class="dp-category">${d.category}</div>
+    <h2 class="dp-title">${d.title}</h2>
+    ${d.html}`;
+  const panel=document.getElementById('detail-panel');
+  panel.classList.add('open');
+  panel.scrollTop=0;
+}
+function closeDetail(){
+  document.getElementById('detail-panel').classList.remove('open');
+}
+
+// ══════════════════════════════════════════
+// KP CARD BUILDER (with detail link)
+// ══════════════════════════════════════════
+function kpCard(title, bodyHTML, detailKey){
+  return `<div class="kp" onclick="openDetail('${detailKey}')">
+    <div class="kp-inner">
+      <div class="kp-body">
+        <h4>${title}</h4>
+        ${bodyHTML}
+      </div>
+      <div class="kp-arrow">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+    </div>
+    <div class="kp-hint">タップして詳しく見る</div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════
+// STEP CONTENT
+// ══════════════════════════════════════════
+function renderStepContent(type){
+  switch(type){
+    case 'intro6': return `
+      <div class="q-card"><span class="q-icon">💬</span><div class="q-text">AIは「便利な道具」でしょうか。<br>それとも、社会や文化の見方を変える存在でしょうか。</div><div class="q-note">最近見たAI関連のニュース・話題を1つ挙げてみましょう。隣の人と共有してください。</div></div>
+      <div class="disc-card"><h4>アイスブレイク</h4><ul><li>最近見たAI関連ニュースを1つ（1分で思い出す）</li><li>2〜3名に共有させ、どんな話題が出たかを板書する</li><li>「便利」「怖い」「面白い」などのキーワードに注目</li></ul></div>`;
+
+    case 'lecture6': return `
+      <div class="kp-list">
+        ${kpCard('① AIはどこで使われているか',`<ul><li>翻訳・文章作成・要約（ChatGPT、Geminiなど）</li><li>レコメンド（YouTube、Spotify、Amazon）</li><li>画像生成・チャットボット・カスタマーサポート</li></ul>`,'s6_ai_usage')}
+        ${kpCard('② AIは「中立」ではないことがある',`<ul><li>学習データに偏りが含まれている場合がある</li><li>同じ質問でも、言語・文化・立場によって回答が変わりうる</li><li>出力は「事実」ではなく「確率的に妥当な文章」</li></ul>`,'s6_bias')}
+        ${kpCard('③ 人文学的な見方 — 4つの問い',`<ul><li><strong>バイアス</strong>：情報に偏りはないか</li><li><strong>表現</strong>：どんな言葉が選ばれているか</li><li><strong>フレーム</strong>：何を前提にしているか</li><li><strong>受け手</strong>：誰に向けて書かれているか</li></ul>`,'s6_humanistic')}
+      </div>`;
+
+    case 'cmp6a': return `
+      <div class="cmp-intro">同じ出来事（市役所へのAI導入）について、<strong>見出しの書き方だけ</strong>が異なる3種類の記事を読んでください。どの語が印象を変えているか、観察してみましょう。</div>
+      <div class="cmp-grid">
+        <div class="cmp-card va"><div class="cmp-lbl">バージョン A — 好意的</div><div class="cmp-text">市がAI活用で窓口業務を効率化<br>— 24時間対応・待ち時間ゼロを実現</div></div>
+        <div class="cmp-card vb"><div class="cmp-lbl">バージョン B — 中立的</div><div class="cmp-text">市役所がAIチャットボットを試験導入<br>— 行政手続きの一部をデジタル対応に</div></div>
+        <div class="cmp-card vc"><div class="cmp-lbl">バージョン C — 懸念提示</div><div class="cmp-text">市役所AI導入で窓口職員の役割縮小へ<br>— 個人情報管理にも懸念の声</div></div>
+      </div>
+      <div class="obs-wrap"><div class="obs-hd">観察ワークシート</div>
+      <table class="obs">
+        <tr><th>観点</th><th>A — 好意的</th><th>B — 中立的</th><th>C — 懸念提示</th></tr>
+        <tr><td>印象を変えている語</td><td><input data-id="c6a-a1" placeholder="例：効率化"/></td><td><input data-id="c6a-b1" placeholder="例：試験導入"/></td><td><input data-id="c6a-c1" placeholder="例：縮小"/></td></tr>
+        <tr><td>誰への配慮が感じられるか</td><td><input data-id="c6a-a2"/></td><td><input data-id="c6a-b2"/></td><td><input data-id="c6a-c2"/></td></tr>
+        <tr><td>省略されている情報</td><td><input data-id="c6a-a3"/></td><td><input data-id="c6a-b3"/></td><td><input data-id="c6a-c3"/></td></tr>
+        <tr><td>最も不安をあおるのは？</td><td colspan="3"><input data-id="c6a-q" placeholder="A / B / C、その理由を書いてみましょう"/></td></tr>
+      </table></div>`;
+
+    case 'share6': return `
+      <div class="disc-card"><h4>グループから1点ずつ共有しましょう</h4><ul><li>語の選び方（どの語が印象を最も変えたか）</li><li>感情を動かす表現（不安・安心・期待を生む言葉）</li><li>省略されている情報（何が書かれていないか）</li><li>誰に向けて書かれているか（想定読者）</li></ul></div>
+      <div class="note-box"><div class="note-hd">板書メモ</div><textarea data-id="share6-note" placeholder="各グループの気づきを記録してください…"></textarea></div>`;
+
+    case 'cmp6b': return `
+      <div class="cmp-intro">同じ製品（スマートスピーカー）について、<strong>対象や目的が異なる</strong>3種類の説明文を読んでください。</div>
+      <div class="cmp-grid">
+        <div class="cmp-card va"><div class="cmp-lbl">A — 広告風</div><div class="cmp-text">話しかけるだけで、あなたの毎日がもっと便利に。AIアシスタントが天気・ニュース・音楽をいつでもサポート。スマートな暮らしを、今すぐ。</div></div>
+        <div class="cmp-card vb"><div class="cmp-lbl">B — 中立説明風</div><div class="cmp-text">このスマートスピーカーは音声認識AIを搭載しており、天気確認・ニュース再生・スケジュール管理などを声で操作できます。本体直径97mm、対応言語は日本語・英語です。</div></div>
+        <div class="cmp-card vc"><div class="cmp-lbl">C — 注意喚起風</div><div class="cmp-text">常時マイクが起動しているため、室内の会話が意図せず録音される場合があります。収集データの利用方法を必ず確認し、プライバシー設定を管理してください。</div></div>
+      </div>
+      <div class="obs-wrap"><div class="obs-hd">比較ワークシート</div>
+      <table class="obs">
+        <tr><th>観点</th><th>A</th><th>B</th><th>C</th></tr>
+        <tr><td>語彙の特徴</td><td><input data-id="c6b-a1"/></td><td><input data-id="c6b-b1"/></td><td><input data-id="c6b-c1"/></td></tr>
+        <tr><td>何を強調しているか</td><td><input data-id="c6b-a2"/></td><td><input data-id="c6b-b2"/></td><td><input data-id="c6b-c2"/></td></tr>
+        <tr><td>想定読者は誰か</td><td><input data-id="c6b-a3"/></td><td><input data-id="c6b-b3"/></td><td><input data-id="c6b-c3"/></td></tr>
+        <tr><td>最も信頼できると感じたのは？理由は？</td><td colspan="3"><textarea data-id="c6b-trust" rows="2"></textarea></td></tr>
+      </table></div>`;
+
+    case 'ref6': return `
+      <div class="disc-card"><h4>本日のまとめ</h4><p>AIは情報を「出す」だけでなく、<strong>表現の仕方を変える</strong>存在です。語の選び方・強調点・想定読者によって、読み手の印象は大きく変わります。</p></div>
+      <div class="ref-form">
+        <div class="ref-q"><label>① 今日気づいたこと・わかったことを書いてください</label><textarea data-id="ref6-1"></textarea></div>
+        <div class="ref-q"><label>② AIを使うときに気をつけたいことは何ですか</label><textarea data-id="ref6-2"></textarea></div>
+        <div class="ref-q"><label>③ 文化や社会を見るときに重要だと思った観点は何ですか</label><textarea data-id="ref6-3"></textarea></div>
+      </div>`;
+
+    case 'intro7': return `
+      <div class="q-card"><span class="q-icon">✂️</span><div class="q-text">「要約」とは、ただ短くすることですか？</div><div class="q-note">1分間、自分の考えを整理してください。その後、隣の人と共有しましょう。</div></div>
+      <div class="disc-card"><h4>考えてみましょう</h4><ul><li>「短くする」以外に、要約に必要なことはありますか？</li><li>要約すると「消えてしまう」ものには何がありますか？</li><li>要約が「失敗」するのはどんなときでしょうか？</li></ul></div>`;
+
+    case 'lecture7': return `
+      <div class="kp-list">
+        ${kpCard('① 要約の基本3条件',`<ul><li>重要情報を残す（主題・核心を落とさない）</li><li>重複を省く（同じ内容を繰り返さない）</li><li>筋道を保つ（論理の流れを維持する）</li></ul>`,'s7_basics')}
+        ${kpCard('② 要約でよく起こる問題',`<ul><li>大事な情報の欠落（何を重要とみなすかの判断ミス）</li><li>ニュアンスの変化（断定しすぎ・弱めすぎ）</li><li>具体例だけ残って主旨が消える</li></ul>`,'s7_problems')}
+        ${kpCard('③ 生成AIによる要約の特徴',`<ul><li>◎ 速い・一定の読みやすさがある</li><li>△ 何を「重要」とみなすかはモデルによって異なる</li><li>△ プロンプトの違いで要約の中身が変わる</li></ul>`,'s7_ai_summary')}
+      </div>`;
+
+    case 'sum7a': return `
+      <div class="src-box"><div class="src-lbl">元テキスト（約250字）</div><div class="src-text">${SOURCE_TEXT}</div><div class="src-chars">文字数：${SOURCE_TEXT.length}字</div></div>
+      <div class="sum-grid">
+        <div class="sum-inp"><div class="sum-head"><span>100字要約</span><span class="sum-ctr" id="ctr7-100">0 / 100字</span></div><textarea data-id="sum7-100" data-max="100" placeholder="まず100字以内でまとめてみましょう…" oninput="updateCtr(this,'ctr7-100')"></textarea></div>
+        <div class="sum-inp"><div class="sum-head"><span>50字要約</span><span class="sum-ctr" id="ctr7-50">0 / 50字</span></div><textarea data-id="sum7-50" data-max="50" placeholder="100字をさらに半分に絞ると…" oninput="updateCtr(this,'ctr7-50')"></textarea></div>
+      </div>
+      <div class="disc-card"><h4>要約する際に考えること</h4><ul><li>この文章の「主旨」は何か？（1文で言うと？）</li><li>削れる情報と削れない情報をどう判断したか？</li><li>50字にするとき、どの情報を犠牲にしたか？</li></ul></div>`;
+
+    case 'sum7b': return `
+      <div class="sum-cmp-list">
+        <div class="sum-row"><div class="sum-row-hd"><span class="sum-row-lbl">元テキスト</span></div><div class="sum-row-text">${SOURCE_TEXT}</div></div>
+        <div class="sum-row"><div class="sum-row-hd"><span class="sum-row-lbl">あなたの要約（100字）</span><span class="sum-badge student">自分</span></div><div class="sum-row-text" id="my-sum100">${state.inputs['sum7-100']||'（まだ入力されていません）'}</div></div>
+        <div class="sum-row"><div class="sum-row-hd"><span class="sum-row-lbl">AI要約 A — 短縮版</span><span class="sum-badge ai">AI</span></div><div class="sum-row-text">${AI_SUM_A}</div></div>
+        <div class="sum-row"><div class="sum-row-hd"><span class="sum-row-lbl">AI要約 B — バランス版</span><span class="sum-badge ai">AI</span></div><div class="sum-row-text">${AI_SUM_B}</div></div>
+      </div>
+      <div class="eval-wrap"><table class="eval">
+        <tr><th>評価観点</th><th>自分</th><th>AI-A</th><th>AI-B</th></tr>
+        <tr><td>主題が含まれているか</td><td><input type="checkbox" data-id="ev-my-1"></td><td><input type="checkbox" data-id="ev-a-1"></td><td><input type="checkbox" data-id="ev-b-1"></td></tr>
+        <tr><td>重要語が残っているか</td><td><input type="checkbox" data-id="ev-my-2"></td><td><input type="checkbox" data-id="ev-a-2"></td><td><input type="checkbox" data-id="ev-b-2"></td></tr>
+        <tr><td>誤解を招かないか</td><td><input type="checkbox" data-id="ev-my-3"></td><td><input type="checkbox" data-id="ev-a-3"></td><td><input type="checkbox" data-id="ev-b-3"></td></tr>
+        <tr><td>読みやすいか</td><td><input type="checkbox" data-id="ev-my-4"></td><td><input type="checkbox" data-id="ev-a-4"></td><td><input type="checkbox" data-id="ev-b-4"></td></tr>
+      </table></div>`;
+
+    case 'disc7': return `
+      <div class="disc-card"><h4>グループ討議テーマ</h4><ul><li>どの要約が最もよいか？「情報の残り方・消え方」で説明する</li><li>「わかりやすい」は評価の理由になるか？</li><li>AI-AとBの違いは何か。プロンプトの違いで何が変わりそうか？</li></ul></div>
+      <div class="note-box"><div class="note-hd">グループメモ</div><textarea data-id="disc7-note" placeholder="グループで出た意見を記録してください…"></textarea></div>`;
+
+    case 'ref7': return `
+      <div class="disc-card"><h4>本日のまとめ</h4><p>要約は中立な「圧縮」ではなく、<strong>情報の選択と再構成</strong>です。何を重要とみなすかは、書き手の判断に依存します。</p></div>
+      <div class="ref-form">
+        <div class="ref-q"><label>① よい要約の条件を3つ挙げてください</label><textarea data-id="ref7-1" placeholder="条件1：　条件2：　条件3："></textarea></div>
+        <div class="ref-q"><label>② 自分の要約とAIの要約で最も大きな差はどこにありましたか</label><textarea data-id="ref7-2"></textarea></div>
+        <div class="ref-q"><label>③ 要約を使うとき、どんな点に注意しますか</label><textarea data-id="ref7-3"></textarea></div>
+      </div>`;
+
+    case 'intro8': return `
+      <div class="q-card"><span class="q-icon">🗂️</span><div class="q-text">映画を分類するとしたら、何で分けますか？</div><div class="q-note">自由に考えてみましょう。何通りの分け方が考えられるでしょうか。</div></div>
+      <div class="disc-card"><h4>出てきやすい分類基準</h4><ul><li>ジャンル（アクション・ロマンス・ホラー…）</li><li>公開年・時代（1990年代・2020年代…）</li><li>制作国（日本・アメリカ・韓国…）</li><li>気分・目的（泣ける・笑える・勉強になる…）</li><li>→ 分類基準は「目的」によって変わります</li></ul></div>`;
+
+    case 'lecture8': return `
+      <div class="kp-list">
+        ${kpCard('① 分類とは何か',`<p>ある目的に基づいて、データを共通の性質でグループに分ける操作。何のために分けるかによって基準が変わります。</p>`,'s8_what_is_classify')}
+        ${kpCard('② ラベルとは何か',`<p>各グループにつける名前（カテゴリ）。AIの学習では、データに正解ラベルを付ける作業（アノテーション）が重要な工程です。</p>`,'s8_what_is_label')}
+        ${kpCard('③ AIにおけるラベリングの重要性',`<ul><li>スパム判定（スパム / 非スパム）</li><li>感情判定（ポジティブ / ネガティブ / 中立）</li><li>画像認識（犬 / 猫 / その他）</li></ul>`,'s8_annotation_importance')}
+        ${kpCard('④ ラベリングの難しさ',`<ul><li>曖昧なケース（どちらにも分類できる）</li><li>複数ラベルが当てはまる</li><li>人によって判断が異なる</li></ul>`,'s8_labeling_difficulty')}
+      </div>`;
+
+    case 'cls8a': return `
+      <div class="cmp-intro"><strong>5つのラベル</strong>を使って、以下の短文を分類してください。迷ったものには「迷い」ボタンを押してください。</div>
+      <div class="legend">${LABELS.map(l=>`<span class="lchip" style="background:${LABEL_COLORS[l]}18;color:${LABEL_COLORS[l]};border-color:${LABEL_COLORS[l]}40"><span class="dot" style="background:${LABEL_COLORS[l]}"></span>${l}</span>`).join('')}</div>
+      <div class="cls-grid" id="cls-grid">${POSTS.map((p,i)=>clsCard(p,i)).join('')}</div>`;
+
+    case 'share8': return `
+      <div class="disc-card"><h4>「迷ったもの」を共有しましょう</h4><ul><li>各グループが迷ったケースを1〜2個ずつ出す</li><li>なぜ迷ったかを言語化する</li><li>迷いの原因：境界が曖昧 / 複数ラベル / 書き方の問題</li></ul></div>
+      <div class="note-box"><div class="note-hd">迷ったケースと理由（記録用）</div><textarea data-id="share8-note" placeholder="番号と迷った理由を記録してください…"></textarea></div>`;
+
+    case 'cls8b': return `
+      <div class="disc-card"><h4>グループ演習②　ラベルを自分たちで設計する</h4><p>教員のラベルを使わず、グループで独自のラベル体系を設計してください。</p><ul><li>何を分類したいか</li><li>どんなラベルを設定するか</li><li>境界例をどう扱うか</li></ul></div>
+      <div class="obs-wrap"><div class="obs-hd">ラベル設計書</div>
+      <table class="obs">
+        <tr><th>項目</th><th>内容</th></tr>
+        <tr><td>分類対象</td><td><input data-id="lb-target" placeholder="例：大学生のSNS投稿"/></td></tr>
+        <tr><td>ラベル一覧</td><td><input data-id="lb-labels" placeholder="例：学習, 生活, 交友, 愚痴, 情報"/></td></tr>
+        <tr><td>各ラベルの定義</td><td><textarea data-id="lb-defs" rows="3"></textarea></td></tr>
+        <tr><td>曖昧事例への対応方針</td><td><textarea data-id="lb-edge" rows="2"></textarea></td></tr>
+        <tr><td>難しかったこと</td><td><textarea data-id="lb-diff" rows="2"></textarea></td></tr>
+      </table></div>`;
+
+    case 'ref8': return `
+      <div class="disc-card"><h4>本日のまとめ</h4><p>分類は客観的に見えて、<strong>目的・定義・例外処理の設計</strong>が必要です。ラベル設計の仕方によってAIの学習結果が変わります。</p></div>
+      <div class="ref-form">
+        <div class="ref-q"><label>① 分類作業で最も難しかったケースを書いてください</label><textarea data-id="ref8-1"></textarea></div>
+        <div class="ref-q"><label>② AIにこのデータを学習させるとしたら、何が問題になりそうですか</label><textarea data-id="ref8-2"></textarea></div>
+        <div class="ref-q"><label>③ 「よいラベル設計」の条件を2〜3つ挙げてください</label><textarea data-id="ref8-3"></textarea></div>
+      </div>`;
+
+    case 'movie8': return renderMovieStep();
+
+    case 'intro9': return `
+      <div class="q-card"><span class="q-icon">🤔</span><div class="q-text">「まあ、よかったですね。」<br>— これはポジティブな文ですか？</div><div class="q-note">この文を見て、最初にどう感じましたか？文脈がないと、どんな問題が生じるでしょうか。</div></div>
+      <div class="disc-card"><h4>考えてみましょう</h4><ul><li>「まあ」というひとことで印象がどう変わるか</li><li>同じ言葉でも、声のトーン・状況によって感情が変わる</li><li>文字だけでは何が判断できないか</li></ul></div>`;
+
+    case 'lecture9': return `
+      <div class="kp-list">
+        ${kpCard('① 感情分析とは何か',`<ul><li>テキストに含まれる感情を自動判定する技術</li><li>最もシンプル：ポジティブ / ネガティブ / 中立の3値分類</li><li>より細かい分類：喜び・怒り・悲しみ・不安・驚き</li></ul>`,'s9_what_is_sentiment')}
+        ${kpCard('② 感情分析の活用例',`<ul><li>商品レビューの傾向把握</li><li>SNSモニタリング（ブランドへの反応）</li><li>アンケート自由記述の集計</li></ul>`,'s9_use_cases')}
+        ${kpCard('③ 感情分析の難しさ',`<ul><li><strong>皮肉・反語</strong>：「さすがですね」「まあそうですね」</li><li><strong>文脈依存</strong>：「やっと終わった」は喜び？安堵？疲労？</li><li><strong>複数感情・文化差</strong>（特に日本語の婉曲表現）</li></ul>`,'s9_difficulty')}
+      </div>`;
+
+    case 'sent9a': return `
+      <div class="cmp-intro">以下の文に<strong>感情ラベルを付け</strong>、判断の根拠となる語を「根拠メモ」に書いてください。</div>
+      <div class="sent-list">${SENTENCES.map((s,i)=>sentCard(s,i)).join('')}</div>`;
+
+    case 'sent9b': return `
+      <div class="ai-cmp-note">以下は各文に対する「AI（単純辞書方式）の判定例」です。あなたの判定と比べてみましょう。</div>
+      <div class="ai-sent-list">${SENTENCES.map((s,i)=>`
+        <div class="ai-sent-row">
+          <div class="asr-txt"><strong>${i+1}.</strong> ${s.t} <span style="font-size:.8rem;color:var(--light)">${s.h}</span></div>
+          <div class="asr-compare">
+            <div class="asr-col human"><div class="asr-col-lbl">あなたの判定</div>${state.sentiment[i]?.emotion||'—'}</div>
+            <div class="asr-col ai"><div class="asr-col-lbl">AI判定例</div>${AI_JUDGMENTS[i].ai}<br><span style="font-size:.78rem;color:var(--slate);margin-top:4px;display:block">${AI_JUDGMENTS[i].note}</span></div>
+          </div>
+        </div>`).join('')}
+      </div>`;
+
+    case 'disc9': return `
+      <div class="disc-card"><h4>グループ討議テーマ</h4><p>担当した場面カードについて話し合いましょう：</p><ul><li><strong>商品レビュー</strong>：感情分析は役に立つか？</li><li><strong>SNS投稿</strong>：皮肉や文脈依存の例はどれか？</li><li><strong>アンケート自由記述</strong>：そのまま使うとどんな問題が起きるか？</li><li><strong>相談文</strong>：感情を「判定」することに倫理的問題はないか？</li></ul></div>
+      <div class="note-box"><div class="note-hd">討議メモ</div><textarea data-id="disc9-note" placeholder="グループで出た意見・気づきを記録してください…"></textarea></div>`;
+
+    case 'ref9': return `
+      <div class="disc-card"><h4>本日のまとめ</h4><p>感情分析は便利ですが、<strong>ことばの文脈・文化・皮肉表現</strong>を無視できません。人文学的な読解力は、AI分析を補い批判的に評価する役割を持ちます。</p></div>
+      <div class="ref-form">
+        <div class="ref-q"><label>① 今日最も判断が難しかった文はどれですか？その理由は？</label><textarea data-id="ref9-1"></textarea></div>
+        <div class="ref-q"><label>② 感情分析を使う場合、どんな注意が必要ですか</label><textarea data-id="ref9-2"></textarea></div>
+        <div class="ref-q"><label>③ 人間とAIの感情判定の違いで気づいたことを書いてください</label><textarea data-id="ref9-3"></textarea></div>
+      </div>`;
+
+    default: return '<p>コンテンツを準備中です。</p>';
+  }
+}
+
+function clsCard(post,idx){
+  const c=state.classify[idx]||{};
+  return `<div class="cls-card${c.uncertain?' uncert':''}" id="clsc-${idx}">
+    <div class="cls-post">${post}</div>
+    <div class="cls-btns">
+      ${LABELS.map(l=>`<button class="lbtn${c.label===l?' sel':''}" data-l="${l}" onclick="setLabel(${idx},'${l}')">${l}</button>`).join('')}
+      <button class="unc-btn${c.uncertain?' on':''}" onclick="toggleUncertain(${idx})">迷い</button>
+    </div>
+  </div>`;
+}
+
+function sentCard(s,idx){
+  const e=state.sentiment[idx]||{};
+  return `<div class="sent-item">
+    <div class="sent-n">${idx+1} ${s.h}</div>
+    <div class="sent-txt">${s.t}</div>
+    <div class="sent-btns">${EMOTIONS.map(em=>`<button class="sbtn${e.emotion===em?' sel':''}" data-e="${em}" onclick="setEmotion(${idx},'${em}')">${em}</button>`).join('')}</div>
+    <input class="sent-note-inp" data-id="sent-note-${idx}" placeholder="根拠となる語・判断理由" value="${e.note||''}" oninput="setNote(${idx},this.value)">
+  </div>`;
+}
+
+// ══════════════════════════════════════════
+// INTERACTIONS
+// ══════════════════════════════════════════
+function setLabel(idx,label){
+  if(!state.classify[idx])state.classify[idx]={};
+  if(state.classify[idx].label===label)delete state.classify[idx].label;
+  else state.classify[idx].label=label;
+  const card=document.getElementById('clsc-'+idx);
+  if(card){card.querySelectorAll('.lbtn').forEach(b=>b.classList.toggle('sel',b.dataset.l===state.classify[idx].label));}
+}
+function toggleUncertain(idx){
+  if(!state.classify[idx])state.classify[idx]={};
+  state.classify[idx].uncertain=!state.classify[idx].uncertain;
+  const card=document.getElementById('clsc-'+idx);
+  if(card){card.classList.toggle('uncert',!!state.classify[idx].uncertain);card.querySelector('.unc-btn').classList.toggle('on',!!state.classify[idx].uncertain);}
+}
+function setEmotion(idx,em){
+  if(!state.sentiment[idx])state.sentiment[idx]={note:''};
+  if(state.sentiment[idx].emotion===em)delete state.sentiment[idx].emotion;
+  else state.sentiment[idx].emotion=em;
+  const item=document.querySelectorAll('.sent-item')[idx];
+  if(item){item.querySelectorAll('.sbtn').forEach(b=>b.classList.toggle('sel',b.dataset.e===state.sentiment[idx].emotion));}
+}
+function setNote(idx,val){if(!state.sentiment[idx])state.sentiment[idx]={};state.sentiment[idx].note=val;}
+function updateCtr(ta,ctrid){
+  const len=ta.value.length,max=parseInt(ta.dataset.max)||100;
+  const el=document.getElementById(ctrid);
+  if(el){el.textContent=`${len} / ${max}字`;el.classList.toggle('over',len>max);}
+  saveInput(ta);
+}
+function saveInput(el){if(el.dataset.id)state.inputs[el.dataset.id]=el.value;}
+function restoreInputs(){
+  document.querySelectorAll('[data-id]').forEach(el=>{
+    if(state.inputs[el.dataset.id]!=null){
+      el.value=state.inputs[el.dataset.id];
+      if(el.dataset.max){
+        const cid=el.dataset.id==='sum7-100'?'ctr7-100':el.dataset.id==='sum7-50'?'ctr7-50':null;
+        if(cid){const c=document.getElementById(cid);if(c)c.textContent=`${el.value.length} / ${el.dataset.max}字`;}
+      }
+    }
+  });
+}
+
+// ══════════════════════════════════════════
+// SESSIONS CONFIG
+// ══════════════════════════════════════════
+const SESSIONS=[
+  {num:6,title:'AIと社会・文化',subtitle:'表現と見方を比較する',color:'var(--sage)',duration:90,
+   steps:[{title:'導入',badge:'導入',minutes:10,type:'intro6'},{title:'ミニ講義',badge:'ミニ講義',minutes:15,type:'lecture6'},{title:'比較演習①　見出しを読む',badge:'演習',minutes:20,type:'cmp6a'},{title:'全体共有',badge:'共有',minutes:10,type:'share6'},{title:'比較演習②　対象別の説明文',badge:'演習',minutes:20,type:'cmp6b'},{title:'まとめ・振り返り',badge:'振り返り',minutes:15,type:'ref6'}]},
+  {num:7,title:'生成AIと要約',subtitle:'何を残し、何を省くのか',color:'var(--gold)',duration:90,
+   steps:[{title:'導入',badge:'導入',minutes:10,type:'intro7'},{title:'ミニ講義',badge:'ミニ講義',minutes:15,type:'lecture7'},{title:'演習①　自分で要約する',badge:'個人演習',minutes:15,type:'sum7a'},{title:'演習②　要約を比較する',badge:'比較演習',minutes:20,type:'sum7b'},{title:'グループ討議',badge:'討議',minutes:15,type:'disc7'},{title:'共有・まとめ',badge:'まとめ',minutes:15,type:'ref7'}]},
+  {num:8,title:'分類とラベリング',subtitle:'分けることの基準を考える',color:'var(--terra)',duration:90,
+   steps:[{title:'導入',badge:'導入',minutes:10,type:'intro8'},{title:'ミニ講義',badge:'ミニ講義',minutes:15,type:'lecture8'},{title:'グループ演習①　短文を分類する',badge:'グループ演習',minutes:20,type:'cls8a'},{title:'中間共有',badge:'共有',minutes:10,type:'share8'},{title:'映画でジャンル分類',badge:'映画演習',minutes:20,type:'movie8'},{title:'グループ演習②　ラベルを設計する',badge:'設計演習',minutes:20,type:'cls8b'},{title:'発表・まとめ',badge:'まとめ',minutes:15,type:'ref8'}]},
+  {num:9,title:'感情分析',subtitle:'ことばから感情をどう読むか',color:'var(--plum)',duration:90,
+   steps:[{title:'導入',badge:'導入',minutes:10,type:'intro9'},{title:'ミニ講義',badge:'ミニ講義',minutes:15,type:'lecture9'},{title:'比較演習①　感情ラベリング',badge:'個人演習',minutes:20,type:'sent9a'},{title:'比較演習②　AIの判定と比べる',badge:'比較演習',minutes:15,type:'sent9b'},{title:'グループ討議',badge:'討議',minutes:15,type:'disc9'},{title:'まとめ・振り返り',badge:'振り返り',minutes:15,type:'ref9'}]},
+];
+
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+function render(){
+  const app=document.getElementById('app');
+  if(state.view==='home'){app.innerHTML=renderHome();}
+  else{
+    app.innerHTML=renderSession();
+    restoreInputs();
+    document.querySelectorAll('[data-id]').forEach(el=>{
+      el.addEventListener('change',()=>saveInput(el));
+      el.addEventListener('input',()=>saveInput(el));
+    });
+    const curType = state.si>=0 ? SESSIONS[state.si].steps[state.step].type : '';
+  }
+}
+
+function renderHome(){
+  return `<div class="home">
+    <div class="home-head">
+      <div class="eyebrow">Omnibus Lecture — 授業ツール</div>
+      <h1 class="home-title">AIデータ・デジタル入門<br>〈オムニバス〉第6〜9回</h1>
+      <div class="home-meta">担当：杉山真央</div>
+      <div class="home-line"></div>
+    </div>
+    <div class="sessions-grid">
+      ${SESSIONS.map((s,i)=>`
+      <div class="scard" style="--c:${s.color}" onclick="openSession(${i})">
+        <div class="scard-num">0${s.num}</div>
+        <div class="scard-lbl">Session ${s.num}</div>
+        <div class="scard-title">${s.title}</div>
+        <div class="scard-sub">${s.subtitle}</div>
+        <div class="scard-footer">${s.steps.length}ステップ ／ ${s.duration}分</div>
+        <div class="scard-terms" onclick="event.stopPropagation();openTerms(${i})">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          用語リストを見る
+        </div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderSession(){
+  const s=SESSIONS[state.si];
+  const step=s.steps[state.step];
+  const isLast=state.step===s.steps.length-1;
+  const isFirst=state.step===0;
+  return `
+  <div class="session-view on" style="--acc:${s.color}">
+    <div class="snav">
+      <button class="back-btn" onclick="goHome()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>一覧
+      </button>
+      <span class="snav-title">第${s.num}回　${s.title}</span>
+      <div class="sdots">${s.steps.map((_,i)=>`<button class="sdot ${i===state.step?'active':i<state.step?'done':''}" onclick="gotoStep(${i})" data-label="${s.steps[i].title}"></button>`).join('')}</div>
+      <button class="terms-btn" onclick="openTerms(${state.si})">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        用語
+      </button>
+    </div>
+    <div class="step-wrap">
+      <div class="step-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg>${step.badge}</div>
+      <h2 class="step-title">${step.title}</h2>
+      <div class="step-time">ステップ ${state.step+1} / ${s.steps.length}　（目安 ${step.minutes}分）</div>
+      <div class="step-body">${renderStepContent(step.type)}</div>
+    </div>
+    <div class="sfooter">
+      <button class="snav-btn" onclick="prevStep()" ${isFirst?'disabled':''}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>前へ
+      </button>
+      <span class="sfooter-info">${state.step+1} / ${s.steps.length}　— ${s.steps.slice(0,state.step+1).reduce((a,b)=>a+b.minutes,0)}分経過目安</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button class="print-btn" onclick="window.print()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          印刷 / PDF保存
+        </button>
+        <button class="snav-btn primary" onclick="nextStep()" ${isLast?'disabled':''}>
+          次へ<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════
+function openSession(i){state.view='session';state.si=i;state.step=0;render();window.scrollTo(0,0);}
+function goHome(){state.view='home';render();window.scrollTo(0,0);}
+function nextStep(){if(state.step<SESSIONS[state.si].steps.length-1){state.step++;render();window.scrollTo(0,0);}}
+function prevStep(){if(state.step>0){state.step--;render();window.scrollTo(0,0);}}
+function gotoStep(i){state.step=i;render();window.scrollTo(0,0);}
+
+render();
+</script>
+</body>
+</html>
