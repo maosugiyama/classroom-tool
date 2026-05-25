@@ -1316,6 +1316,39 @@ function renderStepContent(type){
       <div class="q-card"><span class="q-icon">💬</span><div class="q-text">AIは「便利な道具」でしょうか。<br>それとも、社会や文化の見方を変える存在でしょうか。</div><div class="q-note">最近見たAI関連のニュース・話題を1つ挙げてみましょう。隣の人と共有してください。</div></div>
       <div class="disc-card"><h4>アイスブレイク</h4><ul><li>最近見たAI関連ニュースを1つ（1分で思い出す）</li><li>2〜3名に共有させ、どんな話題が出たかを板書する</li><li>「便利」「怖い」「面白い」などのキーワードに注目</li></ul></div>`;
 
+    case 'premise6': return `
+      <div class="cmp-intro">「AI」は大きな傘。今日の主役は、その中の<strong>「生成AI」</strong>です。まず、2つの種類を整理しておきましょう。</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;">
+          <div style="background:#9b9c8a;color:#fff;padding:13px 18px;font-weight:600;">🔎　選ぶ・見分ける AI（識別・予測）</div>
+          <div style="padding:18px 20px;">
+            <div style="font-size:.7rem;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:2px;">すること</div>
+            <div style="margin-bottom:13px;">分類する・選び出す・予測する</div>
+            <div style="font-size:.7rem;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:2px;">例</div>
+            <div style="margin-bottom:13px;">おすすめ／迷惑メール判定／顔認証／経路案内</div>
+            <div style="font-size:.7rem;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:2px;">出力</div>
+            <div>ラベル・順位・スコア・判断</div>
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1.5px solid var(--gold);border-radius:var(--r);overflow:hidden;">
+          <div style="background:var(--sage);color:#fff;padding:13px 18px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:8px;">
+            <span>✨　作り出す AI ＝ 生成AI</span>
+            <span style="background:var(--gold);color:#fff;font-size:.64rem;padding:3px 11px;border-radius:100px;letter-spacing:.04em;white-space:nowrap;">今日の主役</span>
+          </div>
+          <div style="padding:18px 20px;">
+            <div style="font-size:.7rem;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:2px;">すること</div>
+            <div style="margin-bottom:13px;">文・画像・音声・コードを新しく作る</div>
+            <div style="font-size:.7rem;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:2px;">例</div>
+            <div style="margin-bottom:13px;">ChatGPT／画像生成／要約／チャットボット</div>
+            <div style="font-size:.7rem;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:2px;">出力</div>
+            <div>「人が作ったような」文章・画像など</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--sage-l);border-left:4px solid var(--sage);border-radius:0;padding:16px 20px;">
+        <strong style="color:#4e7a52;">生成AIは、私たちのことばからできている。</strong>だから「どう表現されているか」を観察することは、私たち自身の見方を観察することでもある。
+      </div>`;
+
     case 'lecture6': return `
       <div class="kp-list">
         ${kpCard('① AIはどこで使われているか',`<ul><li>翻訳・文章作成・要約（ChatGPT、Geminiなど）</li><li>レコメンド（YouTube、Spotify、Amazon）</li><li>画像生成・チャットボット・カスタマーサポート</li></ul>`,'s6_ai_usage')}
@@ -1361,6 +1394,9 @@ function renderStepContent(type){
 
     case 'ref6': return `
       <div class="disc-card"><h4>本日のまとめ</h4><p>AIは情報を「出す」だけでなく、<strong>表現の仕方を変える</strong>存在です。語の選び方・強調点・想定読者によって、読み手の印象は大きく変わります。</p></div>
+      <div style="background:var(--sage-l);border-left:4px solid var(--sage);border-radius:0;padding:16px 20px;margin-bottom:22px;">
+        <strong style="color:#4e7a52;">AIが「どう表現するか」を見ることは、私たちが「どう表現しているか」を見ること。</strong>私たちはことばで社会をつくり続けています——その社会を、AIという鏡を通して観察できる。
+      </div>
       <div class="ref-form">
         <div class="ref-q"><label>① 今日気づいたこと・わかったことを書いてください</label><textarea data-id="ref6-1"></textarea></div>
         <div class="ref-q"><label>② AIを使うときに気をつけたいことは何ですか</label><textarea data-id="ref6-2"></textarea></div>
@@ -1568,7 +1604,7 @@ function restoreInputs(){
 // ══════════════════════════════════════════
 const SESSIONS=[
   {num:6,title:'AIと社会・文化',subtitle:'表現と見方を比較する',color:'var(--sage)',duration:90,
-   steps:[{title:'導入',badge:'導入',minutes:10,type:'intro6'},{title:'ミニ講義',badge:'ミニ講義',minutes:15,type:'lecture6'},{title:'比較演習①　見出しを読む',badge:'演習',minutes:20,type:'cmp6a'},{title:'全体共有',badge:'共有',minutes:10,type:'share6'},{title:'比較演習②　対象別の説明文',badge:'演習',minutes:20,type:'cmp6b'},{title:'まとめ・振り返り',badge:'振り返り',minutes:15,type:'ref6'}]},
+   steps:[{title:'導入',badge:'導入',minutes:10,type:'intro6'},{title:'前提：AIと生成AI',badge:'前提',minutes:5,type:'premise6'},{title:'ミニ講義',badge:'ミニ講義',minutes:10,type:'lecture6'},{title:'比較演習①　見出しを読む',badge:'演習',minutes:20,type:'cmp6a'},{title:'全体共有',badge:'共有',minutes:10,type:'share6'},{title:'比較演習②　対象別の説明文',badge:'演習',minutes:20,type:'cmp6b'},{title:'まとめ・振り返り',badge:'振り返り',minutes:15,type:'ref6'}]},
   {num:7,title:'生成AIと要約',subtitle:'何を残し、何を省くのか',color:'var(--gold)',duration:90,
    steps:[{title:'導入',badge:'導入',minutes:10,type:'intro7'},{title:'ミニ講義',badge:'ミニ講義',minutes:15,type:'lecture7'},{title:'演習①　自分で要約する',badge:'個人演習',minutes:15,type:'sum7a'},{title:'演習②　要約を比較する',badge:'比較演習',minutes:20,type:'sum7b'},{title:'グループ討議',badge:'討議',minutes:15,type:'disc7'},{title:'共有・まとめ',badge:'まとめ',minutes:15,type:'ref7'}]},
   {num:8,title:'分類とラベリング',subtitle:'分けることの基準を考える',color:'var(--terra)',duration:90,
