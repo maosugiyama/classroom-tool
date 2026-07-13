@@ -889,7 +889,9 @@ function renderMovieStep(){
         <li>複数ジャンルに当てはまって迷った作品はどれか、その理由は</li>
         <li>年代によってジャンルの雰囲気はどう変わっているか</li>
       </ul>
-    </div>`;
+    </div>
+    <div class="note-box" style="margin-top:14px"><div class="note-hd">ポスターだけのときと、あらすじを読んだ後で判断が変わった作品とその理由</div><textarea data-id="movie8-obs1" rows="2"></textarea></div>
+    <div class="note-box"><div class="note-hd">邦画と洋画で、ポスターの「見せ方」に感じた違い</div><textarea data-id="movie8-obs2" rows="2"></textarea></div>`;
 }
 
 
@@ -1491,6 +1493,15 @@ function renderStepContent(type){
         <tr><td>💡 例が見つからない → 同じ商品の「広告」と「レビュー」の比較がいちばん見つけやすい</td></tr>
       </table></div>`;
 
+    case 'rev7': return `
+      <div class="cmp-intro"><strong>第6回の復習：フレーミング</strong> — 次の事実を、立場を変えて2通りの見出しに書いてみましょう。書けたら隣の人と交換して読み比べます。</div>
+      <div class="src-box"><div class="src-lbl">事実</div><div class="src-text">「大学の授業で、生成AIを使う学生が増えている」</div></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">①「便利さを伝える側」の見出し（20字以内）</div><textarea data-id="rev7-1" rows="1" placeholder="自分の見出し："></textarea></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">②「注意点を伝える側」の見出し（20字以内）</div><textarea data-id="rev7-2" rows="1" placeholder="自分の見出し："></textarea></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">③ ①と②を読み比べて、あなたの感覚はどちらに近い？その理由は？（交換した相手の感覚もメモ）</div><textarea data-id="rev7-3" rows="2"></textarea></div>
+      <div class="note-box"><div class="note-hd">④ English Challenge（任意）— 同じ事実を、やさしい英語の見出し（5〜8語）に。例：More students use AI in class</div><textarea data-id="rev7-4" rows="1" placeholder="あなたの英語見出し："></textarea></div>
+      <div style="background:var(--gold-l);border-left:4px solid var(--gold);padding:14px 20px;margin-top:16px;">※ 見出しは<strong>「いちばん短い要約」</strong>。今日の授業（要約）につながります。</div>`;
+
     case 'intro7': return `
       <div class="q-card"><span class="q-icon">✂️</span><div class="q-text">「要約」とは、ただ短くすることですか？</div><div class="q-note">1分間、自分の考えを整理してください。その後、隣の人と共有しましょう。</div></div>
       <div class="disc-card"><h4>考えてみましょう</h4><ul><li>「短くする」以外に、要約に必要なことはありますか？</li><li>要約すると「消えてしまう」ものには何がありますか？</li><li>要約が「失敗」するのはどんなときでしょうか？</li></ul></div>`;
@@ -1630,8 +1641,19 @@ function renderStepContent(type){
         <tr><td>☐ 考察で「残った情報／消えた情報」を具体的に指摘している（「AIすごい」等の感想文になっていない）</td></tr>
       </table></div>`;
 
+    case 'rev8': return `
+      <div class="cmp-intro"><strong>第7回の復習：相手に合わせて言い換える</strong> — 次の「商品の機能の説明」を、相手を変えて2通りに言い換えてみましょう。書けたら隣の人と交換します。相手が変わると、<strong>「残すことば」と「省くことば」</strong>が変わります。</div>
+      <div class="src-box"><div class="src-lbl">商品の機能の説明</div><div class="src-text">【ロボット掃除機】本機はセンサーで室内を計測して走行経路を自動生成し、ゴミの量に応じて吸引力を制御します。段差や障害物は検知して回避します。</div></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">① 機械が苦手なお年寄りに、やさしく伝えるなら</div><textarea data-id="rev8-1" rows="2"></textarea></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">② この商品を買いたくなる広告のことばにするなら</div><textarea data-id="rev8-2" rows="2"></textarea></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">③ ①と②を読み比べて、ことばを変えると「何が」「どう」変わったか（交換した相手の気づきもメモ）</div><textarea data-id="rev8-3" rows="2"></textarea></div>
+      <div class="note-box"><div class="note-hd">④ English Challenge（任意）— この掃除機を、やさしい英語ひとこと（8語以内）で宣伝。例：It cleans your room by itself!</div><textarea data-id="rev8-4" rows="1" placeholder="あなたの英語コピー："></textarea></div>
+      <div style="background:var(--terra-l);border-left:4px solid var(--terra);padding:14px 20px;margin-top:16px;">※ 「誰に・何を残して伝えるか」——言い換えも広告も、今日の授業（分類とラベリング）と同じく<strong>「選ぶ」作業</strong>です。</div>`;
+
     case 'intro8': return `
       <div class="q-card"><span class="q-icon">🗂️</span><div class="q-text">映画を分類するとしたら、何で分けますか？</div><div class="q-note">自由に考えてみましょう。何通りの分け方が考えられるでしょうか。</div></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">思いつく「分け方」を、できるだけたくさん</div><textarea data-id="intro8-1" rows="2" placeholder="例：ジャンル、年代、国、長さ、観る相手…"></textarea></div>
+      <div class="note-box"><div class="note-hd">それぞれ、何のために分けている？（分ける「目的」）</div><textarea data-id="intro8-2" rows="2" placeholder="例：観る作品を選ぶため／棚に並べるため／人に薦めるため…"></textarea></div>
       <div class="disc-card"><h4>出てきやすい分類基準</h4><ul><li>ジャンル（アクション・ロマンス・ホラー…）</li><li>公開年・時代（1990年代・2020年代…）</li><li>制作国（日本・アメリカ・韓国…）</li><li>気分・目的（泣ける・笑える・勉強になる…）</li><li>→ 分類基準は「目的」によって変わります</li></ul></div>`;
 
     case 'lecture8': return `
@@ -1640,25 +1662,34 @@ function renderStepContent(type){
         ${kpCard('② ラベルとは何か',`<p>各グループにつける名前（カテゴリ）。AIの学習では、データに正解ラベルを付ける作業（アノテーション）が重要な工程です。</p>`,'s8_what_is_label')}
         ${kpCard('③ AIにおけるラベリングの重要性',`<ul><li>スパム判定（スパム / 非スパム）</li><li>感情判定（ポジティブ / ネガティブ / 中立）</li><li>画像認識（犬 / 猫 / その他）</li></ul>`,'s8_annotation_importance')}
         ${kpCard('④ ラベリングの難しさ',`<ul><li>曖昧なケース（どちらにも分類できる）</li><li>複数ラベルが当てはまる</li><li>人によって判断が異なる</li></ul>`,'s8_labeling_difficulty')}
+        ${kpCard('⑤ アノテーター間一致率とガイドライン',`<ul><li>同じデータでも、ラベルを付ける人（アノテーター）によって判断はぶれる</li><li>ぶれの度合いを測るのが<strong>アノテーター間一致率</strong></li><li>一致率を上げるには、定義・境界例・判定基準を書いた<strong>ガイドライン</strong>が必要 — 今日の演習②で実際に設計します</li></ul>`,'s8_agreement')}
       </div>`;
 
     case 'cls8a': return `
       <div class="cmp-intro"><strong>5つのラベル</strong>を使って、以下の短文を分類してください。迷ったものには「迷い」ボタンを押してください。</div>
       <div class="legend">${LABELS.map(l=>`<span class="lchip" style="background:${LABEL_COLORS[l]}18;color:${LABEL_COLORS[l]};border-color:${LABEL_COLORS[l]}40"><span class="dot" style="background:${LABEL_COLORS[l]}"></span>${l}</span>`).join('')}</div>
-      <div class="cls-grid" id="cls-grid">${POSTS.map((p,i)=>clsCard(p,i)).join('')}</div>`;
+      <div class="cls-grid" id="cls-grid">${POSTS.map((p,i)=>clsCard(p,i)).join('')}</div>
+      <div class="note-box" style="margin-top:18px;"><div class="note-hd">迷った短文の番号と、その理由</div><textarea data-id="cls8a-mayoi" rows="2" placeholder="例：No.3 — 意見と感想の境界が曖昧…"></textarea></div>`;
 
     case 'share8': return `
       <div class="disc-card"><h4>「迷ったもの」を共有しましょう</h4><ul><li>各グループが迷ったケースを1〜2個ずつ出す</li><li>なぜ迷ったかを言語化する</li><li>迷いの原因：境界が曖昧 / 複数ラベル / 書き方の問題</li></ul></div>
       <div class="note-box"><div class="note-hd">迷ったケースと理由（記録用）</div><textarea data-id="share8-note" placeholder="番号と迷った理由を記録してください…"></textarea></div>`;
 
     case 'cls8b': return `
-      <div class="disc-card"><h4>グループ演習②　ラベルを自分たちで設計する</h4><p>教員のラベルを使わず、グループで独自のラベル体系を設計してください。</p><ul><li>何を分類したいか</li><li>どんなラベルを設定するか</li><li>境界例をどう扱うか</li></ul></div>
+      <div class="disc-card"><h4>グループ演習②　ラベルを自分たちで設計する</h4><p>教員のラベルを使わず、グループで独自のラベル体系を設計してください。定義は下の<strong>「ラベル定義の型」</strong>で書いてかまいません。</p></div>
+      <div class="obs-wrap" style="margin-bottom:20px;"><div class="obs-hd">★ ラベル定義の型 — 定義はゼロから考えなくてOK。1ラベルにつき、この3行＋1例</div>
+      <table class="obs">
+        <tr><td style="white-space:nowrap;font-weight:600;">① 含む</td><td>何が当てはまるかを書く（例：ラベル「宣伝」→ 商品・サービスの購入や登録へ誘導する文）</td></tr>
+        <tr><td style="font-weight:600;">② 含まない</td><td>まぎらわしい「隣のラベル」を名指しして区別する（例：体験の個人的な評価だけなら「感想」であって「宣伝」ではない）</td></tr>
+        <tr><td style="font-weight:600;">③ 迷ったら</td><td>判定の質問を1つ決める（例：「この文は読み手に行動させようとしている？」→ YESなら宣伝）</td></tr>
+        <tr><td style="font-weight:600;">④ 例文</td><td>典型例を1つ添える（例：「期間限定！今月末まで初月無料」）</td></tr>
+      </table></div>
       <div class="obs-wrap"><div class="obs-hd">ラベル設計書</div>
       <table class="obs">
         <tr><th>項目</th><th>内容</th></tr>
         <tr><td>分類対象</td><td><input data-id="lb-target" placeholder="例：大学生のSNS投稿"/></td></tr>
         <tr><td>ラベル一覧</td><td><input data-id="lb-labels" placeholder="例：学習, 生活, 交友, 愚痴, 情報"/></td></tr>
-        <tr><td>各ラベルの定義</td><td><textarea data-id="lb-defs" rows="3"></textarea></td></tr>
+        <tr><td>各ラベルの定義（型の3行＋1例で）</td><td><textarea data-id="lb-defs" rows="4" placeholder="①含む：…　②含まない：…　③迷ったら：…　④例文：…"></textarea></td></tr>
         <tr><td>曖昧事例への対応方針</td><td><textarea data-id="lb-edge" rows="2"></textarea></td></tr>
         <tr><td>難しかったこと</td><td><textarea data-id="lb-diff" rows="2"></textarea></td></tr>
       </table></div>`;
@@ -1666,26 +1697,83 @@ function renderStepContent(type){
     case 'ref8': return `
       <div class="disc-card"><h4>本日のまとめ</h4><p>分類は客観的に見えて、<strong>目的・定義・例外処理の設計</strong>が必要です。ラベル設計の仕方によってAIの学習結果が変わります。</p></div>
       <div class="ref-form">
-        <div class="ref-q"><label>① 分類作業で最も難しかったケースを書いてください</label><textarea data-id="ref8-1"></textarea></div>
+        <div class="ref-q"><label>① 分類作業で最も難しかったケースは？それはなぜ難しかったですか</label><textarea data-id="ref8-1"></textarea></div>
         <div class="ref-q"><label>② AIにこのデータを学習させるとしたら、何が問題になりそうですか</label><textarea data-id="ref8-2"></textarea></div>
-        <div class="ref-q"><label>③ 「よいラベル設計」の条件を2〜3つ挙げてください</label><textarea data-id="ref8-3"></textarea></div>
+        <div class="ref-q"><label>③ 「よいラベル設計」の条件を、自分の言葉で2〜3つ挙げてください</label><textarea data-id="ref8-3"></textarea></div>
+        <div class="ref-q"><label>④ 自由記述（任意）— 感想・もっと知りたいこと・疑問点など</label><textarea data-id="ref8-4"></textarea></div>
       </div>`;
+
+    case 'hw8': return `
+      <div class="q-card"><span class="q-icon">📝</span><div class="q-text">課題：身近なデータを集めて、自分なりの分類基準を作る</div><div class="q-note">身近なデータ（YouTube動画タイトル・書籍紹介・ニュース見出し・SNS投稿など）を5件集め、自分で分類基準を設計し、実際に分類します。提出：Google Classroom 第8回課題ページ（次回授業前日23:59まで）</div></div>
+      <div class="obs-wrap"><div class="obs-hd">進め方（4ステップ）</div>
+      <table class="obs">
+        <tr><td style="white-space:nowrap;font-weight:600;">STEP 1</td><td><strong>データを5件集める</strong>：同じ種類のデータでそろえるのがコツ（動画タイトルなら5件とも動画タイトル）。自分のYouTube・SNSの履歴が一番集めやすい素材</td></tr>
+        <tr><td style="font-weight:600;">STEP 2</td><td><strong>ラベルを3〜5個設計する</strong>：「ラベル定義の型」（①含む ②含まない ③迷ったら ④例文）で各ラベルを定義する</td></tr>
+        <tr><td style="font-weight:600;">STEP 3</td><td><strong>境界例のルールを決める</strong>：複数当てはまる場合・どれにも当てはまらない場合の方針を、分類を始める前に書いておく</td></tr>
+        <tr><td style="font-weight:600;">STEP 4</td><td><strong>分類を実行する</strong>：5件にラベルを付け、迷ったかどうかも記録。うまく分けられなかったら、それ自体が大事な発見です</td></tr>
+      </table></div>
+      <div class="disc-card" style="margin-top:20px;"><h4>English Option（発展・任意）</h4><p>集めるデータを<strong>英語のもの</strong>（英語のニュース見出し・英語のSNS投稿・海外YouTubeのタイトルなど）にしてもOK。またはラベル名を英語（Study / Fun / Life など）で付けて、日本語のラベルとのニュアンスの違いをひとことメモしても面白い観察になります。</p></div>
+      <div class="obs-wrap" style="margin-top:20px;"><div class="obs-hd">提出前チェックリスト／よくあるつまずき</div>
+      <table class="obs">
+        <tr><td>☐ データ5件が同じ種類でそろっている</td></tr>
+        <tr><td>☐ すべてのラベルに「①含む ②含まない ③迷ったら ④例文」がある</td></tr>
+        <tr><td>☐ 境界例ルールを、分類の前に決めて書いた</td></tr>
+        <tr><td>☐ 5件すべてにラベルと「迷った？」の記録がある</td></tr>
+        <tr><td>💡 定義が1行で終わる → 「②含まない」で隣のラベルを名指しすると境界がはっきりします</td></tr>
+        <tr><td>💡 迷いゼロで終わった → 基準がゆるい可能性。境界例を1つ探して③の質問でテストを</td></tr>
+      </table></div>`;
 
     case 'movie8': return renderMovieStep();
 
+    case 'eng8': return `
+      <div class="cmp-intro"><strong>One movie, different labels.</strong> — 同じ映画でも、ラベルの「体系」が変わると居場所が変わります。</div>
+      <div class="src-box"><div class="src-lbl">例：『羊たちの沈黙』</div><div class="src-text">IMDb（英語圏）のラベルは <strong>Crime / Drama / Thriller</strong>。日本の配信サイトでは「ホラー」の棚に並ぶことも。</div></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">Q1. horror と thriller、どう違う？（ヒント：怖がらせ方——おどかす？ ハラハラさせる？）</div><textarea data-id="eng8-q1" rows="2"></textarea></div>
+      <div class="note-box"><div class="note-hd">Q2. Which English label would you give 『もののけ姫』?　animation / fantasy / adventure / その他 —— そう選んだ理由（animation は「ジャンル」？ それとも「技法」？）</div><textarea data-id="eng8-q2" rows="2"></textarea></div>
+      <div style="background:var(--terra-l);border-left:4px solid var(--terra);padding:16px 20px;margin-top:18px;">
+        → ラベルの体系は、<strong>文化・目的・プラットフォーム</strong>によって変わります。英語のジャンル語（thriller / sci-fi / rom-com …）は、そのまま使える観察の道具です。
+      </div>`;
+
+    case 'rev9': return `
+      <div class="cmp-intro"><strong>第8回の復習：分類とラベリング</strong> — 次のX（旧Twitter）の投稿4つに、<strong>自分で考えたラベル</strong>を1つずつ付けてみましょう。書けたら隣の人と交換します。</div>
+      <div class="src-box"><div class="src-lbl">4つの投稿</div><div class="src-text">① 新しいカフェのモーニング、写真を撮る前に食べちゃった笑<br>② レポートが終わらない。なんでこんなに書けないんだろ……<br>③ 【拡散希望】サークル新歓、金曜18時から！参加無料！<br>④ 電車5分の遅れで遅刻扱い。さすがうちの大学って感じ。</div></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">① 投稿①〜④に、自分で考えたラベルを1つずつ</div><textarea data-id="rev9-1" rows="2" placeholder="①＝　②＝　③＝　④＝"></textarea></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">② 交換者とラベルを比べる。同じ投稿に違う名前がついたのはなぜ？</div><textarea data-id="rev9-2" rows="2"></textarea></div>
+      <div class="note-box" style="margin-bottom:14px;"><div class="note-hd">③ 二人のラベルを、似たものどうしでまとめてカテゴリーを作る（2〜3個に。例：気持ち系／お知らせ系）</div><textarea data-id="rev9-3" rows="2" placeholder="ラベル＝一つひとつの「名札」。カテゴリー＝似た名札をしまう引き出し。"></textarea></div>
+      <div class="note-box"><div class="note-hd">④ English Challenge（任意）— 投稿④「さすがうちの大学って感じ。」に英語で1語ラベルを付けるなら？　positive / complaint / sarcasm / その他 —— 理由をひとこと</div><textarea data-id="rev9-4" rows="1"></textarea></div>
+      <div style="background:var(--plum-l);border-left:4px solid var(--plum);padding:14px 20px;margin-top:16px;">※ 「さすが」はほめ言葉なのに……？　この<strong>「ことばと働きのズレ」</strong>が、今日の授業（感情分析）のテーマです。</div>`;
+
     case 'intro9': return `
-      <div class="q-card"><span class="q-icon">🤔</span><div class="q-text">「まあ、よかったですね。」<br>— これはポジティブな文ですか？</div><div class="q-note">この文を見て、最初にどう感じましたか？文脈がないと、どんな問題が生じるでしょうか。</div></div>
-      <div class="disc-card"><h4>考えてみましょう</h4><ul><li>「まあ」というひとことで印象がどう変わるか</li><li>同じ言葉でも、声のトーン・状況によって感情が変わる</li><li>文字だけでは何が判断できないか</li></ul></div>`;
+      <div class="q-card"><span class="q-icon">🤔</span><div class="q-text">同じ「まあ、よかったですね。」でも、<br>会話の中では感情が変わる？</div><div class="q-note">記号：↗＝上昇調　↘＝下降調　（数字）＝沈黙の秒数　：：＝引き延ばし（会話分析のジェファーソン・システムを簡略化）</div></div>
+      <div class="obs-wrap"><div class="obs-hd">3つの会話 — どんな感情に聞こえる？</div>
+      <table class="obs">
+        <tr><th>会話</th><th>どんな感情に聞こえるか</th><th>手がかり（間・音調・直前の発話）</th></tr>
+        <tr><td>A：後輩「私の発表、どうでしたか？」→ 先輩「（1.5）まあ：：、よかったですね↘。」</td><td><input data-id="int9-a1"/></td><td><input data-id="int9-a2" placeholder="例：1.5秒の沈黙…"/></td></tr>
+        <tr><td>B：友人「ぎりぎりだったけど、単位取れたよ！」→ 友人「まあ、よかったですね↗！（笑）」</td><td><input data-id="int9-b1"/></td><td><input data-id="int9-b2"/></td></tr>
+        <tr><td>C：同僚「先方が了承してくれたそうです。」→ 同僚「まあ、よかったですね↘。じゃあ次に進めましょう。」</td><td><input data-id="int9-c1"/></td><td><input data-id="int9-c2"/></td></tr>
+      </table></div>
+      <div class="note-box" style="margin-top:16px;"><div class="note-hd">文字だけを受け取るAIには、何が伝わらないと思いますか</div><textarea data-id="int9-ai" rows="2"></textarea></div>
+      <p style="font-size:.78rem;color:var(--muted);margin-top:8px;">出典：会話の書き起こし記号はジェファーソン・システムの簡略版（詳しくは串田・平本・林『会話分析入門』勁草書房、2017年）。</p>`;
 
     case 'lecture9': return `
       <div class="kp-list">
         ${kpCard('① 感情分析とは何か',`<ul><li>テキストに含まれる感情を自動判定する技術</li><li>最もシンプル：ポジティブ / ネガティブ / 中立の3値分類</li><li>より細かい分類：喜び・怒り・悲しみ・不安・驚き</li></ul>`,'s9_what_is_sentiment')}
         ${kpCard('② 感情分析の活用例',`<ul><li>商品レビューの傾向把握</li><li>SNSモニタリング（ブランドへの反応）</li><li>アンケート自由記述の集計</li></ul>`,'s9_use_cases')}
-        ${kpCard('③ 感情分析の難しさ',`<ul><li><strong>皮肉・反語</strong>：「さすがですね」「まあそうですね」</li><li><strong>文脈依存</strong>：「やっと終わった」は喜び？安堵？疲労？</li><li><strong>複数感情・文化差</strong>（特に日本語の婉曲表現）</li></ul>`,'s9_difficulty')}
-      </div>`;
+        ${kpCard('③ 感情分析の難しさ ①②',`<ul><li><strong>皮肉・反語</strong>：「さすがですね」「まあそうですね」</li><li><strong>文脈依存</strong>：「やっと終わった」は喜び？安堵？疲労？</li></ul>`,'s9_difficulty')}
+        ${kpCard('④ 感情分析の難しさ ③④',`<ul><li><strong>複数感情</strong>：賞賛と落胆が1文に共存することがある</li><li><strong>文化差</strong>：日本語の婉曲表現・謙遜は特に判定が難しい</li></ul>`,'s9_difficulty2')}
+      </div>
+      <div class="obs-wrap" style="margin-top:22px;"><div class="obs-hd">★ 感情の手がかりヒント — 演習①と課題で使ってよい「道具」</div>
+      <table class="obs">
+        <tr><td style="white-space:nowrap;font-weight:600;">① 極性語</td><td>プラス／マイナスの意味を持つ語（最高・すごい・助かった／ダメ・うんざり・ミス）</td></tr>
+        <tr><td style="font-weight:600;">② 記号・文体</td><td>！　……　笑　？　——　感情の強さやためらいのサイン</td></tr>
+        <tr><td style="font-weight:600;">③ 逆接・転換</td><td>「のに」「けど」「が」→ 逆接の後ろに本音が来やすい（前回は最高だったのに…）</td></tr>
+        <tr><td style="font-weight:600;">④ 婉曲・ぼかし</td><td>「どうかな」「まだまだ」「なんとか」→ 不安・謙遜・断定回避のサイン</td></tr>
+        <tr><td style="font-weight:600;">⑤ 皮肉のサイン</td><td>ほめ言葉 × 不満の文脈（「さすが」「まあ」＋否定的状況）。語はプラスでも働きはマイナス</td></tr>
+      </table></div>
+      <p style="font-size:.82rem;color:var(--muted);margin-top:8px;">※ 「なんとなく」ではなく、この5種類の手がかりから根拠を探しましょう。</p>`;
 
     case 'sent9a': return `
-      <div class="cmp-intro">以下の文に<strong>感情ラベルを付け</strong>、判断の根拠となる語を「根拠メモ」に書いてください。</div>
+      <div class="cmp-intro">以下の文に<strong>感情ラベルを付け</strong>、判断の根拠となる語を「根拠メモ」に書いてください。根拠は<strong>「感情の手がかりヒント」①〜⑤</strong>の番号で書いてもOKです。</div>
       <div class="sent-list">${SENTENCES.map((s,i)=>sentCard(s,i)).join('')}</div>`;
 
     case 'sent9b': return `
@@ -1698,6 +1786,21 @@ function renderStepContent(type){
             <div class="asr-col ai"><div class="asr-col-lbl">AI判定例</div>${AI_JUDGMENTS[i].ai}<br><span style="font-size:.78rem;color:var(--slate);margin-top:4px;display:block">${AI_JUDGMENTS[i].note}</span></div>
           </div>
         </div>`).join('')}
+      </div>
+      <div class="note-box" style="margin-top:18px;"><div class="note-hd">自分の判定とAI判定が「ずれた」文の番号／そのうち1つ：AIは何を見落としたか</div><textarea data-id="sent9b-1" rows="2"></textarea></div>
+      <div class="note-box"><div class="note-hd">逆に「AIの方が妥当かもしれない」と感じた文があれば、その番号と理由</div><textarea data-id="sent9b-2" rows="2"></textarea></div>`;
+
+    case 'eng9': return `
+      <div class="cmp-intro"><strong>Words are positive, meaning is not.</strong> — 皮肉・控えめ表現・スラングは、英語でも辞書方式AIの難所です。3つの英語表現にラベルを付けてみましょう。</div>
+      <div class="obs-wrap"><div class="obs-hd">English expressions — あなたのラベルと手がかり（①〜⑤のどれ？）</div>
+      <table class="obs">
+        <tr><th>English</th><th>あなたのラベル</th><th>手がかり</th></tr>
+        <tr><td>"Great, just great."（トラブル発生の直後に）</td><td><input data-id="eng9-1a"/></td><td><input data-id="eng9-1b" placeholder="①〜⑤"/></td></tr>
+        <tr><td>"Not bad!"（試食のあとで）</td><td><input data-id="eng9-2a"/></td><td><input data-id="eng9-2b"/></td></tr>
+        <tr><td>"This is sick!"（新しいスニーカーを見て）</td><td><input data-id="eng9-3a"/></td><td><input data-id="eng9-3b"/></td></tr>
+      </table></div>
+      <div style="background:var(--plum-l);border-left:4px solid var(--plum);padding:16px 20px;margin-top:18px;">
+        → 答え合わせは授業で。「語の極性」と「ことばの働き」のズレは英語でも同じ——<strong>訳すときに訳すべきなのは「働き」の方</strong>。翻訳や英語を使う仕事の核心です。
       </div>`;
 
     case 'disc9': return `
@@ -1710,7 +1813,28 @@ function renderStepContent(type){
         <div class="ref-q"><label>① 今日最も判断が難しかった文はどれですか？その理由は？</label><textarea data-id="ref9-1"></textarea></div>
         <div class="ref-q"><label>② 感情分析を使う場合、どんな注意が必要ですか</label><textarea data-id="ref9-2"></textarea></div>
         <div class="ref-q"><label>③ 人間とAIの感情判定の違いで気づいたことを書いてください</label><textarea data-id="ref9-3"></textarea></div>
+        <div class="ref-q"><label>④ 自由記述（任意）— 感想・もっと知りたいこと・疑問点など</label><textarea data-id="ref9-4"></textarea></div>
       </div>`;
+
+    case 'hw9': return `
+      <div class="q-card"><span class="q-icon">📝</span><div class="q-text">課題：実際のテキストに感情ラベルを付けてみる</div><div class="q-note">短いレビュー文・SNS投稿・コメントなどを3〜5件集め、それぞれに感情ラベルを付けます。判断が難しかった例については、その理由も添えます。提出：Google Classroom 第9回課題ページ（次回授業前日23:59まで）</div></div>
+      <div class="obs-wrap"><div class="obs-hd">進め方（4ステップ）</div>
+      <table class="obs">
+        <tr><td style="white-space:nowrap;font-weight:600;">STEP 1</td><td><strong>テキストを3〜5件集める</strong>：同じ収集元でそろえるのがコツ（例：同じ商品のAmazonレビュー5件）。わざと1件は「判断が割れそうな文」（皮肉・逆接・婉曲入り）を混ぜると分析が書きやすくなります</td></tr>
+        <tr><td style="font-weight:600;">STEP 2</td><td><strong>感情ラベルを付ける</strong>：授業の10ラベル（喜び/安堵/驚き/不安/落胆/不満/怒り/皮肉/複合/判断困難）を使ってOK。自分のラベル設計もOK（定義をひとこと添える）</td></tr>
+        <tr><td style="font-weight:600;">STEP 3</td><td><strong>根拠を書く</strong>：「感情の手がかりヒント」①極性語 ②記号・文体 ③逆接 ④婉曲 ⑤皮肉のサイン から、根拠となる語を具体的に指さす。確信度（高/中/低）も付ける</td></tr>
+        <tr><td style="font-weight:600;">STEP 4</td><td><strong>難しかった例を分析する</strong>：なぜ難しいかを「皮肉・文脈依存・複数感情・婉曲」の観点で説明する</td></tr>
+      </table></div>
+      <div class="disc-card" style="margin-top:20px;"><h4>English Option（発展・任意）</h4><p>集めるテキストのうち1件を、<strong>英語のもの</strong>（英語のレビュー・SNS投稿など）にしてもOK。"Not bad"（控えめ＝実は良い）や "Great, just great."（繰り返し＝皮肉）のような<strong>「語はプラス・働きはマイナス（またはその逆）」</strong>の例が見つかると、最高の分析材料になります。</p></div>
+      <div class="obs-wrap" style="margin-top:20px;"><div class="obs-hd">提出前チェックリスト／よくあるつまずき</div>
+      <table class="obs">
+        <tr><td>☐ テキストは3〜5件、収集元を明記した</td></tr>
+        <tr><td>☐ すべての行に「根拠となる語」が具体的に書いてある（「なんとなく」がない）</td></tr>
+        <tr><td>☐ 難しかった例の分析に、授業の観点（皮肉・文脈依存・複数感情・婉曲）のことばを使った</td></tr>
+        <tr><td>☐ 確信度（高/中/低）をすべての行に付けた</td></tr>
+        <tr><td>💡 根拠が「雰囲気で」になる → ヒント①〜⑤から探す。見つからなければ「判断困難」も立派なラベル</td></tr>
+        <tr><td>💡 プライバシーが心配 → 個人が特定できる投稿は避け、ユーザー名は書かない。公開レビューが安全</td></tr>
+      </table></div>`;
 
     default: return '<p>コンテンツを準備中です。</p>';
   }
@@ -1787,11 +1911,11 @@ const SESSIONS=[
   {num:6,title:'AIと社会・文化',subtitle:'表現と見方を比較する',color:'var(--sage)',duration:90,
    steps:[{title:'導入',badge:'導入',minutes:8,type:'intro6'},{title:'ウォームアップ　ことばのペア',badge:'ウォームアップ',minutes:7,type:'warmup6'},{title:'前提：AIと生成AI',badge:'前提',minutes:5,type:'premise6'},{title:'ミニ講義',badge:'ミニ講義',minutes:10,type:'lecture6'},{title:'比較演習①　見出しを読む',badge:'演習',minutes:17,type:'cmp6a'},{title:'全体共有',badge:'共有',minutes:8,type:'share6'},{title:'比較演習②　対象別の説明文',badge:'演習',minutes:14,type:'cmp6b'},{title:'English Corner',badge:'English',minutes:8,type:'eng6'},{title:'討議・まとめ・振り返り',badge:'振り返り',minutes:10,type:'ref6'},{title:'課題の確認',badge:'課題',minutes:3,type:'hw6'}]},
   {num:7,title:'生成AIと要約',subtitle:'何を残し、何を省くのか',color:'var(--gold)',duration:90,
-   steps:[{title:'導入',badge:'導入',minutes:8,type:'intro7'},{title:'ミニ講義',badge:'ミニ講義',minutes:12,type:'lecture7'},{title:'演習①　自分で要約する',badge:'個人演習',minutes:14,type:'sum7a'},{title:'English Corner',badge:'English',minutes:8,type:'eng7'},{title:'演習②　要約を比較する',badge:'比較演習',minutes:12,type:'sum7b'},{title:'演習③　プロンプトで比較する',badge:'AI実験',minutes:20,type:'prompt7'},{title:'グループ討議',badge:'討議',minutes:8,type:'disc7'},{title:'まとめ・振り返り',badge:'まとめ',minutes:5,type:'ref7'},{title:'課題の確認',badge:'課題',minutes:3,type:'hw7'}]},
+   steps:[{title:'前回の復習　フレーミング',badge:'復習',minutes:7,type:'rev7'},{title:'導入',badge:'導入',minutes:6,type:'intro7'},{title:'ミニ講義',badge:'ミニ講義',minutes:11,type:'lecture7'},{title:'演習①　自分で要約する',badge:'個人演習',minutes:14,type:'sum7a'},{title:'English Corner',badge:'English',minutes:8,type:'eng7'},{title:'演習②　要約を比較する',badge:'比較演習',minutes:12,type:'sum7b'},{title:'演習③　プロンプトで比較する',badge:'AI実験',minutes:20,type:'prompt7'},{title:'グループ討議',badge:'討議',minutes:8,type:'disc7'},{title:'まとめ・振り返り',badge:'まとめ',minutes:5,type:'ref7'},{title:'課題の確認',badge:'課題',minutes:3,type:'hw7'}]},
   {num:8,title:'分類とラベリング',subtitle:'分けることの基準を考える',color:'var(--terra)',duration:90,
-   steps:[{title:'導入',badge:'導入',minutes:10,type:'intro8'},{title:'ミニ講義',badge:'ミニ講義',minutes:15,type:'lecture8'},{title:'グループ演習①　短文を分類する',badge:'グループ演習',minutes:20,type:'cls8a'},{title:'中間共有',badge:'共有',minutes:10,type:'share8'},{title:'映画でジャンル分類',badge:'映画演習',minutes:20,type:'movie8'},{title:'グループ演習②　ラベルを設計する',badge:'設計演習',minutes:20,type:'cls8b'},{title:'発表・まとめ',badge:'まとめ',minutes:15,type:'ref8'}]},
+   steps:[{title:'前回の復習　言い換え',badge:'復習',minutes:7,type:'rev8'},{title:'導入',badge:'導入',minutes:8,type:'intro8'},{title:'ミニ講義',badge:'ミニ講義',minutes:13,type:'lecture8'},{title:'グループ演習①　短文を分類する',badge:'グループ演習',minutes:18,type:'cls8a'},{title:'中間共有',badge:'共有',minutes:8,type:'share8'},{title:'映画でジャンル分類',badge:'映画演習',minutes:18,type:'movie8'},{title:'English Corner',badge:'English',minutes:8,type:'eng8'},{title:'グループ演習②　ラベルを設計する',badge:'設計演習',minutes:18,type:'cls8b'},{title:'発表・まとめ・振り返り',badge:'まとめ',minutes:9,type:'ref8'},{title:'課題の確認',badge:'課題',minutes:3,type:'hw8'}]},
   {num:9,title:'感情分析',subtitle:'ことばから感情をどう読むか',color:'var(--plum)',duration:90,
-   steps:[{title:'導入',badge:'導入',minutes:10,type:'intro9'},{title:'ミニ講義',badge:'ミニ講義',minutes:15,type:'lecture9'},{title:'比較演習①　感情ラベリング',badge:'個人演習',minutes:20,type:'sent9a'},{title:'比較演習②　AIの判定と比べる',badge:'比較演習',minutes:15,type:'sent9b'},{title:'グループ討議',badge:'討議',minutes:15,type:'disc9'},{title:'まとめ・振り返り',badge:'振り返り',minutes:15,type:'ref9'}]},
+   steps:[{title:'前回の復習　分類とラベリング',badge:'復習',minutes:7,type:'rev9'},{title:'導入　会話の中で聞く',badge:'導入',minutes:10,type:'intro9'},{title:'ミニ講義',badge:'ミニ講義',minutes:12,type:'lecture9'},{title:'比較演習①　感情ラベリング',badge:'個人演習',minutes:18,type:'sent9a'},{title:'比較演習②　AIの判定と比べる',badge:'比較演習',minutes:12,type:'sent9b'},{title:'English Corner',badge:'English',minutes:8,type:'eng9'},{title:'グループ討議',badge:'討議',minutes:12,type:'disc9'},{title:'まとめ・振り返り',badge:'振り返り',minutes:8,type:'ref9'},{title:'課題の確認',badge:'課題',minutes:3,type:'hw9'}]},
 ];
 
 // ══════════════════════════════════════════
