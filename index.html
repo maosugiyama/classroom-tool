@@ -1342,6 +1342,20 @@ function renderStepContent(type){
       <div class="q-card"><span class="q-icon">💬</span><div class="q-text">AIは「便利な道具」でしょうか。<br>それとも、社会や文化の見方を変える存在でしょうか。</div><div class="q-note">最近見たAI関連のニュース・話題を1つ挙げてみましょう。隣の人と共有してください。</div></div>
       <div class="disc-card"><h4>アイスブレイク</h4><ul><li>最近見たAI関連ニュースを1つ（1分で思い出す）</li><li>2〜3名に共有させ、どんな話題が出たかを板書する</li><li>「便利」「怖い」「面白い」などのキーワードに注目</li></ul></div>`;
 
+    case 'warmup6': return `
+      <div class="cmp-intro">同じものを指すのに、印象がちがう<strong>「ことばのペア」</strong>です。それぞれ、どちらがプラスに聞こえるか考え、印象のちがいをひとことメモしましょう。</div>
+      <div class="obs-wrap"><div class="obs-hd">ことばのペア</div>
+      <table class="obs">
+        <tr><th>ことば A</th><th>ことば B</th><th>印象のちがいメモ</th></tr>
+        <tr><td>値上げ</td><td>価格改定</td><td><input data-id="w6-1" placeholder="どちらがプラス？なぜ？"/></td></tr>
+        <tr><td>中古</td><td>ヴィンテージ</td><td><input data-id="w6-2"/></td></tr>
+        <tr><td>がんこ</td><td>意志が強い</td><td><input data-id="w6-3"/></td></tr>
+        <tr><td>cheap（安っぽい？）</td><td>affordable（手ごろ）</td><td><input data-id="w6-4"/></td></tr>
+      </table></div>
+      <div style="background:var(--sage-l);border-left:4px solid var(--sage);padding:16px 20px;margin-top:18px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;">
+        <span>→ 気づいたこと：ことばを選ぶことは、</span><input data-id="w6-fill" placeholder="＿＿＿＿＿＿" style="width:160px;border:none;border-bottom:1.5px dotted var(--sage);background:transparent;font-size:.95rem;padding:2px 6px;"/><span>を選ぶことでもある。</span>
+      </div>`;
+
     case 'premise6': return `
       <div class="cmp-intro">「AI」は大きな傘。今日の主役は、その中の<strong>「生成AI」</strong>です。まず、2つの種類を整理しておきましょう。</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;">
@@ -1380,7 +1394,15 @@ function renderStepContent(type){
         ${kpCard('① AIはどこで使われているか',`<ul><li>翻訳・文章作成・要約（ChatGPT、Geminiなど）</li><li>レコメンド（YouTube、Spotify、Amazon）</li><li>画像生成・チャットボット・カスタマーサポート</li></ul>`,'s6_ai_usage')}
         ${kpCard('② AIは「中立」ではないことがある',`<ul><li>学習データに偏りが含まれている場合がある</li><li>同じ質問でも、言語・文化・立場によって回答が変わりうる</li><li>出力は「事実」ではなく「確率的に妥当な文章」</li></ul>`,'s6_bias')}
         ${kpCard('③ 人文学的な見方 — 4つの問い',`<ul><li><strong>バイアス</strong>：情報に偏りはないか</li><li><strong>表現</strong>：どんな言葉が選ばれているか</li><li><strong>フレーム</strong>：何を前提にしているか</li><li><strong>受け手</strong>：誰に向けて書かれているか</li></ul>`,'s6_humanistic')}
-      </div>`;
+      </div>
+      <div class="obs-wrap" style="margin-top:22px;"><div class="obs-hd">★ 観察のことばヒント — 演習①②で使ってよい「道具」</div>
+      <table class="obs">
+        <tr><td style="white-space:nowrap;">プラスに傾ける語の例</td><td>効率化／実現／スマート／便利／向上／サポート</td></tr>
+        <tr><td>マイナスに傾ける語の例</td><td>縮小／懸念／リスク／負担／不安／削減</td></tr>
+        <tr><td>中立に見せる語の例</td><td>試験導入／一部／検討／数値・仕様（97mmなど）</td></tr>
+        <tr><td>省略に気づく問い</td><td>「この文に出てこない人はだれ？」「良い点／悪い点のどちらが書かれていない？」</td></tr>
+      </table></div>
+      <p style="font-size:.82rem;color:var(--muted);margin-top:8px;">※ 自分でゼロから基準を作る必要はありません。まずこのヒントの中から探し、当てはまらなければ自分のことばで書きましょう。</p>`;
 
     case 'cmp6a': return `
       <div class="cmp-intro">同じ出来事（市役所へのAI導入）について、<strong>見出しの書き方だけ</strong>が異なる3種類の記事を読んでください。どの語が印象を変えているか、観察してみましょう。</div>
@@ -1418,7 +1440,27 @@ function renderStepContent(type){
         <tr><td>最も信頼できると感じたのは？理由は？</td><td colspan="3"><textarea data-id="c6b-trust" rows="2"></textarea></td></tr>
       </table></div>`;
 
+    case 'eng6': return `
+      <div class="cmp-intro">フレーミングは英語でも同じです。<strong>Same fact, different feeling.</strong> — 次の英語表現を読み、質問に答えましょう（メモは日本語でOK）。</div>
+      <div class="cmp-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="cmp-card va"><div class="cmp-lbl">(a)</div><div class="cmp-text">"This yogurt is <strong>90% fat-free</strong>!"</div></div>
+        <div class="cmp-card vc"><div class="cmp-lbl">(b)</div><div class="cmp-text">"This yogurt <strong>contains 10% fat</strong>."</div></div>
+      </div>
+      <div class="note-box"><div class="note-hd">Q. Which one sounds healthier? Why?</div><textarea data-id="eng6-q1" placeholder="同じ事実なのに、どちらが健康的に聞こえる？その理由は？"></textarea></div>
+      <div class="obs-wrap" style="margin-top:20px;"><div class="obs-hd">English word pairs — どんな場面で使い分ける？</div>
+      <table class="obs">
+        <tr><th>English A</th><th>English B</th><th>どんな場面で使う？</th></tr>
+        <tr><td>slim（すらっとした）</td><td>skinny（がりがりの）</td><td><input data-id="eng6-p1"/></td></tr>
+        <tr><td>curious（好奇心旺盛な）</td><td>nosy（詮索好きな）</td><td><input data-id="eng6-p2"/></td></tr>
+        <tr><td>problem（問題）</td><td>challenge（挑戦しがいのある課題）</td><td><input data-id="eng6-p3"/></td></tr>
+      </table></div>
+      <div style="background:var(--sage-l);border-left:4px solid var(--sage);padding:16px 20px;margin-top:18px;">
+        → 翻訳するときに訳語を1つ選ぶことも、実は<strong>フレーミングの選択</strong>です。英語を使う仕事では、この「ことばの選び方」の感覚がそのまま武器になります。
+      </div>`;
+
     case 'ref6': return `
+      <div class="disc-card"><h4>グループ討議メモ</h4><ul><li>自分の意見</li><li>メンバーから出た意見で印象に残ったもの</li><li>議論を通じて自分の考えが変わった点</li></ul></div>
+      <div class="note-box" style="margin-bottom:22px;"><div class="note-hd">討議メモ</div><textarea data-id="disc6-note" placeholder="自分の意見／印象に残った意見／考えが変わった点…"></textarea></div>
       <div class="disc-card"><h4>本日のまとめ</h4><p>AIは情報を「出す」だけでなく、<strong>表現の仕方を変える</strong>存在です。語の選び方・強調点・想定読者によって、読み手の印象は大きく変わります。</p></div>
       <div style="background:var(--sage-l);border-left:4px solid var(--sage);border-radius:0;padding:16px 20px;margin-bottom:22px;">
         <strong style="color:#4e7a52;">AIが「どう表現するか」を見ることは、私たちが「どう表現しているか」を見ること。</strong>私たちはことばで社会をつくり続けています——その社会を、AIという鏡を通して観察できる。
@@ -1427,7 +1469,27 @@ function renderStepContent(type){
         <div class="ref-q"><label>① 今日気づいたこと・わかったことを書いてください</label><textarea data-id="ref6-1"></textarea></div>
         <div class="ref-q"><label>② AIを使うときに気をつけたいことは何ですか</label><textarea data-id="ref6-2"></textarea></div>
         <div class="ref-q"><label>③ 文化や社会を見るときに重要だと思った観点は何ですか</label><textarea data-id="ref6-3"></textarea></div>
+        <div class="ref-q"><label>④ 自由記述（任意）— 感想・もっと知りたいこと・疑問点など</label><textarea data-id="ref6-4"></textarea></div>
       </div>`;
+
+    case 'hw6': return `
+      <div class="q-card"><span class="q-icon">📝</span><div class="q-text">課題：身近な「同じテーマ・違う表現」を見つける</div><div class="q-note">ニュース記事・広告・SNS投稿などから、同じテーマ（同じ出来事・同じ商品・同じ制度）を異なる言い方で表現している例を1つ探し、観察したことを200〜300字でまとめます。提出：Google Classroom 第6回課題ページ（次回授業前日23:59まで）</div></div>
+      <div class="obs-wrap"><div class="obs-hd">進め方（4ステップ）</div>
+      <table class="obs">
+        <tr><td style="white-space:nowrap;font-weight:600;">STEP 1</td><td>テーマを1つ決める。「同じ出来事・同じ商品・同じ制度」に限定するのがコツ（例：レジ袋有料化／円安／新しいAIサービス／自分の大学）</td></tr>
+        <tr><td style="font-weight:600;">STEP 2</td><td>言い方が違う表現を2つ以上集める。探す場所：同じニュースの複数メディアの見出し／同じ商品の「広告」と「レビュー」／大学の「公式サイト」と「口コミ」／同じ話題のSNS投稿2つ</td></tr>
+        <tr><td style="font-weight:600;">STEP 3</td><td>授業の3観点で観察する：①語の選び方　②強調点・省略　③受け手の印象（「観察のことばヒント」を使ってOK）</td></tr>
+        <tr><td style="font-weight:600;">STEP 4</td><td>観察したことを200〜300字にまとめる（配布の記入見本の「型」をまねてOK。見本と同じテーマは不可）</td></tr>
+      </table></div>
+      <div class="disc-card" style="margin-top:20px;"><h4>English Option（発展・任意）</h4><p>比較する表現のうち1つを、<strong>やさしい英語のもの</strong>（英語の見出し・広告・SNS投稿など）にしてもかまいません。<br>Example: "90% fat-free" vs "contains 10% fat" — same fact, different feeling.</p></div>
+      <div class="obs-wrap" style="margin-top:20px;"><div class="obs-hd">提出前チェックリスト／よくあるつまずき</div>
+      <table class="obs">
+        <tr><td>☐ 比べた表現は「同じ出来事・同じ商品・同じ制度」になっている</td></tr>
+        <tr><td>☐ 出典（メディア名・タイトル・URL・閲覧日）を2つ以上書いた</td></tr>
+        <tr><td>☐ 「観察と分析」に ①テーマ ②違い ③受け手の印象 の3点が入っている（感想文にしない）</td></tr>
+        <tr><td>☐ 字数が200〜300字になっている</td></tr>
+        <tr><td>💡 例が見つからない → 同じ商品の「広告」と「レビュー」の比較がいちばん見つけやすい</td></tr>
+      </table></div>`;
 
     case 'intro7': return `
       <div class="q-card"><span class="q-icon">✂️</span><div class="q-text">「要約」とは、ただ短くすることですか？</div><div class="q-note">1分間、自分の考えを整理してください。その後、隣の人と共有しましょう。</div></div>
@@ -1438,20 +1500,38 @@ function renderStepContent(type){
         ${kpCard('① 要約の基本3条件',`<ul><li>重要情報を残す（主題・核心を落とさない）</li><li>重複を省く（同じ内容を繰り返さない）</li><li>筋道を保つ（論理の流れを維持する）</li></ul>`,'s7_basics')}
         ${kpCard('② 要約でよく起こる問題',`<ul><li>大事な情報の欠落（何を重要とみなすかの判断ミス）</li><li>ニュアンスの変化（断定しすぎ・弱めすぎ）</li><li>具体例だけ残って主旨が消える</li></ul>`,'s7_problems')}
         ${kpCard('③ 生成AIによる要約の特徴',`<ul><li>◎ 速い・一定の読みやすさがある</li><li>△ 何を「重要」とみなすかはモデルによって異なる</li><li>△ プロンプトの違いで要約の中身が変わる</li></ul>`,'s7_ai_summary')}
-      </div>`;
+      </div>
+      <div class="obs-wrap" style="margin-top:22px;"><div class="obs-hd">★ 要約の手順ヒント（4ステップ）— 苦手でも、この順番でやれば書けます</div>
+      <table class="obs">
+        <tr><td style="white-space:nowrap;font-weight:600;">①</td><td><strong>主旨の1文を探す</strong>：元の文章の中で「これが言いたい」という1文に線を引く（英語のリーディングで学ぶ topic sentence と同じ）</td></tr>
+        <tr><td style="font-weight:600;">②</td><td><strong>残す語に○、消す語に×</strong>：数字・固有名詞・結論の語は残す。具体例・言い換え・くり返しは消す候補</td></tr>
+        <tr><td style="font-weight:600;">③</td><td><strong>○をつないで書く</strong>：残した語を、自分のことばで1〜2文につなぐ</td></tr>
+        <tr><td style="font-weight:600;">④</td><td><strong>落としすぎチェック</strong>：留保や条件（「一方」「〜も少なくない」「〜が求められる」）が消えて、断定に変わっていないか確認する</td></tr>
+      </table></div>`;
 
     case 'sum7a': return `
       <div class="src-box"><div class="src-lbl">元テキスト（約250字）</div><div class="src-text">${SOURCE_TEXT}</div><div class="src-chars">文字数：${SOURCE_TEXT.length}字</div></div>
+      <div class="note-box" style="margin-bottom:18px;"><div class="note-hd">① 線を引いた「主旨の1文」（書き写す）</div><textarea data-id="sum7-shushi" rows="2" placeholder="手順ヒント①：まず「これが言いたい」という1文を探して書き写しましょう"></textarea></div>
       <div class="sum-grid">
-        <div class="sum-inp"><div class="sum-head"><span>100字要約</span><span class="sum-ctr" id="ctr7-100">0 / 100字</span></div><textarea data-id="sum7-100" data-max="100" placeholder="まず100字以内でまとめてみましょう…" oninput="updateCtr(this,'ctr7-100')"></textarea></div>
-        <div class="sum-inp"><div class="sum-head"><span>50字要約</span><span class="sum-ctr" id="ctr7-50">0 / 50字</span></div><textarea data-id="sum7-50" data-max="50" placeholder="100字をさらに半分に絞ると…" oninput="updateCtr(this,'ctr7-50')"></textarea></div>
+        <div class="sum-inp"><div class="sum-head"><span>② 80字要約</span><span class="sum-ctr" id="ctr7-80">0 / 80字</span></div><textarea data-id="sum7-80" data-max="80" placeholder="手順ヒント②③の順に：残す語をつないで80字以内で…" oninput="updateCtr(this,'ctr7-80')"></textarea></div>
+        <div class="sum-inp"><div class="sum-head"><span>③ 発展：50字に圧縮</span><span class="sum-ctr" id="ctr7-50">0 / 50字</span></div><textarea data-id="sum7-50" data-max="50" placeholder="80字をさらに絞ると…" oninput="updateCtr(this,'ctr7-50')"></textarea></div>
       </div>
-      <div class="disc-card"><h4>要約する際に考えること</h4><ul><li>この文章の「主旨」は何か？（1文で言うと？）</li><li>削れる情報と削れない情報をどう判断したか？</li><li>50字にするとき、どの情報を犠牲にしたか？</li></ul></div>`;
+      <div class="note-box"><div class="note-hd">④ 80字から50字に削るとき、何を犠牲にしたか</div><textarea data-id="sum7-sacrifice" rows="2"></textarea></div>
+      <div class="disc-card"><h4>手順ヒント④ 落としすぎチェック</h4><ul><li>留保や条件（「一方」「〜も少なくない」）が消えて、断定に変わっていないか？</li><li>数字・固有名詞・結論の語は残っているか？</li></ul></div>`;
+
+    case 'eng7': return `
+      <div class="cmp-intro"><strong>Summary starts with the topic sentence.</strong> — やさしい英語でも、手順は同じです。まず「主旨の1文（topic sentence）」を探しましょう。</div>
+      <div class="src-box"><div class="src-lbl">Mini text</div><div class="src-text">Many students use AI for homework. It is fast and easy. But students must check the answers, because AI sometimes makes mistakes.</div></div>
+      <div class="note-box" style="margin-bottom:18px;"><div class="note-hd">Q1. Which sentence is the topic sentence? — 主旨に最も近い1文を書き写そう</div><textarea data-id="eng7-q1" rows="2" placeholder="3つの文のうち、どれが「いちばん言いたいこと」？"></textarea></div>
+      <div class="note-box"><div class="note-hd">Q2. Summarize in ONE sentence（10〜15 words くらいでOK）</div><textarea data-id="eng7-q2" rows="2" placeholder="例：Students use AI for homework, but ..."></textarea></div>
+      <div style="background:var(--sage-l);border-left:4px solid var(--sage);padding:16px 20px;margin-top:18px;">
+        → 英語の要約も<strong>「主旨の1文を見つける＋落としすぎチェック」</strong>。リーディングの授業で学ぶ topic sentence は、要約の第一歩です。
+      </div>`;
 
     case 'sum7b': return `
       <div class="sum-cmp-list">
         <div class="sum-row"><div class="sum-row-hd"><span class="sum-row-lbl">元テキスト</span></div><div class="sum-row-text">${SOURCE_TEXT}</div></div>
-        <div class="sum-row"><div class="sum-row-hd"><span class="sum-row-lbl">あなたの要約（100字）</span><span class="sum-badge student">自分</span></div><div class="sum-row-text" id="my-sum100">${state.inputs['sum7-100']||'（まだ入力されていません）'}</div></div>
+        <div class="sum-row"><div class="sum-row-hd"><span class="sum-row-lbl">あなたの要約（80字）</span><span class="sum-badge student">自分</span></div><div class="sum-row-text" id="my-sum80">${state.inputs['sum7-80']||'（まだ入力されていません）'}</div></div>
         <div class="sum-row"><div class="sum-row-hd"><span class="sum-row-lbl">AI要約 A — 短縮版</span><span class="sum-badge ai">AI</span></div><div class="sum-row-text">${AI_SUM_A}</div></div>
         <div class="sum-row"><div class="sum-row-hd"><span class="sum-row-lbl">AI要約 B — バランス版</span><span class="sum-badge ai">AI</span></div><div class="sum-row-text">${AI_SUM_B}</div></div>
       </div>
@@ -1461,7 +1541,9 @@ function renderStepContent(type){
         <tr><td>重要語が残っているか</td><td><input type="checkbox" data-id="ev-my-2"></td><td><input type="checkbox" data-id="ev-a-2"></td><td><input type="checkbox" data-id="ev-b-2"></td></tr>
         <tr><td>誤解を招かないか</td><td><input type="checkbox" data-id="ev-my-3"></td><td><input type="checkbox" data-id="ev-a-3"></td><td><input type="checkbox" data-id="ev-b-3"></td></tr>
         <tr><td>読みやすいか</td><td><input type="checkbox" data-id="ev-my-4"></td><td><input type="checkbox" data-id="ev-a-4"></td><td><input type="checkbox" data-id="ev-b-4"></td></tr>
-      </table></div>`;
+      </table></div>
+      <div class="disc-card" style="margin-top:20px;"><h4>★ 比較のことばヒント</h4><ul><li>どの名詞・数字が残った？／どの留保（「一方」「〜も」）が消えた？</li><li>専門用語と日常語、どちら寄り？／文は誰に向いている？</li></ul></div>
+      <div class="note-box"><div class="note-hd">観察メモ — どこに違いがあったか</div><textarea data-id="sum7b-obs" placeholder="残った情報／消えた情報を具体的に…"></textarea></div>`;
 
     case 'prompt7': return `
       <div class="src-box"><div class="src-lbl">元テキスト（コピーして使ってください）</div><div class="src-text" id="prompt-src">${SOURCE_TEXT}</div><div class="src-chars">文字数：${SOURCE_TEXT.length}字</div></div>
@@ -1512,19 +1594,41 @@ function renderStepContent(type){
         </div>
       </div>
 
-      <div class="disc-card" style="margin-top:24px"><h4>観察のポイント</h4><ul><li><strong>A群（読み手）</strong>：語彙の難易度・文の長さ・表現の柔らかさはどう変わったか</li><li><strong>A群</strong>：「読み手に合わせる」とき、AIは何を犠牲にしたか（情報量／正確さ／ニュアンス）</li><li><strong>B群（強調）</strong>：同じ事実なのに、読後の印象はどう変わったか</li><li><strong>B群</strong>：消えた情報・追加された語に注目してみよう</li><li>5つを並べたとき、「中立な要約」はあると言えるか</li></ul></div>`;
+      <div class="disc-card" style="margin-top:24px"><h4>観察のポイント</h4><ul><li><strong>A群（読み手）</strong>：語彙の難易度・文の長さ・表現の柔らかさはどう変わったか</li><li><strong>A群</strong>：「読み手に合わせる」とき、AIは何を犠牲にしたか（情報量／正確さ／ニュアンス）</li><li><strong>B群（強調）</strong>：同じ事実なのに、読後の印象はどう変わったか</li><li><strong>B群</strong>：消えた情報・追加された語に注目してみよう</li><li>5つを並べたとき、「中立な要約」はあると言えるか</li></ul></div>
+      <div class="note-box" style="margin-top:18px;"><div class="note-hd">A群の観察 — 語彙・表現はどう変わったか</div><textarea data-id="prompt7-obsA" rows="2"></textarea></div>
+      <div class="note-box"><div class="note-hd">B群の観察 — 語の選択と印象の変化</div><textarea data-id="prompt7-obsB" rows="2"></textarea></div>
+      <div class="note-box"><div class="note-hd">5つの要約を見比べて — 「同じ文章なのに印象が変わる」と感じた点／AIの「中立」をどう考えるか</div><textarea data-id="prompt7-obsAll" rows="3"></textarea></div>`;
 
     case 'disc7': return `
-      <div class="disc-card"><h4>グループ討議テーマ</h4><ul><li>どの要約が最もよいか？「情報の残り方・消え方」で説明する</li><li>「わかりやすい」は評価の理由になるか？</li><li>AI-AとBの違いは何か。プロンプトの違いで何が変わりそうか？</li></ul></div>
-      <div class="note-box"><div class="note-hd">グループメモ</div><textarea data-id="disc7-note" placeholder="グループで出た意見を記録してください…"></textarea></div>`;
+      <div class="disc-card"><h4>グループ討議テーマ</h4><ul><li>① プロンプトを変えると、なぜ要約はあれほど変わるのか</li><li>② 「良い要約」とは何か。何を残し、何を消すべきか</li><li>③ AIに要約を任せるとき、人間が確認すべきことは何か</li></ul></div>
+      <div class="note-box"><div class="note-hd">討議メモ</div><textarea data-id="disc7-note" placeholder="自分の意見／メンバーから出た意見で印象に残ったもの／議論を通じて自分の考えが変わった点…"></textarea></div>`;
 
     case 'ref7': return `
       <div class="disc-card"><h4>本日のまとめ</h4><p>要約は中立な「圧縮」ではなく、<strong>情報の選択と再構成</strong>です。何を重要とみなすかは、書き手の判断に依存します。</p></div>
       <div class="ref-form">
-        <div class="ref-q"><label>① よい要約の条件を3つ挙げてください</label><textarea data-id="ref7-1" placeholder="条件1：　条件2：　条件3："></textarea></div>
-        <div class="ref-q"><label>② 自分の要約とAIの要約で最も大きな差はどこにありましたか</label><textarea data-id="ref7-2"></textarea></div>
-        <div class="ref-q"><label>③ 要約を使うとき、どんな点に注意しますか</label><textarea data-id="ref7-3"></textarea></div>
+        <div class="ref-q"><label>①「良い要約」の条件を、自分の言葉で3つ挙げてください</label><textarea data-id="ref7-1" placeholder="条件1：　条件2：　条件3："></textarea></div>
+        <div class="ref-q"><label>② 自分の要約とAIの要約で、最も大きな差はどこにありましたか</label><textarea data-id="ref7-2"></textarea></div>
+        <div class="ref-q"><label>③ AIに要約を頼むとき、これから気をつけたいこと</label><textarea data-id="ref7-3"></textarea></div>
+        <div class="ref-q"><label>④ 自由記述（任意）— 感想・もっと知りたいこと・疑問点など</label><textarea data-id="ref7-4"></textarea></div>
       </div>`;
+
+    case 'hw7': return `
+      <div class="q-card"><span class="q-icon">📝</span><div class="q-text">課題：自分の要約と生成AIの要約を比較する</div><div class="q-note">300〜500字程度の記事を1本選び、自分で80字に要約してから、生成AIにも同じ記事を80字で要約させます。両者を比較して、200字程度で考察を書きます。提出：Google Classroom 第7回課題ページ（次回授業前日23:59まで）</div></div>
+      <div class="obs-wrap"><div class="obs-hd">進め方（4ステップ）</div>
+      <table class="obs">
+        <tr><td style="white-space:nowrap;font-weight:600;">STEP 1</td><td><strong>記事を選ぶ</strong>：300〜500字程度・「1つの出来事について書かれた記事」を1本（短すぎると要約の余地がなく、長すぎると主旨が複数になります）</td></tr>
+        <tr><td style="font-weight:600;">STEP 2</td><td><strong>自分で要約</strong>：「要約の手順ヒント（4ステップ）」の順で80字に（①主旨の1文 ②残す○・消す× ③つなぐ ④落としすぎチェック）</td></tr>
+        <tr><td style="font-weight:600;">STEP 3</td><td><strong>AIに要約させる</strong>：同じ記事を生成AIに80字で。プロンプトとAIの出力を、そのままコピーして貼ること</td></tr>
+        <tr><td style="font-weight:600;">STEP 4</td><td><strong>比較・考察</strong>：「残った情報／消えた情報」を具体的に指摘しながら200字程度で。感想文にしないのがポイント</td></tr>
+      </table></div>
+      <div class="disc-card" style="margin-top:20px;"><h4>English Option（発展・任意）</h4><p>記事を<strong>やさしい英語のニュース記事</strong>（NHK WORLD の Easy な記事、News in Levels など）にしてもOK。その場合は、自分の要約を<strong>英語1文（one-sentence summary）＋日本語80字</strong>の両方で。AIにも "Summarize this article in one sentence." と英語で頼んで比較すると、日本語との違いも観察できます。</p></div>
+      <div class="obs-wrap" style="margin-top:20px;"><div class="obs-hd">提出前チェックリスト／よくあるつまずき</div>
+      <table class="obs">
+        <tr><td>☐ 記事は300〜500字程度・1つの出来事について書かれている</td></tr>
+        <tr><td>☐ 自分の要約とAIの要約が、どちらも80字前後になっている</td></tr>
+        <tr><td>☐ AIへのプロンプトと出力を、そのままコピーして貼った（プロンプトがないと比較を評価できません）</td></tr>
+        <tr><td>☐ 考察で「残った情報／消えた情報」を具体的に指摘している（「AIすごい」等の感想文になっていない）</td></tr>
+      </table></div>`;
 
     case 'intro8': return `
       <div class="q-card"><span class="q-icon">🗂️</span><div class="q-text">映画を分類するとしたら、何で分けますか？</div><div class="q-note">自由に考えてみましょう。何通りの分け方が考えられるでしょうか。</div></div>
@@ -1681,9 +1785,9 @@ function restoreInputs(){
 // ══════════════════════════════════════════
 const SESSIONS=[
   {num:6,title:'AIと社会・文化',subtitle:'表現と見方を比較する',color:'var(--sage)',duration:90,
-   steps:[{title:'導入',badge:'導入',minutes:10,type:'intro6'},{title:'前提：AIと生成AI',badge:'前提',minutes:5,type:'premise6'},{title:'ミニ講義',badge:'ミニ講義',minutes:10,type:'lecture6'},{title:'比較演習①　見出しを読む',badge:'演習',minutes:20,type:'cmp6a'},{title:'全体共有',badge:'共有',minutes:10,type:'share6'},{title:'比較演習②　対象別の説明文',badge:'演習',minutes:20,type:'cmp6b'},{title:'まとめ・振り返り',badge:'振り返り',minutes:15,type:'ref6'}]},
+   steps:[{title:'導入',badge:'導入',minutes:8,type:'intro6'},{title:'ウォームアップ　ことばのペア',badge:'ウォームアップ',minutes:7,type:'warmup6'},{title:'前提：AIと生成AI',badge:'前提',minutes:5,type:'premise6'},{title:'ミニ講義',badge:'ミニ講義',minutes:10,type:'lecture6'},{title:'比較演習①　見出しを読む',badge:'演習',minutes:17,type:'cmp6a'},{title:'全体共有',badge:'共有',minutes:8,type:'share6'},{title:'比較演習②　対象別の説明文',badge:'演習',minutes:14,type:'cmp6b'},{title:'English Corner',badge:'English',minutes:8,type:'eng6'},{title:'討議・まとめ・振り返り',badge:'振り返り',minutes:10,type:'ref6'},{title:'課題の確認',badge:'課題',minutes:3,type:'hw6'}]},
   {num:7,title:'生成AIと要約',subtitle:'何を残し、何を省くのか',color:'var(--gold)',duration:90,
-   steps:[{title:'導入',badge:'導入',minutes:10,type:'intro7'},{title:'ミニ講義',badge:'ミニ講義',minutes:15,type:'lecture7'},{title:'演習①　自分で要約する',badge:'個人演習',minutes:15,type:'sum7a'},{title:'演習②　要約を比較する',badge:'比較演習',minutes:15,type:'sum7b'},{title:'演習③　プロンプトで比較する',badge:'AI実験',minutes:20,type:'prompt7'},{title:'グループ討議',badge:'討議',minutes:10,type:'disc7'},{title:'共有・まとめ',badge:'まとめ',minutes:10,type:'ref7'}]},
+   steps:[{title:'導入',badge:'導入',minutes:8,type:'intro7'},{title:'ミニ講義',badge:'ミニ講義',minutes:12,type:'lecture7'},{title:'演習①　自分で要約する',badge:'個人演習',minutes:14,type:'sum7a'},{title:'English Corner',badge:'English',minutes:8,type:'eng7'},{title:'演習②　要約を比較する',badge:'比較演習',minutes:12,type:'sum7b'},{title:'演習③　プロンプトで比較する',badge:'AI実験',minutes:20,type:'prompt7'},{title:'グループ討議',badge:'討議',minutes:8,type:'disc7'},{title:'まとめ・振り返り',badge:'まとめ',minutes:5,type:'ref7'},{title:'課題の確認',badge:'課題',minutes:3,type:'hw7'}]},
   {num:8,title:'分類とラベリング',subtitle:'分けることの基準を考える',color:'var(--terra)',duration:90,
    steps:[{title:'導入',badge:'導入',minutes:10,type:'intro8'},{title:'ミニ講義',badge:'ミニ講義',minutes:15,type:'lecture8'},{title:'グループ演習①　短文を分類する',badge:'グループ演習',minutes:20,type:'cls8a'},{title:'中間共有',badge:'共有',minutes:10,type:'share8'},{title:'映画でジャンル分類',badge:'映画演習',minutes:20,type:'movie8'},{title:'グループ演習②　ラベルを設計する',badge:'設計演習',minutes:20,type:'cls8b'},{title:'発表・まとめ',badge:'まとめ',minutes:15,type:'ref8'}]},
   {num:9,title:'感情分析',subtitle:'ことばから感情をどう読むか',color:'var(--plum)',duration:90,
